@@ -8,17 +8,40 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var leagueViewModel: LeagueViewModel
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        List(leagueViewModel.leagues) { league in
+            Text(league.name)
+                .font(.headline)
         }
-        .padding()
+        .navigationTitle(leagueViewModel.title)
+        .toolbarTitleDisplayMode(.inline)
+        .onAppear {
+            leagueViewModel.loadLeagues()
+        }
     }
 }
 
+//struct LeagueView: View {
+//    @Binding var leagues: [League]
+//    
+//    var body: some View {
+//        List {
+//            ForEach(leagueViewModel.leagues) { league in
+//                VStack {
+//                    Text(league.name)
+//                        .font(.headline)
+//                }
+//            }
+//        }
+//        .navigationTitle(leagueViewModel.title)
+////        .onAppear {
+////            leagueViewModel.loadLeagues()
+////        }
+//    }
+//}
+
 #Preview {
-    ContentView()
+    //ContentView(leagueViewModel: )
 }
