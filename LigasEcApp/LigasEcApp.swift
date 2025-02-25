@@ -21,8 +21,7 @@ struct LigasEcApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                LeagueView(leagueViewModel: composeLeagueViewModel(),
-                            imageView: composeImageView)
+                LeagueView(leagueViewModel: composeLeagueViewModel())
             }
         }
     }
@@ -35,16 +34,6 @@ struct LigasEcApp: App {
             return try LeagueMapper.map(data, from: response)
         }
         return LeagueViewModel(leagueLoader: leagueLoader)
-    }
-    
-    private func composeImageView(model: League) -> ImageView {
-        let imageLoader: () async throws -> Data = {
-            let (data, response) = try await httpClient.get(from: model.logoURL)
-            
-            return try ImageMapper.map(data, from: response)
-        }
-        let imageViewModel = ImageViewModel(imageURL: model.logoURL, imageLoader: imageLoader, imageTransformer: UIImage.init)
-        return ImageView(imageViewModel: imageViewModel)
     }
 }
     

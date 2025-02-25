@@ -44,3 +44,12 @@ struct ErrorModel: Identifiable {
     let id = UUID()
     let message: String
 }
+
+final class MockLeagueViewModel {
+    static func mockLeagueLoader() async throws -> [League] {
+        return [
+            League(id: 1, name: "Liga Pro", logoURL: URL(string: "https://media.api-sports.io/football/leagues/243.png")!),
+            League(id: 1, name: "Liga Pro", logoURL: URL(string: "https://media.api-sports.io/football/leagues/243.png")!),
+        ]
+    }
+}
