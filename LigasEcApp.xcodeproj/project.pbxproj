@@ -58,9 +58,22 @@
 		B09581082D6CE59100C4B206 /* LigasEcAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LigasEcAPI.xcodeproj; path = ../LigasEcAPI/LigasEcAPI.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B09584212D6E382600C4B206 /* Exceptions for "LigasEcApp" folder in "LigasEcApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B03E6F8C2D6CE44F00DE1485 /* LigasEcApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B03E6F8F2D6CE44F00DE1485 /* LigasEcApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B09584212D6E382600C4B206 /* Exceptions for "LigasEcApp" folder in "LigasEcApp" target */,
+			);
 			path = LigasEcApp;
 			sourceTree = "<group>";
 		};
@@ -196,12 +209,11 @@
 				};
 			};
 			buildConfigurationList = B03E6F882D6CE44F00DE1485 /* Build configuration list for PBXProject "LigasEcApp" */;
-			developmentRegion = en;
+			developmentRegion = "es-419";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
-				sl,
 				"es-419",
 			);
 			mainGroup = B03E6F842D6CE44F00DE1485;
@@ -285,6 +297,8 @@
 /* Begin XCBuildConfiguration section */
 		B03E6FAF2D6CE45000DE1485 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = B03E6F8F2D6CE44F00DE1485 /* LigasEcApp */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -349,6 +363,8 @@
 		};
 		B03E6FB02D6CE45000DE1485 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = B03E6F8F2D6CE44F00DE1485 /* LigasEcApp */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -406,6 +422,8 @@
 		};
 		B03E6FB22D6CE45000DE1485 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = B03E6F8F2D6CE44F00DE1485 /* LigasEcApp */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -415,6 +433,7 @@
 				DEVELOPMENT_TEAM = 9V3336X7NB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LigasEcApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LigasEc;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -440,6 +459,8 @@
 		};
 		B03E6FB32D6CE45000DE1485 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = B03E6F8F2D6CE44F00DE1485 /* LigasEcApp */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -449,6 +470,7 @@
 				DEVELOPMENT_TEAM = 9V3336X7NB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LigasEcApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LigasEc;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
