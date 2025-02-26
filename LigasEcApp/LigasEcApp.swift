@@ -50,14 +50,32 @@ struct LigasEcApp: App {
         }
     }
     
-    private func composeLeagueViewModel() -> LeagueViewModel {
+    func composeLeagueViewModel() -> LeagueViewModel {
         let leagueLoader: () async throws -> [League] = {
             let url = LeagueEndpoint.get(country: "Ecuador", season: "2023" ).url(baseURL: baseURL)
             let (data, response) = try await httpClient.get(from: url)
             
             return try LeagueMapper.map(data, from: response)
         }
-        return LeagueViewModel(leagueLoader: leagueLoader)
+        return LeagueViewModel(leagueLoader: leagueLoader, selection: composeTeamView)
+    }
+    
+    func composeTeamView(for league: League) -> TeamView{
+        let teamLoader: () async throws -> [Team] = {
+            let url = TeamEndpoint.get(leagueId: league.id, season: "2023" ).url(baseURL: baseURL)
+            let (data, response) = try await httpClient.get(from: url)
+            
+            return try TeamMapper.map(data, from: response)
+        }
+        let teamViewModel = TeamViewModel(teamLoader: teamLoader)
+        return TeamView(teamViewModel: teamViewModel)
     }
 }
+
+
+final class UIComposer {
     
+
+    
+
+}

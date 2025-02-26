@@ -11,7 +11,7 @@ import SharedAPI
 
 struct LeagueView: View {
     @StateObject var leagueViewModel: LeagueViewModel
-    
+        
     var body: some View {
         List {
             if leagueViewModel.isLoading {
@@ -19,23 +19,25 @@ struct LeagueView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
             } else {
                 ForEach(leagueViewModel.leagues) { league in
-                    HStack {
-                        AsyncImage(url: league.logoURL) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                            case .success(let image):
-                                image.resizable()
-                                    .scaledToFit()
-                                    .frame(width: 96, height: 48)
-                            case .failure(_):
-                                Image(systemName: "soccerball")
-                            @unknown default:
-                                EmptyView()
+                    NavigationLink(destination: leagueViewModel.selection(league)) {
+                        HStack {
+                            AsyncImage(url: league.logoURL) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                case .success(let image):
+                                    image.resizable()
+                                        .scaledToFit()
+                                        .frame(width: 96, height: 48)
+                                case .failure(_):
+                                    Image(systemName: "soccerball")
+                                @unknown default:
+                                    EmptyView()
+                                }
                             }
+                            Text(league.name)
+                                .font(.title2)
                         }
-                        Text(league.name)
-                            .font(.title2)
                     }
                 }
             }
@@ -63,8 +65,9 @@ struct LeagueView: View {
     
 
 #Preview {
+    let teamViewModel = TeamViewModel(teamLoader: MockTeamViewModel.mockTeamLoader)
     let leagueViewModel = LeagueViewModel(
-        leagueLoader: MockLeagueViewModel.mockLeagueLoader
+        leagueLoader: MockLeagueViewModel.mockLeagueLoader, selection: { _ in TeamView(teamViewModel: teamViewModel)}
     )
     LeagueView(
         leagueViewModel: leagueViewModel)

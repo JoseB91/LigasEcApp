@@ -5,7 +5,6 @@
 //  Created by José Briones on 24/2/25.
 //
 
-import Foundation
 import Combine
 import LigasEcAPI
 import SharedAPI
@@ -16,16 +15,18 @@ final class LeagueViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: ErrorModel? = nil
 
+    let selection: (League) -> TeamView
     private let leagueLoader: () async throws -> [League]
     
     var title: String {
         String(localized: "LEAGUE_VIEW_TITLE",
-               table: "League",
+               table: "LigasEc",
                bundle: Bundle(for: Self.self))
     }
     
-    init(leagueLoader: @escaping () async throws -> [League]) {
+    init(leagueLoader: @escaping () async throws -> [League], selection: @escaping (League) -> TeamView) {
         self.leagueLoader = leagueLoader
+        self.selection = selection
     }
     
     @MainActor
