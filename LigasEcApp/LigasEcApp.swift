@@ -60,15 +60,26 @@ struct LigasEcApp: App {
         return LeagueViewModel(leagueLoader: leagueLoader, selection: composeTeamView)
     }
     
-    func composeTeamView(for league: League) -> TeamView{
+    func composeTeamView(for league: League) -> TeamView {
         let teamLoader: () async throws -> [Team] = {
             let url = TeamEndpoint.get(leagueId: league.id, season: "2023" ).url(baseURL: baseURL)
             let (data, response) = try await httpClient.get(from: url)
             
             return try TeamMapper.map(data, from: response)
         }
-        let teamViewModel = TeamViewModel(teamLoader: teamLoader)
+        let teamViewModel = TeamViewModel(teamLoader: teamLoader, selection: composePlayerView)
         return TeamView(teamViewModel: teamViewModel)
+    }
+    
+    func composePlayerView(for team: Team) -> PlayerView {
+        let playerLoader: () async throws -> [Player] = {
+            let url = PlayerEndpoint.get(teamId: 33).url(baseURL: baseURL)
+            let (data, response) = try await httpClient.get(from: url)
+            
+            return try PlayerMapper.map(data, from: response)
+        }
+        let playerViewModel = PlayerViewModel(playerLoader: playerLoader)
+        return PlayerView(playerViewModel: playerViewModel)
     }
 }
 

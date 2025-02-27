@@ -18,6 +18,23 @@
         }
       }
     },
+    "PLAYER_VIEW_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Squad"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plantel"
+          }
+        }
+      }
+    },
     "TEAM_VIEW_TITLE" : {
       "extractionState" : "manual",
       "localizations" : {

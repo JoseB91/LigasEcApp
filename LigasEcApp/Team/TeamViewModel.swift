@@ -5,7 +5,6 @@
 //  Created by José Briones on 25/2/25.
 //
 
-import Combine
 import LigasEcAPI
 import SharedAPI
 
@@ -15,6 +14,7 @@ final class TeamViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: ErrorModel? = nil
 
+    let selection: (Team) -> PlayerView
     private let teamLoader: () async throws -> [Team]
     
     var title: String {
@@ -23,8 +23,9 @@ final class TeamViewModel: ObservableObject {
                bundle: Bundle(for: Self.self))
     }
     
-    init(teamLoader: @escaping () async throws -> [Team]) {
+    init(teamLoader: @escaping () async throws -> [Team], selection: @escaping (Team) -> PlayerView) {
         self.teamLoader = teamLoader
+        self.selection = selection
     }
     
     @MainActor

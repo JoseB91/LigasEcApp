@@ -19,23 +19,25 @@ struct TeamView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
             } else {
                 ForEach(teamViewModel.teams) { team in
-                    HStack {
-                        AsyncImage(url: team.logoURL) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                            case .success(let image):
-                                image.resizable()
-                                    .scaledToFit()
-                                    .frame(width: 96, height: 48)
-                            case .failure(_):
-                                Image(systemName: "soccerball")
-                            @unknown default:
-                                EmptyView()
+                    NavigationLink(destination: teamViewModel.selection(team)) {
+                        HStack {
+                            AsyncImage(url: team.logoURL) { phase in
+                                switch phase {
+                                case .empty:
+                                    Image(systemName: "soccerball")
+                                case .success(let image):
+                                    image.resizable()
+                                        .scaledToFit()
+                                        .frame(width: 96, height: 48)
+                                case .failure(_):
+                                    Image(systemName: "soccerball")
+                                @unknown default:
+                                    EmptyView()
+                                }
                             }
+                            Text(team.name)
+                                .font(.title2)
                         }
-                        Text(team.name)
-                            .font(.title2)
                     }
                 }
             }
@@ -63,11 +65,13 @@ struct TeamView: View {
     
 
 #Preview {
+    let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
+    
     let teamViewModel = TeamViewModel(
-        teamLoader: MockTeamViewModel.mockTeamLoader
+        teamLoader: MockTeamViewModel.mockTeamLoader, selection: { _ in PlayerView(playerViewModel: playerViewModel)}
     )
-    TeamView(
-        teamViewModel: teamViewModel)
+
+    TeamView(teamViewModel: teamViewModel)
 }
 
 

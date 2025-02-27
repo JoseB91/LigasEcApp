@@ -24,7 +24,7 @@ struct LeagueView: View {
                             AsyncImage(url: league.logoURL) { phase in
                                 switch phase {
                                 case .empty:
-                                    ProgressView()
+                                    Image(systemName: "soccerball")
                                 case .success(let image):
                                     image.resizable()
                                         .scaledToFit()
@@ -65,13 +65,15 @@ struct LeagueView: View {
     
 
 #Preview {
-    let teamViewModel = TeamViewModel(teamLoader: MockTeamViewModel.mockTeamLoader)
+    let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
+    
+    let teamViewModel = TeamViewModel(
+        teamLoader: MockTeamViewModel.mockTeamLoader, selection: { _ in PlayerView(playerViewModel: playerViewModel)}
+    )
+    
     let leagueViewModel = LeagueViewModel(
         leagueLoader: MockLeagueViewModel.mockLeagueLoader, selection: { _ in TeamView(teamViewModel: teamViewModel)}
     )
-    LeagueView(
-        leagueViewModel: leagueViewModel)
+    
+    LeagueView(leagueViewModel: leagueViewModel)
 }
-
-
-
