@@ -73,7 +73,7 @@ struct LigasEcApp: App {
     
     func composePlayerView(for team: Team) -> PlayerView {
         let playerLoader: () async throws -> [Player] = {
-            let url = PlayerEndpoint.get(teamId: 33).url(baseURL: baseURL)
+            let url = PlayerEndpoint.get(teamId: team.id).url(baseURL: baseURL)
             let (data, response) = try await httpClient.get(from: url)
             
             return try PlayerMapper.map(data, from: response)
