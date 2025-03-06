@@ -41,15 +41,13 @@ final class PlayerViewModel: ObservableObject {
 final class MockPlayerViewModel {
     static func mockPlayerLoader() async throws -> [Player] {
         return [
-            Player(id: 1,
+            Player(id: "1",
                    name: "Alexander Domínguez Carabalí",
-                   age: 38,
                    number: 22,
                    position: "Goalkeeper",
                    photoURL: URL(string: "https://media.api-sports.io/football/players/2568.png")!),
-            Player(id: 2,
+            Player(id: "2",
                    name: "G. Valle",
-                   age: 29,
                    number: 1,
                    position: "Goalkeeper",
                    photoURL: URL(string: "https://media.api-sports.io/football/players/16642.png")!)

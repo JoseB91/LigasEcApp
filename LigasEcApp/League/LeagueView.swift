@@ -10,56 +10,36 @@ import LigasEcAPI
 import SharedAPI
 
 struct LeagueView: View {
-    @StateObject var leagueViewModel: LeagueViewModel
+    let leagueViewModel: LeagueViewModel
         
     var body: some View {
-        List {
-            if leagueViewModel.isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity, alignment: .center)
-            } else {
-                ForEach(leagueViewModel.leagues) { league in
-                    NavigationLink(destination: leagueViewModel.selection(league)) {
-                        HStack {
-                            AsyncImage(url: league.logoURL) { phase in
-                                switch phase {
-                                case .empty:
-                                    Image(systemName: "soccerball")
-                                case .success(let image):
-                                    image.resizable()
-                                        .scaledToFit()
-                                        .frame(width: 96, height: 48)
-                                case .failure(_):
-                                    Image(systemName: "soccerball")
-                                @unknown default:
-                                    EmptyView()
-                                }
+        List(leagueViewModel.leagues) { league in
+                NavigationLink(destination: leagueViewModel.selection(league)) {
+                    HStack {
+                        AsyncImage(url: league.logoURL) { phase in
+                            switch phase {
+                            case .empty:
+                                Image(systemName: "soccerball")
+                            case .success(let image):
+                                image.resizable()
+                                    .scaledToFit()
+                                    .frame(width: 96, height: 48)
+                            case .failure(_):
+                                Image(systemName: "soccerball")
+                            @unknown default:
+                                EmptyView()
                             }
-                            Text(league.name)
-                                .font(.title2)
                         }
+                        Text(league.name)
+                            .font(.title2)
                     }
                 }
-            }
         }
         .listRowSeparator(.hidden)
-        .listStyle(.insetGrouped)
         .listRowSpacing(12)
+        .listStyle(.insetGrouped)
         .navigationTitle(leagueViewModel.title)
         .toolbarTitleDisplayMode(.inline)
-        .refreshable {
-            await leagueViewModel.loadLeagues()
-        }
-        .task {
-            await leagueViewModel.loadLeagues()
-        }
-        .alert(item: $leagueViewModel.errorMessage) { error in
-            Alert(
-                title: Text("Error"),
-                message: Text(error.message),
-                dismissButton: .default(Text("OK"))
-            )
-        }
     }
 }
     
@@ -68,11 +48,12 @@ struct LeagueView: View {
     let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
     
     let teamViewModel = TeamViewModel(
-        teamLoader: MockTeamViewModel.mockTeamLoader, selection: { _ in PlayerView(playerViewModel: playerViewModel)}
+        teamLoader: MockTeamViewModel.mockTeamLoader,
+        selection: { _ in PlayerView(playerViewModel: playerViewModel)}
     )
     
     let leagueViewModel = LeagueViewModel(
-        leagueLoader: MockLeagueViewModel.mockLeagueLoader, selection: { _ in TeamView(teamViewModel: teamViewModel)}
+        selection: { _ in TeamView(teamViewModel: teamViewModel)}
     )
     
     LeagueView(leagueViewModel: leagueViewModel)

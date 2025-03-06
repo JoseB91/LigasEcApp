@@ -13,8 +13,8 @@ import Security
 
 @main
 struct LigasEcApp: App {
-    
-    let baseURL = URL(string: "https://v3.football.api-sports.io")!
+        
+    let baseURL = URL(string: "https://flashlive-sports.p.rapidapi.com/v1/")!
     let httpClient: URLSessionHTTPClient
     
     init() {
@@ -45,24 +45,17 @@ struct LigasEcApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                LeagueView(leagueViewModel: composeLeagueViewModel())
+                LeagueView(leagueViewModel: LeagueViewModel(selection: composeTeamView))
             }
         }
     }
-    
-    func composeLeagueViewModel() -> LeagueViewModel {
-        let leagueLoader: () async throws -> [League] = {
-            let url = LeagueEndpoint.get(country: "Ecuador", season: "2023" ).url(baseURL: baseURL)
-            let (data, response) = try await httpClient.get(from: url)
-            
-            return try LeagueMapper.map(data, from: response)
-        }
-        return LeagueViewModel(leagueLoader: leagueLoader, selection: composeTeamView)
-    }
-    
+        
     func composeTeamView(for league: League) -> TeamView {
         let teamLoader: () async throws -> [Team] = {
-            let url = TeamEndpoint.get(leagueId: league.id, season: "2023" ).url(baseURL: baseURL)
+            let url = TeamEndpoint.get(seasonId: league.id,
+                                       standingType: "overall", // TODO: Manage constants
+                                       locale: "es_MX", // TODO: Get locale
+                                       tournamentStageId: league.stageId).url(baseURL: baseURL)
             let (data, response) = try await httpClient.get(from: url)
             
             return try TeamMapper.map(data, from: response)
@@ -73,7 +66,9 @@ struct LigasEcApp: App {
     
     func composePlayerView(for team: Team) -> PlayerView {
         let playerLoader: () async throws -> [Player] = {
-            let url = PlayerEndpoint.get(teamId: team.id).url(baseURL: baseURL)
+            let url = PlayerEndpoint.get(sportId: 1,
+                                         locale: "es_MX",
+                                         teamId: team.id).url(baseURL: baseURL)
             let (data, response) = try await httpClient.get(from: url)
             
             return try PlayerMapper.map(data, from: response)
@@ -83,10 +78,4 @@ struct LigasEcApp: App {
     }
 }
 
-
-final class UIComposer {
-    
-
-    
-
-}
+final class UIComposer {}

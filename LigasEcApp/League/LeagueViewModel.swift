@@ -8,14 +8,20 @@
 import LigasEcAPI
 import SharedAPI
 
-final class LeagueViewModel: ObservableObject {
+final class LeagueViewModel {
 
-    @Published var leagues = [League]()
-    @Published var isLoading = false
-    @Published var errorMessage: ErrorModel? = nil
-
+    let leagues = [
+        League(id: "IaFDigtm",
+               stageId: "OO37de6i",
+               name: "Liga Pro",
+               logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!),
+        League(id: "0O4IjDeg",
+               stageId: "Au6JggjA",
+               name: "Serie B",
+               logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!)
+    ]
+    
     let selection: (League) -> TeamView
-    private let leagueLoader: () async throws -> [League]
     
     var title: String {
         String(localized: "LEAGUE_VIEW_TITLE",
@@ -23,33 +29,8 @@ final class LeagueViewModel: ObservableObject {
                bundle: Bundle(for: Self.self))
     }
     
-    init(leagueLoader: @escaping () async throws -> [League], selection: @escaping (League) -> TeamView) {
-        self.leagueLoader = leagueLoader
+    init(selection: @escaping (League) -> TeamView) {
         self.selection = selection
     }
-    
-    @MainActor
-    func loadLeagues() async {
-        isLoading = true
-        do {
-            leagues = try await leagueLoader()
-        } catch {
-            errorMessage = ErrorModel(message: "Failed to load leagues: \(error.localizedDescription)")
-        }
-        isLoading = false
-    }
 }
 
-struct ErrorModel: Identifiable {
-    let id = UUID()
-    let message: String
-}
-
-final class MockLeagueViewModel {
-    static func mockLeagueLoader() async throws -> [League] {
-        return [
-            League(id: 1, name: "Liga Pro", logoURL: URL(string: "https://media.api-sports.io/football/leagues/243.png")!),
-            League(id: 1, name: "Liga Pro", logoURL: URL(string: "https://media.api-sports.io/football/leagues/243.png")!),
-        ]
-    }
-}

@@ -18,24 +18,35 @@ struct PlayerView: View {
                 ProgressView()
                     .frame(maxWidth: .infinity, alignment: .center)
             } else {
-                ForEach(playerViewModel.squad) { player in
-                    HStack {
-                        AsyncImage(url: player.photoURL) { phase in
-                            switch phase {
-                            case .empty:
-                                Image(systemName: "soccerball")
-                            case .success(let image):
-                                image.resizable()
-                                    .scaledToFit()
-                                    .frame(width: 96, height: 48)
-                            case .failure(_):
-                                Image(systemName: "soccerball")
-                            @unknown default:
-                                EmptyView()
+                
+                let groupedPlayers = Dictionary(grouping: playerViewModel.squad, by: { $0.position })
+
+                let positionOrder = ["GOALKEEPER", "DEFENDER", "MIDFIELDER", "FORWARD"]
+                
+                ForEach(positionOrder, id: \.self) { position in
+                    if let playersInPosition = groupedPlayers[position], !playersInPosition.isEmpty {
+                        Section(header: Text(position + "s")) {
+                            ForEach(playersInPosition) { player in
+                                HStack {
+                                    AsyncImage(url: player.photoURL) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            Image(systemName: "soccerball")
+                                        case .success(let image):
+                                            image.resizable()
+                                                .scaledToFit()
+                                                .frame(width: 96, height: 48)
+                                        case .failure(_):
+                                            Image(systemName: "soccerball")
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
+                                    Text(player.name)
+                                        .font(.title2)
+                                }
                             }
                         }
-                        Text(player.name)
-                            .font(.title2)
                     }
                 }
             }

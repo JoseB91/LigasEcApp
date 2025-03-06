@@ -68,7 +68,8 @@ struct TeamView: View {
     let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
     
     let teamViewModel = TeamViewModel(
-        teamLoader: MockTeamViewModel.mockTeamLoader, selection: { _ in PlayerView(playerViewModel: playerViewModel)}
+        teamLoader: MockTeamViewModel.mockTeamLoader,
+        selection: { _ in PlayerView(playerViewModel: playerViewModel)}
     )
 
     TeamView(teamViewModel: teamViewModel)
