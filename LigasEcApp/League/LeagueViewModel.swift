@@ -14,11 +14,11 @@ final class LeagueViewModel {
         League(id: 240,
                seasonId: 71184,
                name: "LigaPro Serie A",
-               logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!),
+               logoURL: URL(string: "https://sportapi7.p.rapidapi.com/api/v1/unique-tournament/240/image/light")!),
         League(id: 10240,
                seasonId: 72724,
                name: "LigaPro Serie B",
-               logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!)
+               logoURL: URL(string: "https://sportapi7.p.rapidapi.com/api/v1/unique-tournament/10240/image/light")!)
     ]
         
     var title: String {
