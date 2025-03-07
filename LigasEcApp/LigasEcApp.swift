@@ -13,7 +13,7 @@ import Security
 
 @main
 struct LigasEcApp: App {
-        
+    
     let baseURL = URL(string: "https://flashlive-sports.p.rapidapi.com/v1/")!
     let httpClient: URLSessionHTTPClient
     
@@ -42,15 +42,23 @@ struct LigasEcApp: App {
             apiKey: apiKey)
     }
     
+    @State private var navigationPath = NavigationPath()
+        
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                LeagueView(leagueViewModel: LeagueViewModel(selection: composeTeamView))
+            NavigationStack(path: $navigationPath) {
+                LeagueView(leagueViewModel: LeagueViewModel(), navigationPath: $navigationPath)
+                    .navigationDestination(for: League.self) { league in
+                        TeamView(teamViewModel: composeTeamViewModel(for: league), navigationPath: $navigationPath)
+                    }
+                    .navigationDestination(for: Team.self) { team in
+                        PlayerView(playerViewModel: composePlayerViewModel(for: team))
+                    }
             }
         }
     }
         
-    func composeTeamView(for league: League) -> TeamView {
+    func composeTeamViewModel(for league: League) -> TeamViewModel {
         let teamLoader: () async throws -> [Team] = {
             let url = TeamEndpoint.get(seasonId: league.id,
                                        standingType: "overall", // TODO: Manage constants
@@ -60,11 +68,10 @@ struct LigasEcApp: App {
             
             return try TeamMapper.map(data, from: response)
         }
-        let teamViewModel = TeamViewModel(teamLoader: teamLoader, selection: composePlayerView)
-        return TeamView(teamViewModel: teamViewModel)
+        return TeamViewModel(teamLoader: teamLoader)
     }
     
-    func composePlayerView(for team: Team) -> PlayerView {
+    func composePlayerViewModel(for team: Team) -> PlayerViewModel {
         let playerLoader: () async throws -> [Player] = {
             let url = PlayerEndpoint.get(sportId: 1,
                                          locale: "es_MX",
@@ -73,9 +80,6 @@ struct LigasEcApp: App {
             
             return try PlayerMapper.map(data, from: response)
         }
-        let playerViewModel = PlayerViewModel(playerLoader: playerLoader)
-        return PlayerView(playerViewModel: playerViewModel)
+        return PlayerViewModel(playerLoader: playerLoader)
     }
 }
-
-final class UIComposer {}

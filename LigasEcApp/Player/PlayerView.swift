@@ -74,9 +74,7 @@ struct PlayerView: View {
     
 
 #Preview {
-    let playerViewModel = PlayerViewModel(
-        playerLoader: MockPlayerViewModel.mockPlayerLoader
-    )
+    let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
     
     PlayerView(playerViewModel: playerViewModel)
 }

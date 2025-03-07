@@ -11,6 +11,7 @@ import SharedAPI
 
 struct TeamView: View {
     @StateObject var teamViewModel: TeamViewModel
+    @Binding var navigationPath: NavigationPath
     
     var body: some View {
         List {
@@ -19,7 +20,9 @@ struct TeamView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
             } else {
                 ForEach(teamViewModel.teams) { team in
-                    NavigationLink(destination: teamViewModel.selection(team)) {
+                    Button {
+                        navigationPath.append(team)
+                    } label: {
                         HStack {
                             AsyncImage(url: team.logoURL) { phase in
                                 switch phase {
@@ -38,7 +41,7 @@ struct TeamView: View {
                             Text(team.name)
                                 .font(.title2)
                         }
-                    }
+                    }.tint(.black)
                 }
             }
         }
@@ -65,14 +68,9 @@ struct TeamView: View {
     
 
 #Preview {
-    let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
-    
-    let teamViewModel = TeamViewModel(
-        teamLoader: MockTeamViewModel.mockTeamLoader,
-        selection: { _ in PlayerView(playerViewModel: playerViewModel)}
-    )
+    let teamViewModel = TeamViewModel(teamLoader: MockTeamViewModel.mockTeamLoader)
 
-    TeamView(teamViewModel: teamViewModel)
+    TeamView(teamViewModel: teamViewModel, navigationPath: .constant(NavigationPath()))
 }
 
 

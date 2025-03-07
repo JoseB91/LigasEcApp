@@ -20,17 +20,11 @@ final class LeagueViewModel {
                name: "Serie B",
                logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!)
     ]
-    
-    let selection: (League) -> TeamView
-    
+        
     var title: String {
         String(localized: "LEAGUE_VIEW_TITLE",
                table: "LigasEc",
                bundle: Bundle(for: Self.self))
-    }
-    
-    init(selection: @escaping (League) -> TeamView) {
-        self.selection = selection
     }
 }
 

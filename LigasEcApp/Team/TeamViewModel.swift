@@ -14,7 +14,6 @@ final class TeamViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: ErrorModel? = nil
 
-    let selection: (Team) -> PlayerView
     private let teamLoader: () async throws -> [Team]
     
     var title: String {
@@ -23,9 +22,8 @@ final class TeamViewModel: ObservableObject {
                bundle: Bundle(for: Self.self))
     }
     
-    init(teamLoader: @escaping () async throws -> [Team], selection: @escaping (Team) -> PlayerView) {
+    init(teamLoader: @escaping () async throws -> [Team]) {
         self.teamLoader = teamLoader
-        self.selection = selection
     }
     
     @MainActor

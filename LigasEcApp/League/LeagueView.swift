@@ -11,29 +11,32 @@ import SharedAPI
 
 struct LeagueView: View {
     let leagueViewModel: LeagueViewModel
+    @Binding var navigationPath: NavigationPath
         
     var body: some View {
         List(leagueViewModel.leagues) { league in
-                NavigationLink(destination: leagueViewModel.selection(league)) {
-                    HStack {
-                        AsyncImage(url: league.logoURL) { phase in
-                            switch phase {
-                            case .empty:
-                                Image(systemName: "soccerball")
-                            case .success(let image):
-                                image.resizable()
-                                    .scaledToFit()
-                                    .frame(width: 96, height: 48)
-                            case .failure(_):
-                                Image(systemName: "soccerball")
-                            @unknown default:
-                                EmptyView()
-                            }
+            Button {
+                navigationPath.append(league)
+            } label: {
+                HStack {
+                    AsyncImage(url: league.logoURL) { phase in
+                        switch phase {
+                        case .empty:
+                            Image(systemName: "soccerball")
+                        case .success(let image):
+                            image.resizable()
+                                .scaledToFit()
+                                .frame(width: 96, height: 48)
+                        case .failure(_):
+                            Image(systemName: "soccerball")
+                        @unknown default:
+                            EmptyView()
                         }
-                        Text(league.name)
-                            .font(.title2)
                     }
+                    Text(league.name)
+                        .font(.title2)
                 }
+            }.tint(.black)
         }
         .listRowSeparator(.hidden)
         .listRowSpacing(12)
@@ -42,19 +45,7 @@ struct LeagueView: View {
         .toolbarTitleDisplayMode(.inline)
     }
 }
-    
 
 #Preview {
-    let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
-    
-    let teamViewModel = TeamViewModel(
-        teamLoader: MockTeamViewModel.mockTeamLoader,
-        selection: { _ in PlayerView(playerViewModel: playerViewModel)}
-    )
-    
-    let leagueViewModel = LeagueViewModel(
-        selection: { _ in TeamView(teamViewModel: teamViewModel)}
-    )
-    
-    LeagueView(leagueViewModel: leagueViewModel)
+    LeagueView(leagueViewModel: LeagueViewModel(), navigationPath: .constant(NavigationPath()))
 }
