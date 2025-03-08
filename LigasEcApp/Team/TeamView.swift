@@ -27,13 +27,13 @@ struct TeamView: View {
                             AsyncImage(url: team.logoURL) { phase in
                                 switch phase {
                                 case .empty:
-                                    Image(systemName: "soccerball")
+                                    Image(systemName: "soccerball") // TODO: Change
                                 case .success(let image):
                                     image.resizable()
                                         .scaledToFit()
                                         .frame(width: 96, height: 48)
                                 case .failure(_):
-                                    Image(systemName: "soccerball")
+                                    Image(systemName: "soccerball") // TODO: Change
                                 @unknown default:
                                     EmptyView()
                                 }

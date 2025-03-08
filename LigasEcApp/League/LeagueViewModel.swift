@@ -13,11 +13,11 @@ final class LeagueViewModel {
     let leagues = [
         League(id: "IaFDigtm",
                stageId: "OO37de6i",
-               name: "Liga Pro",
+               name: "LigaPro Serie A",
                logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!),
         League(id: "0O4IjDeg",
                stageId: "Au6JggjA",
-               name: "Serie B",
+               name: "LigaPro Serie B",
                logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!)
     ]
         

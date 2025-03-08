@@ -83,3 +83,5 @@ struct LigasEcApp: App {
         return PlayerViewModel(playerLoader: playerLoader)
     }
 }
+
+//TODO: Add Acceptance and UIIntegration tests

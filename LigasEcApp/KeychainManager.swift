@@ -15,7 +15,7 @@ enum KeychainError: Error {
     case unhandledError(status: OSStatus)
 }
 
-class KeychainManager {
+class KeychainManager { //TODO: Add tests 
     
     static let apiKeyIdentifier = "com.ligasec.apikey"
     
