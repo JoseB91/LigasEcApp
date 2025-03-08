@@ -46,8 +46,8 @@ struct ErrorModel: Identifiable {
 final class MockTeamViewModel {
     static func mockTeamLoader() async throws -> [Team] {
         return [
-            Team(id: 1, name: "LDU", shortName: "LDU", logoURL: URL(string: "https://media.api-sports.io/football/teams/1158.png")!),
-            Team(id: 1, name: "Aucas", shortName: "Aucas", logoURL: URL(string: "https://media.api-sports.io/football/teams/1156.png")!),
+            Team(id: "1", name: "LDU de Quito", logoURL: URL(string: "https://media.api-sports.io/football/teams/1158.png")!),
+            Team(id: "1", name: "Aucas", logoURL: URL(string: "https://media.api-sports.io/football/teams/1156.png")!),
         ]
     }
 }

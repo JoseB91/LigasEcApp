@@ -14,9 +14,9 @@ import Security
 @main
 struct LigasEcApp: App {
     
-    let baseURL = URL(string: "https://sportapi7.p.rapidapi.com/api/v1")!
+    let baseURL = URL(string: "https://flashlive-sports.p.rapidapi.com/v1/")!
     let httpClient: URLSessionHTTPClient
-
+    
     init() {
         var apiKey = ""
         
@@ -60,8 +60,10 @@ struct LigasEcApp: App {
         
     func composeTeamViewModel(for league: League) -> TeamViewModel {
         let teamLoader: () async throws -> [Team] = {
-            let url = TeamEndpoint.get(id: league.id,
-                                       seasonId: league.seasonId).url(baseURL: baseURL)
+            let url = TeamEndpoint.get(seasonId: league.id,
+                                       standingType: "overall", // TODO: Manage constants
+                                       locale: "es_MX", // TODO: Get locale
+                                       tournamentStageId: league.stageId).url(baseURL: baseURL)
             let (data, response) = try await httpClient.get(from: url)
             
             return try TeamMapper.map(data, from: response)
@@ -71,7 +73,9 @@ struct LigasEcApp: App {
     
     func composePlayerViewModel(for team: Team) -> PlayerViewModel {
         let playerLoader: () async throws -> [Player] = {
-            let url = PlayerEndpoint.get(teamId: team.id).url(baseURL: baseURL)
+            let url = PlayerEndpoint.get(sportId: 1,
+                                         locale: "es_MX",
+                                         teamId: team.id).url(baseURL: baseURL)
             let (data, response) = try await httpClient.get(from: url)
             
             return try PlayerMapper.map(data, from: response)

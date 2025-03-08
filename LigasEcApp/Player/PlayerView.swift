@@ -21,7 +21,7 @@ struct PlayerView: View {
                 
                 let groupedPlayers = Dictionary(grouping: playerViewModel.squad, by: { $0.position })
 
-                let positionOrder = ["G", "D", "M", "F"]
+                let positionOrder = ["GOALKEEPER", "DEFENDER", "MIDFIELDER", "FORWARD"]
                 
                 ForEach(positionOrder, id: \.self) { position in
                     if let playersInPosition = groupedPlayers[position], !playersInPosition.isEmpty {

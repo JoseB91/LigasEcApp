@@ -11,13 +11,13 @@ import SharedAPI
 final class LeagueViewModel {
 
     let leagues = [
-        League(id: 240,
-               seasonId: 71184,
-               name: "LigaPro Serie A",
+        League(id: "IaFDigtm",
+               stageId: "OO37de6i",
+               name: "Liga Pro",
                logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!),
-        League(id: 10240,
-               seasonId: 72724,
-               name: "LigaPro Serie B",
+        League(id: "0O4IjDeg",
+               stageId: "Au6JggjA",
+               name: "Serie B",
                logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!)
     ]
         
