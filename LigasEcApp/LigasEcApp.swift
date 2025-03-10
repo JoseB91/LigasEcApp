@@ -10,6 +10,8 @@ import Combine
 import LigasEcAPI
 import SharedAPI
 import Security
+import CoreData
+import os
 
 @main
 struct LigasEcApp: App {
@@ -41,6 +43,21 @@ struct LigasEcApp: App {
             session: URLSession(configuration: .ephemeral),
             apiKey: apiKey)
     }
+    
+    private lazy var logger = Logger(subsystem: "com.joseB91.LatinCoaches", category: "main")
+
+    private lazy var store: TeamStore = {
+        do {
+            return try CoreDataLigasEcStore(
+                storeURL: NSPersistentContainer
+                    .defaultDirectoryURL()
+                    .appendingPathComponent("ligas-ec-store.sqlite"))
+        } catch {
+            assertionFailure("Failed to instantiate CoreData store with error: \(error.localizedDescription)")
+            logger.fault("Failed to instantiate CoreData store with error: \(error.localizedDescription)")
+            return InMemoryStore()
+        }
+    }()
     
     @State private var navigationPath = NavigationPath()
         
