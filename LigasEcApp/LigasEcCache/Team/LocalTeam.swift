@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import LigasEcAPI
 
 public struct LocalTeam: Equatable {
     public let id: String
-    public let name: String?
+    public let name: String
     public let logoURL: URL?
     
-    public init(id: String, name: String? = nil, logoURL: URL? = nil) {
+    public init(id: String, name: String, logoURL: URL? = nil) {
         self.id = id
         self.name = name
         self.logoURL = logoURL

@@ -16,11 +16,3 @@ public protocol TeamStore {
     func retrieve() throws -> CachedTeams?
 }
 
-
-extension Array where Element == Team {
-    public func toLocal() -> [LocalTeam] {
-        return map { LocalTeam(id: $0.id,
-                                name: $0.name,
-                               logoURL: $0.logoURL)}
-    }
-}

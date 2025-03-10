@@ -23,9 +23,35 @@ extension LocalTeamLoader: TeamCache {
         try store.delete()
         try store.insert(teams.toLocal(), timestamp: currentDate())
     }
-    
+}
+
+extension LocalTeamLoader {
+    public func load() throws -> [Team] {
+        if let cache = try store.retrieve(),
+           CachePolicy.validate(cache.timestamp,
+                                against: currentDate()) {
+            return cache.teams.toModels()
+        }
+        return []
+    }
 }
 
 public protocol TeamCache {
     func save(_ teams: [Team]) throws
+}
+
+extension Array where Element == Team {
+    public func toLocal() -> [LocalTeam] {
+        return map { LocalTeam(id: $0.id,
+                                name: $0.name,
+                               logoURL: $0.logoURL)}
+    }
+}
+
+private extension Array where Element == LocalTeam {
+    func toModels() -> [Team] {
+        return map { Team(id: $0.id,
+                           name: $0.name,
+                          logoURL: $0.logoURL)}
+    }
 }

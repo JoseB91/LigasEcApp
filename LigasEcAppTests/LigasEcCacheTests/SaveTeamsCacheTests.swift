@@ -81,8 +81,8 @@ final class SaveTeamsCacheTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalTeamLoader, store: TeamsStoreSpy) {
-        let store = TeamsStoreSpy()
+    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalTeamLoader, store: TeamStoreSpy) {
+        let store = TeamStoreSpy()
         let sut = LocalTeamLoader(store: store, currentDate: currentDate)
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
@@ -99,65 +99,4 @@ final class SaveTeamsCacheTests: XCTestCase {
         }
     }
 }
-
-class TeamsStoreSpy: TeamStore {
-    enum ReceivedMessage: Equatable {
-        case delete
-        case insert([LocalTeam], Date)
-        case retrieve
-    }
-    
-    private(set) var receivedMessages = [ReceivedMessage]()
-    
-    private var deletionResult: Result<Void, Error>?
-    private var insertionResult: Result<Void, Error>?
-    private var retrievalResult: Result<CachedTeams?, Error>?
-
-    // MARK: Delete
-    func delete() throws {
-        receivedMessages.append(.delete)
-        try deletionResult?.get()
-    }
-    
-    func completeDeletion(with error: Error) {
-        deletionResult = .failure(error)
-    }
-
-    func completeDeletionSuccessfully() {
-        deletionResult = .success(())
-    }
-
-    // MARK: Insert
-    func insert(_ teams: [LocalTeam], timestamp: Date) throws {
-        receivedMessages.append(.insert(teams, timestamp))
-        try insertionResult?.get()
-    }
-
-    func completeInsertion(with error: Error) {
-        insertionResult = .failure(error)
-    }
-    
-    func completeInsertionSuccessfully() {
-        insertionResult = .success(())
-    }
-    
-    // MARK: Retrieve
-    func retrieve() throws -> CachedTeams? {
-        receivedMessages.append(.retrieve)
-        return try retrievalResult?.get()
-    }
-    
-    func completeRetrieval(with error: Error) {
-        retrievalResult = .failure(error)
-    }
-
-    func completeRetrievalWithEmptyCache() {
-        retrievalResult = .success(.none)
-    }
-    
-    func completeRetrieval(with teams: [LocalTeam], timestamp: Date) {
-        retrievalResult = .success(CachedTeams(teams: teams, timestamp: timestamp))
-    }
-}
-
 
