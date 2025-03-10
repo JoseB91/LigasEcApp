@@ -1,5 +1,5 @@
 //
-//  LigasEcAppTests.swift
+//  LeagueLocalizedTests.swift
 //  LigasEcAppTests
 //
 //  Created by José Briones on 24/2/25.
@@ -9,7 +9,7 @@ import XCTest
 import SwiftUI
 @testable import LigasEcApp
 
-final class LigasEcAppTests: XCTestCase {
+final class LeagueLocalizedTests: XCTestCase {
 
     func test_leagueTitle_isLocalized() {
         let leagueViewModel = LeagueViewModel()
