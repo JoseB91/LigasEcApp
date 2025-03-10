@@ -30,6 +30,6 @@ extension ManagedCache {
     }
     
     var localTeams: [LocalTeam] {
-        return teams.compactMap { ($0 as? ManagedFeedImage)?.local }
+        return teams.compactMap { ($0 as? ManagedTeam)?.local }
     }
 }

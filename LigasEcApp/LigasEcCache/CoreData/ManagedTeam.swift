@@ -31,7 +31,7 @@ extension ManagedTeam {
         return try context.fetch(request).first
     }
     
-    static func teams(from localTeams: [LocalTeam], in context: NSManagedObjectContext) -> NSOrderedSet {
+    static func fetchTeams(from localTeams: [LocalTeam], in context: NSManagedObjectContext) -> NSOrderedSet {
         let teams = NSOrderedSet(array: localTeams.map { local in
             let managed = ManagedTeam(context: context)
             managed.id = local.id

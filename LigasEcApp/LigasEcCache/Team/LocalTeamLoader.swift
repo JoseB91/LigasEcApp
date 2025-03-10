@@ -18,6 +18,10 @@ public final class LocalTeamLoader {
     }
 }
 
+public protocol TeamCache {
+    func save(_ teams: [Team]) throws
+}
+
 extension LocalTeamLoader: TeamCache {
     public func save(_ teams: [Team]) throws {
         try store.delete()
@@ -36,8 +40,19 @@ extension LocalTeamLoader {
     }
 }
 
-public protocol TeamCache {
-    func save(_ teams: [Team]) throws
+extension LocalTeamLoader {
+    private struct InvalidCache: Error {}
+    
+    public func validateCache() throws {
+        do {
+            if let cache = try store.retrieve(), !CachePolicy.validate(cache.timestamp,
+                                                                              against: currentDate()) {
+                throw InvalidCache()
+            }
+        } catch {
+            try store.delete()
+        }
+    }
 }
 
 extension Array where Element == Team {
