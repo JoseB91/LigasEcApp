@@ -76,6 +76,8 @@ class Composer {
         let teamLoader: () async throws -> [Team] = { [localTeamLoader] in
             
             do {
+                return try localTeamLoader.load()
+            } catch {
                 let url = TeamEndpoint.get(seasonId: league.id,
                                            standingType: "overall", // TODO: Manage constants
                                            locale: "es_MX", // TODO: Get locale
@@ -89,8 +91,7 @@ class Composer {
                 }
                 
                 return teams
-            } catch {
-               return try localTeamLoader.load()             
+                
             }
         }
         return TeamViewModel(teamLoader: teamLoader)
