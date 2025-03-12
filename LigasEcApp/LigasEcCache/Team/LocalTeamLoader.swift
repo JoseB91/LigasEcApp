@@ -30,13 +30,16 @@ extension LocalTeamLoader: TeamCache {
 }
 
 extension LocalTeamLoader {
+    private struct EmptyData: Error {}
+    
     public func load() throws -> [Team] {
         if let cache = try store.retrieve(),
            CachePolicy.validate(cache.timestamp,
                                 against: currentDate()) {
             return cache.teams.toModels()
+        } else {
+            throw EmptyData()
         }
-        return []
     }
 }
 

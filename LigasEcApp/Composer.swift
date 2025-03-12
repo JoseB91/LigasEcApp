@@ -59,7 +59,7 @@ class Composer {
             apiKey: apiKey)
     }
     
-    private static func makeStore() -> TeamStore {
+    private static func makeStore() -> TeamStore & ImageStore {
         do {
             return try CoreDataLigasEcStore(
                 storeURL: NSPersistentContainer
@@ -73,7 +73,7 @@ class Composer {
     }
     
     func composeTeamViewModel(for league: League) -> TeamViewModel {
-        let teamLoader: () async throws -> [Team] = { [localTeamLoader] in
+        let teamLoader: () async throws -> [Team] = { [httpClient, localTeamLoader] in
             
             do {
                 return try localTeamLoader.load()
@@ -82,7 +82,7 @@ class Composer {
                                            standingType: "overall", // TODO: Manage constants
                                            locale: "es_MX", // TODO: Get locale
                                            tournamentStageId: league.stageId).url(baseURL: self.baseURL)
-                let (data, response) = try await self.httpClient.get(from: url)
+                let (data, response) = try await httpClient.get(from: url)
                 
                 let teams = try TeamMapper.map(data, from: response)
                 
@@ -91,7 +91,6 @@ class Composer {
                 }
                 
                 return teams
-                
             }
         }
         return TeamViewModel(teamLoader: teamLoader)
@@ -111,24 +110,44 @@ class Composer {
     
     
     func composeImageView(model: Team) -> ImageView {
-        let imageLoader: () async throws -> Data = { [httpClient] in
-            guard let url = model.logoURL else {
-                //TODO: Log error
-                return Data() // Handle this
+            let url = model.logoURL ?? URL(string: "")!
+            let localImageLoader = LocalImageLoader(store: Composer.makeStore())
+            
+            let imageLoader: () async throws -> Data = { [httpClient] in
+                
+                do {
+                    return try localImageLoader.loadImageData(from: url)
+                } catch {
+                    let (data, response) = try await httpClient.get(from: url)
+                    
+                    let imageData = try ImageMapper.map(data, from: response)
+                    
+                    Task {
+                        localImageLoader.saveIgnoringResult(imageData, for: url)
+                    }
+                    
+                    return imageData
+                }
             }
-            let (data, response) = try await httpClient.get(from: url)
- 
-            return try ImageMapper.map(data, from: response)
-        }
- 
-        let imageViewModel = ImageViewModel(imageLoader: imageLoader,
-                                            imageTransformer: UIImage.init)
-        return ImageView(imageViewModel: imageViewModel)
+            let imageViewModel = ImageViewModel(imageLoader: imageLoader,
+                                                imageTransformer: UIImage.init)
+            return ImageView(imageViewModel: imageViewModel)
+//        } else {
+//            let imageViewModel = ImageViewModel(imageLoader: { Data() },
+//                                                imageTransformer: UIImage.init)
+//            return ImageView(imageViewModel: imageViewModel)
+//        }
     }
 }
 
 private extension TeamCache {
     func saveIgnoringResult(_ teams: [Team]) {
         try? save(teams)
+    }
+}
+
+private extension ImageCache {
+    func saveIgnoringResult(_ data: Data, for url: URL) {
+        try? save(data, for: url)
     }
 }

@@ -5,6 +5,7 @@
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ManagedTeam" inverseName="cache" inverseEntity="ManagedTeam"/>
     </entity>
     <entity name="ManagedTeam" representedClassName="ManagedTeam" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="logoURL" optional="YES" attributeType="URI"/>
         <attribute name="name" attributeType="String"/>

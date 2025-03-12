@@ -17,13 +17,13 @@ class ManagedTeam: NSManagedObject {
 }
 
 extension ManagedTeam {
-    static func data(with url: URL, in context: NSManagedObjectContext) throws -> Data? {
+    static func getImageData(with url: URL, in context: NSManagedObjectContext) throws -> Data? {
         if let data = context.userInfo[url] as? Data { return data }
         
-        return try first(with: url, in: context)?.data
+        return try getFirst(with: url, in: context)?.data
     }
     
-    static func first(with url: URL, in context: NSManagedObjectContext) throws -> ManagedTeam? {
+    static func getFirst(with url: URL, in context: NSManagedObjectContext) throws -> ManagedTeam? {
         let request = NSFetchRequest<ManagedTeam>(entityName: entity().name!)
         request.predicate = NSPredicate(format: "%K = %@", argumentArray: [#keyPath(ManagedTeam.logoURL), url])
         request.returnsObjectsAsFaults = false
@@ -37,7 +37,11 @@ extension ManagedTeam {
             managed.id = local.id
             managed.name = local.name
             managed.logoURL = local.logoURL
-            managed.data = context.userInfo[local.logoURL ?? ""] as? Data // TODO: Review default value
+            if let url = local.logoURL, let imageData = context.userInfo[url] as? Data {
+                managed.data = imageData
+            } else {
+                managed.data = nil
+            }
             return managed
         })
         context.userInfo.removeAllObjects()

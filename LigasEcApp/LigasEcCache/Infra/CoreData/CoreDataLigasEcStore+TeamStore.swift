@@ -7,7 +7,7 @@
 
 import CoreData
 
-extension CoreDataLigasEcStore: TeamStore {
+extension CoreDataLigasEcStore: TeamStore { //TODO: Tests
     
     public func retrieve() throws -> CachedTeams? {
         try ManagedCache.find(in: context).map {
