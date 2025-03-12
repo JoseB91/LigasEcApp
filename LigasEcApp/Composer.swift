@@ -108,9 +108,8 @@ class Composer {
         return PlayerViewModel(playerLoader: playerLoader)
     }
     
-    
     func composeImageView(model: Team) -> ImageView {
-            let url = model.logoURL ?? URL(string: "")!
+        if let url = model.logoURL {
             let localImageLoader = LocalImageLoader(store: Composer.makeStore())
             
             let imageLoader: () async throws -> Data = { [httpClient] in
@@ -132,11 +131,11 @@ class Composer {
             let imageViewModel = ImageViewModel(imageLoader: imageLoader,
                                                 imageTransformer: UIImage.init)
             return ImageView(imageViewModel: imageViewModel)
-//        } else {
-//            let imageViewModel = ImageViewModel(imageLoader: { Data() },
-//                                                imageTransformer: UIImage.init)
-//            return ImageView(imageViewModel: imageViewModel)
-//        }
+        } else {
+            let imageViewModel = ImageViewModel(imageLoader: { Data() },
+                                                imageTransformer: UIImage.init)
+            return ImageView(imageViewModel: imageViewModel)
+        }
     }
 }
 
