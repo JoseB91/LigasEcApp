@@ -12,6 +12,7 @@ import SharedAPI
 struct TeamView: View {
     @StateObject var teamViewModel: TeamViewModel
     @Binding var navigationPath: NavigationPath
+    let imageView: (Team) -> ImageView
     
     var body: some View {
         List {
@@ -23,21 +24,9 @@ struct TeamView: View {
                     Button {
                         navigationPath.append(team)
                     } label: {
-                        HStack {
-                            AsyncImage(url: team.logoURL) { phase in
-                                switch phase {
-                                case .empty:
-                                    Image(systemName: "soccerball") // TODO: Change
-                                case .success(let image):
-                                    image.resizable()
-                                        .scaledToFit()
-                                        .frame(width: 96, height: 48)
-                                case .failure(_):
-                                    Image(systemName: "soccerball") // TODO: Change
-                                @unknown default:
-                                    EmptyView()
-                                }
-                            }
+                        HStack {                            
+                            imageView(team)
+                                .frame(width: 96, height: 48)
                             Text(team.name)
                                 .font(.title2)
                         }
@@ -70,7 +59,9 @@ struct TeamView: View {
 #Preview {
     let teamViewModel = TeamViewModel(teamLoader: MockTeamViewModel.mockTeamLoader)
 
-    TeamView(teamViewModel: teamViewModel, navigationPath: .constant(NavigationPath()))
+    TeamView(teamViewModel: teamViewModel,
+             navigationPath: .constant(NavigationPath()),
+             imageView: MockTeamViewModel.mockImageView)
 }
 
 

@@ -7,6 +7,7 @@
 
 import LigasEcAPI
 import SharedAPI
+import UIKit
 
 final class TeamViewModel: ObservableObject {
 
@@ -48,6 +49,15 @@ final class MockTeamViewModel {
         return [Team(id: "pCMG6CNp",
                      name: "Barcelona SC",
                      logoURL: URL(string: "https://www.flashscore.com/res/image/data/nit9vJwS-WErjuywa.png")!)]
+    }
+
+    static func mockImageView(model: Team) -> ImageView {
+        
+        let imageLoader = {
+            Data()
+        }
+        return ImageView(imageViewModel: ImageViewModel(imageLoader: imageLoader,
+                                                        imageTransformer: UIImage.init))
     }
 }
 

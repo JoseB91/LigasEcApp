@@ -28,7 +28,7 @@ struct LigasEcApp: App {
             NavigationStack(path: $navigationPath) {
                 LeagueView(leagueViewModel: LeagueViewModel(), navigationPath: $navigationPath)
                     .navigationDestination(for: League.self) { league in
-                        TeamView(teamViewModel: composer.composeTeamViewModel(for: league), navigationPath: $navigationPath)
+                        TeamView(teamViewModel: composer.composeTeamViewModel(for: league), navigationPath: $navigationPath, imageView: composer.composeImageView)
                     }
                     .navigationDestination(for: Team.self) { team in
                         PlayerView(playerViewModel: composer.composePlayerViewModel(for: team))

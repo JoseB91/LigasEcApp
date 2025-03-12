@@ -11,17 +11,17 @@ import CoreData
 class ManagedTeam: NSManagedObject {
     @NSManaged var id: String
     @NSManaged var name: String
-    //@NSManaged var data: Data?
+    @NSManaged var data: Data?
     @NSManaged var logoURL: URL?
     @NSManaged var cache: ManagedCache
 }
 
 extension ManagedTeam {
-//    static func data(with url: URL, in context: NSManagedObjectContext) throws -> Data? {
-//        if let data = context.userInfo[url] as? Data { return data }
-//        
-//        return try first(with: url, in: context)?.data
-//    }
+    static func data(with url: URL, in context: NSManagedObjectContext) throws -> Data? {
+        if let data = context.userInfo[url] as? Data { return data }
+        
+        return try first(with: url, in: context)?.data
+    }
     
     static func first(with url: URL, in context: NSManagedObjectContext) throws -> ManagedTeam? {
         let request = NSFetchRequest<ManagedTeam>(entityName: entity().name!)
@@ -37,7 +37,7 @@ extension ManagedTeam {
             managed.id = local.id
             managed.name = local.name
             managed.logoURL = local.logoURL
-            // managed.data = context.userInfo[local.logoURL ?? ""] as? Data // TODO: Review default value
+            managed.data = context.userInfo[local.logoURL ?? ""] as? Data // TODO: Review default value
             return managed
         })
         context.userInfo.removeAllObjects()
@@ -48,9 +48,9 @@ extension ManagedTeam {
         return LocalTeam(id: id, name: name, logoURL: logoURL)
     }
     
-//    override func prepareForDeletion() {
-//        super.prepareForDeletion()
-//
-//        managedObjectContext?.userInfo[logoURL ?? ""] = data
-//    }
+    override func prepareForDeletion() {
+        super.prepareForDeletion()
+
+        managedObjectContext?.userInfo[logoURL ?? ""] = data
+    }
 }

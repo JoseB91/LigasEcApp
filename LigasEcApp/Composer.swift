@@ -98,15 +98,32 @@ class Composer {
     }
     
     func composePlayerViewModel(for team: Team) -> PlayerViewModel {
-        let playerLoader: () async throws -> [Player] = {
+        let playerLoader: () async throws -> [Player] = { [httpClient] in
             let url = PlayerEndpoint.get(sportId: 1,
                                        locale: "es_MX",
                                        teamId: team.id).url(baseURL: self.baseURL)
-            let (data, response) = try await self.httpClient.get(from: url)
+            let (data, response) = try await httpClient.get(from: url)
             
             return try PlayerMapper.map(data, from: response)
         }
         return PlayerViewModel(playerLoader: playerLoader)
+    }
+    
+    
+    func composeImageView(model: Team) -> ImageView {
+        let imageLoader: () async throws -> Data = { [httpClient] in
+            guard let url = model.logoURL else {
+                //TODO: Log error
+                return Data() // Handle this
+            }
+            let (data, response) = try await httpClient.get(from: url)
+ 
+            return try ImageMapper.map(data, from: response)
+        }
+ 
+        let imageViewModel = ImageViewModel(imageLoader: imageLoader,
+                                            imageTransformer: UIImage.init)
+        return ImageView(imageViewModel: imageViewModel)
     }
 }
 
