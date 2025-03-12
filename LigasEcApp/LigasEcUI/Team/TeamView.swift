@@ -10,9 +10,9 @@ import LigasEcAPI
 import SharedAPI
 
 struct TeamView: View {
-    @StateObject var teamViewModel: TeamViewModel
+    @StateObject var teamViewModel: TeamViewModel // TODO: Check if could be observedobject
     @Binding var navigationPath: NavigationPath
-    let imageView: (Team) -> ImageView
+    let imageView: (URL, Table) -> ImageView
     
     var body: some View {
         List {
@@ -24,19 +24,21 @@ struct TeamView: View {
                     Button {
                         navigationPath.append(team)
                     } label: {
-                        HStack {                            
-                            imageView(team)
-                                .frame(width: 96, height: 48)
-                            Text(team.name)
-                                .font(.title2)
+                        HStack {
+                            if let url = team.logoURL {
+                                imageView(url, Table.Team)
+                                    .frame(width: 96, height: 48)
+                                Text(team.name)
+                                    .font(.title2)
+                            }
                         }
                     }.tint(.black)
                 }
             }
         }
         .listRowSeparator(.hidden)
-        .listStyle(.insetGrouped)
         .listRowSpacing(12)
+        .listStyle(.insetGrouped)
         .navigationTitle(teamViewModel.title)
         .toolbarTitleDisplayMode(.inline)
         .refreshable {
@@ -61,7 +63,7 @@ struct TeamView: View {
 
     TeamView(teamViewModel: teamViewModel,
              navigationPath: .constant(NavigationPath()),
-             imageView: MockTeamViewModel.mockImageView)
+             imageView: MockImageView.mockImageView)
 }
 
 

@@ -50,14 +50,5 @@ final class MockTeamViewModel {
                      name: "Barcelona SC",
                      logoURL: URL(string: "https://www.flashscore.com/res/image/data/nit9vJwS-WErjuywa.png")!)]
     }
-
-    static func mockImageView(model: Team) -> ImageView {
-        
-        let imageLoader = {
-            Data()
-        }
-        return ImageView(imageViewModel: ImageViewModel(imageLoader: imageLoader,
-                                                        imageTransformer: UIImage.init))
-    }
 }
 

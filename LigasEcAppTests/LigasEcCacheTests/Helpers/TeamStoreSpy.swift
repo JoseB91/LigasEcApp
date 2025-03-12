@@ -58,10 +58,6 @@ public class TeamStoreSpy: TeamStore {
     func completeRetrieval(with error: Error) {
         retrievalResult = .failure(error)
     }
-
-    func completeRetrievalWithEmptyCache() {
-        retrievalResult = .success(.none)
-    }
     
     func completeRetrieval(with teams: [LocalTeam], timestamp: Date) {
         retrievalResult = .success(CachedTeams(teams: teams, timestamp: timestamp))

@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "88774117-BE24-4973-B7BE-365114443E5D",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:LigasEcApp.xcodeproj",
+          "identifier" : "B03E6F8C2D6CE44F00DE1485",
+          "name" : "LigasEcApp"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:LigasEcApp.xcodeproj",
+      "identifier" : "B03E6F8C2D6CE44F00DE1485",
+      "name" : "LigasEcApp"
+    },
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:LigasEcApp.xcodeproj",
+        "identifier" : "B03E6F9C2D6CE45000DE1485",
+        "name" : "LigasEcAppTests"
+      }
+    }
+  ],
+  "version" : 1
+}

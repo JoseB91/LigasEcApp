@@ -8,6 +8,6 @@
 import Foundation
 
 public protocol ImageStore {
-    func insert(_ data: Data, for url: URL) throws
-    func retrieve(dataForURL url: URL) throws -> Data?
+    func insert(_ data: Data, for url: URL, on table: Table) throws
+    func retrieve(dataFor url: URL, on table: Table) throws -> Data?
 }

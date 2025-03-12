@@ -4,4 +4,7 @@
    <FileRef
       location = "container:LigasEcApp.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:LigasEcApp.xctestplan">
+   </FileRef>
 </Workspace>

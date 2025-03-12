@@ -2,13 +2,20 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24C101" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="ManagedCache" representedClassName="ManagedCache" syncable="YES">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="teams" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ManagedTeam" inverseName="cache" inverseEntity="ManagedTeam"/>
+        <relationship name="leagues" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ManagedLeague" inverseName="cache" inverseEntity="ManagedLeague"/>
+    </entity>
+    <entity name="ManagedLeague" representedClassName="ManagedLeague" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="logoURL" attributeType="URI"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="stageId" attributeType="String"/>
+        <relationship name="cache" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="leagues" inverseEntity="ManagedCache"/>
     </entity>
     <entity name="ManagedTeam" representedClassName="ManagedTeam" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="logoURL" optional="YES" attributeType="URI"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="cache" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="teams" inverseEntity="ManagedCache"/>
     </entity>
 </model>

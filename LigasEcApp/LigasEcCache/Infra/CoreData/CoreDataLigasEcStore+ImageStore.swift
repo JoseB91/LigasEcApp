@@ -9,14 +9,24 @@ import Foundation
 
 extension CoreDataLigasEcStore: ImageStore { //TODO: Tests
     
-    public func insert(_ data: Data, for url: URL) throws {
-        try ManagedTeam.getFirst(with: url, in: context)
-            .map { $0.data = data }
-            .map(context.save)
+    public func insert(_ data: Data, for url: URL, on table: Table) throws {
+        if table == .League {
+            try ManagedLeague.getFirst(with: url, in: context)
+                .map { $0.data = data }
+                .map(context.save)
+        } else {
+            try ManagedTeam.getFirst(with: url, in: context)
+                .map { $0.data = data }
+                .map(context.save)
+        }
     }
     
-    public func retrieve(dataForURL url: URL) throws -> Data?  {
-        try ManagedTeam.getImageData(with: url, in: context)
+    public func retrieve(dataFor url: URL, on table: Table) throws -> Data?  {
+        if table == .League {
+            try ManagedLeague.getImageData(with: url, in: context)
+        } else {
+            try ManagedTeam.getImageData(with: url, in: context)
+        }
     }
     
 }

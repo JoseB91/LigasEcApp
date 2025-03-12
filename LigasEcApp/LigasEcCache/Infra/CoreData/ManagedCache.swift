@@ -10,7 +10,7 @@ import CoreData
 @objc(ManagedCache)
 class ManagedCache: NSManagedObject {
     @NSManaged var timestamp: Date
-    @NSManaged var teams: NSOrderedSet
+    @NSManaged var leagues: NSOrderedSet
 }
 
 extension ManagedCache {
@@ -29,7 +29,7 @@ extension ManagedCache {
         return ManagedCache(context: context)
     }
     
-    var localTeams: [LocalTeam] {
-        return teams.compactMap { ($0 as? ManagedTeam)?.local }
+    var localLeagues: [LocalLeague] {
+        return leagues.compactMap { ($0 as? ManagedLeague)?.local }
     }
 }

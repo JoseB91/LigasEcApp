@@ -11,7 +11,7 @@ import LigasEcAPI
 public struct LocalTeam: Equatable {
     public let id: String
     public let name: String
-    public let logoURL: URL?
+    public let logoURL: URL? // TODO: View if its necessary this optional
     
     public init(id: String, name: String, logoURL: URL? = nil) {
         self.id = id

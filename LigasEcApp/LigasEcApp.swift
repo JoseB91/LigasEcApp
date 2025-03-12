@@ -26,9 +26,13 @@ struct LigasEcApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $navigationPath) {
-                LeagueView(leagueViewModel: LeagueViewModel(), navigationPath: $navigationPath)
+                LeagueView(leagueViewModel: composer.composeLeagueViewModel(),
+                           navigationPath: $navigationPath,
+                           imageView: composer.composeImageView)
                     .navigationDestination(for: League.self) { league in
-                        TeamView(teamViewModel: composer.composeTeamViewModel(for: league), navigationPath: $navigationPath, imageView: composer.composeImageView)
+                        TeamView(teamViewModel: composer.composeTeamViewModel(for: league),
+                                 navigationPath: $navigationPath,
+                                 imageView: composer.composeImageView)
                     }
                     .navigationDestination(for: Team.self) { team in
                         PlayerView(playerViewModel: composer.composePlayerViewModel(for: team))

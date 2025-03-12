@@ -10,42 +10,62 @@ import LigasEcAPI
 import SharedAPI
 
 struct LeagueView: View {
-    let leagueViewModel: LeagueViewModel
+    @StateObject var leagueViewModel: LeagueViewModel
     @Binding var navigationPath: NavigationPath
+    
+    let imageView: (URL, Table) -> ImageView
         
     var body: some View {
-        List(leagueViewModel.leagues) { league in
-            Button {
-                navigationPath.append(league)
-            } label: {
-                HStack {
-                    AsyncImage(url: league.logoURL) { phase in
-                        switch phase {
-                        case .empty:
-                            Image(systemName: "soccerball")
-                        case .success(let image):
-                            image.resizable()
-                                .scaledToFit()
+        List {
+            if leagueViewModel.isLoading {
+                ProgressView()
+                    .frame(maxWidth: .infinity, alignment: .center)
+            } else {
+                ForEach(leagueViewModel.leagues) { league in
+                    Button {
+                        navigationPath.append(league)
+                    } label: {
+                        HStack {
+                            imageView(league.logoURL, Table.League)
                                 .frame(width: 96, height: 48)
-                        case .failure(_):
-                            Image(systemName: "soccerball")
-                        @unknown default:
-                            EmptyView()
+                            Text(league.name)
+                                .font(.title2)
                         }
-                    }
-                    Text(league.name)
-                        .font(.title2)
+                    }.tint(.black)
                 }
-            }.tint(.black)
+            }
         }
         .listRowSeparator(.hidden)
         .listRowSpacing(12)
         .listStyle(.insetGrouped)
         .navigationTitle(leagueViewModel.title)
         .toolbarTitleDisplayMode(.inline)
+        .refreshable {
+            await leagueViewModel.loadLeagues()
+        }
+        .task {
+            await leagueViewModel.loadLeagues()
+        }
+        .alert(item: $leagueViewModel.errorMessage) { error in
+            Alert(
+                title: Text("Error"),
+                message: Text(error.message),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 }
 
 #Preview {
-    LeagueView(leagueViewModel: LeagueViewModel(), navigationPath: .constant(NavigationPath()))
+    let leagueViewModel = LeagueViewModel(leagueLoader: MockLeagueViewModel.mockLeagueLoader)
+    
+    let imageLoader = {
+        Data()
+    }
+    let imageViewModel = ImageViewModel(imageLoader: imageLoader,
+                                        imageTransformer: UIImage.init)
+    
+    LeagueView(leagueViewModel: leagueViewModel,
+               navigationPath: .constant(NavigationPath()),
+               imageView: MockImageView.mockImageView)
 }

@@ -15,23 +15,32 @@ import LigasEcAPI
 class Composer {
     private let baseURL: URL
     private let httpClient: URLSessionHTTPClient
-    private let localTeamLoader: LocalTeamLoader
+    private let localLeagueLoader: LocalLeagueLoader
+    private let localImageLoader: LocalImageLoader
     
     //let logger = Logger(subsystem: "com.joseB91.LatinCoaches", category: "main")
 
-    init(baseURL: URL, httpClient: URLSessionHTTPClient, localTeamLoader: LocalTeamLoader) {
+    init(baseURL: URL,
+         httpClient: URLSessionHTTPClient,
+         localLeagueLoader: LocalLeagueLoader,
+         localImageLoader: LocalImageLoader) {
         self.baseURL = baseURL
         self.httpClient = httpClient
-        self.localTeamLoader = localTeamLoader
+        self.localLeagueLoader = localLeagueLoader
+        self.localImageLoader = localImageLoader
     }
     
     static func makeComposer() -> Composer {
         let baseURL = URL(string: "https://flashlive-sports.p.rapidapi.com/v1/")!
         let httpClient = makeHTTPClient()
         let store = makeStore()
-        let localTeamLoader = LocalTeamLoader(store: store, currentDate: Date.init)
+        let localLeagueLoader = LocalLeagueLoader(store: store, currentDate: Date.init)
+        let localImageLoader = LocalImageLoader(store: store)
         
-        return Composer(baseURL: baseURL, httpClient: httpClient, localTeamLoader: localTeamLoader)
+        return Composer(baseURL: baseURL,
+                        httpClient: httpClient,
+                        localLeagueLoader: localLeagueLoader,
+                        localImageLoader: localImageLoader)
     }
     
     private static func makeHTTPClient() -> URLSessionHTTPClient {
@@ -59,7 +68,7 @@ class Composer {
             apiKey: apiKey)
     }
     
-    private static func makeStore() -> TeamStore & ImageStore {
+    private static func makeStore() -> LeagueStore & ImageStore {
         do {
             return try CoreDataLigasEcStore(
                 storeURL: NSPersistentContainer
@@ -72,12 +81,34 @@ class Composer {
         }
     }
     
-    func composeTeamViewModel(for league: League) -> TeamViewModel {
-        let teamLoader: () async throws -> [Team] = { [httpClient, localTeamLoader] in
+    func composeLeagueViewModel() -> LeagueViewModel {
+        let leagueLoader: () async throws -> [League] = { [localLeagueLoader] in
             
-            do {
-                return try localTeamLoader.load()
-            } catch {
+            let hardcodedLeagues = [
+                League(id: "IaFDigtm",
+                       stageId: "OO37de6i",
+                       name: "LigaPro Serie A",
+                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!),
+                League(id: "0O4IjDeg",
+                       stageId: "Au6JggjA",
+                       name: "LigaPro Serie B",
+                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!)
+            ]
+            
+            localLeagueLoader.saveIgnoringResult(hardcodedLeagues)
+            
+            return hardcodedLeagues
+        }
+        
+        return LeagueViewModel(leagueLoader: leagueLoader)
+    }
+    
+    func composeTeamViewModel(for league: League) -> TeamViewModel {
+        let teamLoader: () async throws -> [Team] = { [httpClient] in
+            
+//            do {
+//                return try localTeamLoader.load()
+//            } catch {
                 let url = TeamEndpoint.get(seasonId: league.id,
                                            standingType: "overall", // TODO: Manage constants
                                            locale: "es_MX", // TODO: Get locale
@@ -86,12 +117,12 @@ class Composer {
                 
                 let teams = try TeamMapper.map(data, from: response)
                 
-                Task {
-                    localTeamLoader.saveIgnoringResult(teams)
-                }
+//                Task {
+//                    localTeamLoader.saveIgnoringResult(teams)
+//                }
                 
                 return teams
-            }
+            //}
         }
         return TeamViewModel(teamLoader: teamLoader)
     }
@@ -108,45 +139,43 @@ class Composer {
         return PlayerViewModel(playerLoader: playerLoader)
     }
     
-    func composeImageView(model: Team) -> ImageView {
-        if let url = model.logoURL {
-            let localImageLoader = LocalImageLoader(store: Composer.makeStore())
+    func composeImageView(with url: URL, on table: Table) -> ImageView {
+        let imageLoader: () async throws -> Data = { [httpClient, localImageLoader] in
             
-            let imageLoader: () async throws -> Data = { [httpClient] in
+            do {
+                return try localImageLoader.loadImageData(from: url, on: table)
+            } catch {
+                let (data, response) = try await httpClient.get(from: url)
                 
-                do {
-                    return try localImageLoader.loadImageData(from: url)
-                } catch {
-                    let (data, response) = try await httpClient.get(from: url)
-                    
-                    let imageData = try ImageMapper.map(data, from: response)
-                    
-                    Task {
-                        localImageLoader.saveIgnoringResult(imageData, for: url)
-                    }
-                    
-                    return imageData
+                let imageData = try ImageMapper.map(data, from: response)
+                
+                Task {
+                    localImageLoader.saveIgnoringResult(imageData, for: url, on: table)
                 }
+                
+                return imageData
             }
-            let imageViewModel = ImageViewModel(imageLoader: imageLoader,
-                                                imageTransformer: UIImage.init)
-            return ImageView(imageViewModel: imageViewModel)
-        } else {
-            let imageViewModel = ImageViewModel(imageLoader: { Data() },
-                                                imageTransformer: UIImage.init)
-            return ImageView(imageViewModel: imageViewModel)
         }
+        let imageViewModel = ImageViewModel(imageLoader: imageLoader,
+                                            imageTransformer: UIImage.init)
+        return ImageView(imageViewModel: imageViewModel)
     }
 }
 
-private extension TeamCache {
-    func saveIgnoringResult(_ teams: [Team]) {
-        try? save(teams)
+private extension LeagueCache {
+    func saveIgnoringResult(_ leagues: [League]) {
+        try? save(leagues)
     }
 }
+
+//private extension TeamCache {
+//    func saveIgnoringResult(_ teams: [Team]) {
+//        try? save(teams)
+//    }
+//}
 
 private extension ImageCache {
-    func saveIgnoringResult(_ data: Data, for url: URL) {
-        try? save(data, for: url)
+    func saveIgnoringResult(_ data: Data, for url: URL, on table: Table) {
+        try? save(data, for: url, on: table)
     }
 }

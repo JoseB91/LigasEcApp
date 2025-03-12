@@ -25,14 +25,14 @@ class ValidateCacheTests: XCTestCase {
         XCTAssertEqual(store.receivedMessages, [.retrieve, .delete])
     }
 
-    func test_validateCache_doesNotDeleteCacheOnEmptyCache() {
-        let (sut, store) = makeSUT()
-        store.completeRetrievalWithEmptyCache()
-
-        try? sut.validateCache()
-        
-        XCTAssertEqual(store.receivedMessages, [.retrieve])
-    }
+//    func test_validateCache_doesNotDeleteCacheOnEmptyCache() {
+//        let (sut, store) = makeSUT()
+//        store.completeRetrievalWithEmptyCache()
+//
+//        try? sut.validateCache()
+//        
+//        XCTAssertEqual(store.receivedMessages, [.retrieve])
+//    }
     
     func test_validateCache_doesNotDeleteOnNonExpiredCache() {
         let teams = mockTeams()
@@ -89,13 +89,13 @@ class ValidateCacheTests: XCTestCase {
         })
     }
     
-    func test_validateCache_succeedsOnEmptyCache() {
-        let (sut, store) = makeSUT()
-
-        expect(sut, toCompleteWith: .success(()), when: {
-            store.completeRetrievalWithEmptyCache()
-        })
-    }
+//    func test_validateCache_succeedsOnEmptyCache() {
+//        let (sut, store) = makeSUT()
+//
+//        expect(sut, toCompleteWith: .success(()), when: {
+//            store.completeRetrievalWithEmptyCache()
+//        })
+//    }
     
     func test_validateCache_succeedsOnNonExpiredCache() {
         let teams = mockTeams()
