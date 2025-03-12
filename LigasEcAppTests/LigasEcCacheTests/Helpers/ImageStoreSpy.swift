@@ -1,5 +1,5 @@
 //
-//  ImageStorySpy.swift
+//  ImageStoreSpy.swift
 //  LigasEcAppTests
 //
 //  Created by José Briones on 12/3/25.
@@ -8,7 +8,7 @@
 import Foundation
 import LigasEcApp
 
-public class ImageStorySpy: ImageStore {
+public class ImageStoreSpy: ImageStore {
     enum Message: Equatable {
         case insert(data: Data, for: URL)
         case retrieve(dataFor: URL)

@@ -21,6 +21,14 @@ func anyNSError() -> NSError {
     return NSError(domain: "any error", code: 0)
 }
 
+func anyURL() -> URL {
+    return URL(string: "http://any-url.com")!
+}
+
+func anyData() -> Data {
+    return Data("any data".utf8)
+}
+
 func mockTeams() -> (models: [Team], local: [LocalTeam]) {
     let models = [mockTeam(), mockTeam()]
     let local = models.toLocal()
