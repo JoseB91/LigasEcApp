@@ -5,8 +5,6 @@
 //  Created by José Briones on 10/3/25.
 //
 
-import Foundation
-
 protocol StoreSpecs {
     func test_retrieve_deliversEmptyOnEmptyCache() throws
     func test_retrieve_hasNoSideEffectsOnEmptyCache() throws

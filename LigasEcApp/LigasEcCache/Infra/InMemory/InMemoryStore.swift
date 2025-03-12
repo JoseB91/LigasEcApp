@@ -8,32 +8,32 @@
 import Foundation
 
 public class InMemoryStore {
-    private var coachesCache: CachedTeams?
-    private var coachImageDataCache = NSCache<NSURL, NSData>()
+    private var teamsCache: CachedTeams?
+    private var teamImageDataCache = NSCache<NSURL, NSData>()
 
     public init() {}
 }
 
 extension InMemoryStore: TeamStore {
     public func delete() throws {
-        coachesCache = nil
+        teamsCache = nil
     }
 
     public func insert(_ teams: [LocalTeam], timestamp: Date) throws {
-        coachesCache = CachedTeams(teams: teams, timestamp: timestamp)
+        teamsCache = CachedTeams(teams: teams, timestamp: timestamp)
     }
 
     public func retrieve() throws -> CachedTeams? {
-        coachesCache
+        teamsCache
     }
 }
 
-//extension InMemoryStore: CoachImageStoreProtocol {
-//    public func insert(_ data: Data, for url: URL) throws {
-//        coachImageDataCache.setObject(data as NSData, forKey: url as NSURL)
-//    }
-//
-//    public func retrieve(dataForURL url: URL) throws -> Data? {
-//        coachImageDataCache.object(forKey: url as NSURL) as Data?
-//    }
-//}
+extension InMemoryStore: ImageStore {
+    public func insert(_ data: Data, for url: URL) throws {
+        teamImageDataCache.setObject(data as NSData, forKey: url as NSURL)
+    }
+
+    public func retrieve(dataForURL url: URL) throws -> Data? {
+        teamImageDataCache.object(forKey: url as NSURL) as Data?
+    }
+}
