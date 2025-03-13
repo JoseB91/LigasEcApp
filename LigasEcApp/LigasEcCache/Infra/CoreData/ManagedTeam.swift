@@ -13,7 +13,7 @@ class ManagedTeam: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var data: Data?
     @NSManaged var logoURL: URL?
-    @NSManaged var cache: ManagedCache
+    @NSManaged var league: ManagedLeague
 }
 
 extension ManagedTeam {

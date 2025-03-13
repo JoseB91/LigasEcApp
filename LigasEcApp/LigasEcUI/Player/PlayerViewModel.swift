@@ -32,7 +32,11 @@ final class PlayerViewModel: ObservableObject {
         do {
             squad = try await playerLoader()
         } catch {
-            errorMessage = ErrorModel(message: "Failed to load squad: \(error.localizedDescription)")
+            if error is MapperError {
+                print("No players for this team")
+            } else {
+                errorMessage = ErrorModel(message: "Failed to load squad: \(error.localizedDescription)")
+            }
         }
         isLoading = false
     }

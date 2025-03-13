@@ -11,8 +11,9 @@ import LigasEcAPI
 public typealias CachedTeams = (teams: [LocalTeam], timestamp: Date)
     
 public protocol TeamStore {
-    func delete() throws
-    func insert(_ teams: [LocalTeam], timestamp: Date) throws
-    func retrieve() throws -> CachedTeams?
+    func deleteTeams(with id: String) throws
+    func insert(_ teams: [LocalTeam], with id: String, timestamp: Date) throws
+    func retrieve(with id: String) throws -> CachedTeams?
 }
+
 

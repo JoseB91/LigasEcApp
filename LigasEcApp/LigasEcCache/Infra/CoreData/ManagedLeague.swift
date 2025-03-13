@@ -15,6 +15,7 @@ class ManagedLeague: NSManagedObject {
     @NSManaged var data: Data?
     @NSManaged var logoURL: URL
     @NSManaged var cache: ManagedCache
+    @NSManaged var teams: NSOrderedSet
 }
 
 extension ManagedLeague {
@@ -45,9 +46,25 @@ extension ManagedLeague {
         context.userInfo.removeAllObjects()
         return leagues
     }
+    
+    static func find(with id: String, in context: NSManagedObjectContext) throws -> ManagedLeague? {
+        let request = NSFetchRequest<ManagedLeague>(entityName: entity().name!)
+        request.predicate = NSPredicate(format: "id == %@", id)
+        request.returnsObjectsAsFaults = false
+        request.fetchLimit = 1
+        return try context.fetch(request).first
+    }
+    
+    static func deleteCache(with id: String, in context: NSManagedObjectContext) throws {
+        try find(with: id, in: context).map(context.delete).map(context.save)
+    }
 
     var local: LocalLeague {
         return LocalLeague(id: id, stageId: stageId, name: name, logoURL: logoURL)
+    }
+    
+    var localTeams: [LocalTeam] {
+        return teams.compactMap { ($0 as? ManagedTeam)?.local }
     }
     
     override func prepareForDeletion() {

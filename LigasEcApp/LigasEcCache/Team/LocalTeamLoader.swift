@@ -19,44 +19,49 @@ public final class LocalTeamLoader {
 }
 
 public protocol TeamCache {
-    func save(_ teams: [Team]) throws
+    func save(_ teams: [Team], with id: String) throws
 }
 
 extension LocalTeamLoader: TeamCache {
-    public func save(_ teams: [Team]) throws {
-        try store.delete()
-        try store.insert(teams.toLocal(), timestamp: currentDate())
+    public func save(_ teams: [Team], with id: String) throws {
+        //try store.deleteTeams(with: id)
+        try store.insert(teams.toLocal(), with: id, timestamp: currentDate())
     }
 }
 
 extension LocalTeamLoader {
     private struct EmptyData: Error {}
     
-    public func load() throws -> [Team] {
-        if let cache = try store.retrieve(),
-           CachePolicy.validate(cache.timestamp,
+    public func load(with id: String) throws -> [Team] {
+        if let cachedTeams = try store.retrieve(with: id),
+           CachePolicy.validate(cachedTeams.timestamp,
                                 against: currentDate()) {
-            return cache.teams.toModels()
+            let teams = cachedTeams.teams.toModels()
+            if teams.isEmpty {
+                throw EmptyData()
+            } else {
+                return teams
+            }
         } else {
             throw EmptyData()
         }
     }
 }
 
-extension LocalTeamLoader {
-    private struct InvalidCache: Error {}
-    
-    public func validateCache() throws {
-        do {
-            if let cache = try store.retrieve(), !CachePolicy.validate(cache.timestamp,
-                                                                              against: currentDate()) {
-                throw InvalidCache()
-            }
-        } catch {
-            try store.delete()
-        }
-    }
-}
+//extension LocalTeamLoader {
+//    private struct InvalidCache: Error {}
+//    
+//    public func validateCache() throws {
+//        do {
+//            if let cache = try store.retrieve(), !CachePolicy.validate(cache.timestamp,
+//                                                                              against: currentDate()) {
+//                throw InvalidCache()
+//            }
+//        } catch {
+//            try store.delete()
+//        }
+//    }
+//}
 
 extension Array where Element == Team {
     public func toLocal() -> [LocalTeam] {

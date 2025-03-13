@@ -10,8 +10,9 @@ import LigasEcAPI
 import SharedAPI
 
 struct PlayerView: View {
-    @StateObject var playerViewModel: PlayerViewModel
-    
+    @ObservedObject var playerViewModel: PlayerViewModel
+    let imageView: (URL, Table) -> ImageView
+
     var body: some View {
         List {
             if playerViewModel.isLoading {
@@ -28,19 +29,9 @@ struct PlayerView: View {
                         Section(header: Text(position + "s")) {
                             ForEach(playersInPosition) { player in
                                 HStack {
-                                    AsyncImage(url: player.photoURL) { phase in
-                                        switch phase {
-                                        case .empty:
-                                            Image(systemName: "soccerball") // TODO: Change
-                                        case .success(let image):
-                                            image.resizable()
-                                                .scaledToFit()
-                                                .frame(width: 96, height: 48)
-                                        case .failure(_):
-                                            Image(systemName: "soccerball") // TODO: Change
-                                        @unknown default:
-                                            EmptyView()
-                                        }
+                                    if let url = player.photoURL {
+                                        imageView(url, Table.Player)
+                                            .frame(width: 96, height: 48)
                                     }
                                     Text(player.name)
                                         .font(.title2)

@@ -10,7 +10,7 @@ import LigasEcAPI
 import SharedAPI
 
 struct TeamView: View {
-    @StateObject var teamViewModel: TeamViewModel // TODO: Check if could be observedobject
+    @ObservedObject var teamViewModel: TeamViewModel
     @Binding var navigationPath: NavigationPath
     let imageView: (URL, Table) -> ImageView
     
@@ -28,9 +28,9 @@ struct TeamView: View {
                             if let url = team.logoURL {
                                 imageView(url, Table.Team)
                                     .frame(width: 96, height: 48)
-                                Text(team.name)
-                                    .font(.title2)
                             }
+                            Text(team.name)
+                                .font(.title2)
                         }
                     }.tint(.black)
                 }

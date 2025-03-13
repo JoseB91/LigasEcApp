@@ -10,7 +10,7 @@ import LigasEcAPI
 import SharedAPI
 
 struct LeagueView: View {
-    @StateObject var leagueViewModel: LeagueViewModel
+    @ObservedObject var leagueViewModel: LeagueViewModel
     @Binding var navigationPath: NavigationPath
     
     let imageView: (URL, Table) -> ImageView

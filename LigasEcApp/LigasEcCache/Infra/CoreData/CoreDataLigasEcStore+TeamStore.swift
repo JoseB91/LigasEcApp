@@ -7,22 +7,23 @@
 
 import CoreData
 
-//extension CoreDataLigasEcStore: TeamStore { //TODO: Tests
-//    
-//    public func retrieve() throws -> CachedTeams? {
-//        try ManagedCache.find(in: context).map {
-//            CachedTeams(teams: $0.localTeams, timestamp: $0.timestamp)
-//        }
-//    }
-//    
-//    public func insert(_ teams: [LocalTeam], timestamp: Date) throws {
-//        let managedCache = try ManagedCache.newUniqueInstance(in: context)
-//        managedCache.timestamp = timestamp
-//        managedCache.teams = ManagedTeam.fetchTeams(from: teams, in: context)
-//        try context.save()
-//    }
-//    
-//    public func delete() throws {
-//        try ManagedCache.deleteCache(in: context)
-//    }
-//}
+extension CoreDataLigasEcStore: TeamStore {
+    //TODO: Tests
+    
+    public func retrieve(with id: String) throws -> CachedTeams? {
+        try ManagedLeague.find(with: id, in: context).map {
+            CachedTeams(teams: $0.localTeams, timestamp: $0.cache.timestamp)
+        }
+    }
+    
+    public func insert(_ teams: [LocalTeam], with id: String, timestamp: Date) throws {
+        let managedLeague = try ManagedLeague.find(with: id, in: context)
+        managedLeague?.cache.timestamp = timestamp
+        managedLeague?.teams = ManagedTeam.fetchTeams(from: teams, in: context)
+        try context.save()
+    }
+    
+    public func deleteTeams(with id: String) throws {
+        try ManagedLeague.deleteCache(with: id, in: context)
+    }
+}

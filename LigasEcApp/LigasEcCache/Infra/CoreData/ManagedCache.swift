@@ -25,7 +25,7 @@ extension ManagedCache {
     }
     
     static func newUniqueInstance(in context: NSManagedObjectContext) throws -> ManagedCache {
-        try deleteCache(in: context)
+        //try deleteCache(in: context)
         return ManagedCache(context: context)
     }
     

@@ -24,7 +24,7 @@ public protocol LeagueCache {
 
 extension LocalLeagueLoader: LeagueCache {
     public func save(_ leagues: [League]) throws {
-//        try store.deleteLeagues()
+        //try store.deleteLeagues()
         try store.insert(leagues.toLocal(), timestamp: currentDate())
     }
 }
