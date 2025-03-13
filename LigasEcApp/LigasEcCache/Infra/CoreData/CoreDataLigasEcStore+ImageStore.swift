@@ -22,7 +22,7 @@ extension CoreDataLigasEcStore: ImageStore { //TODO: Tests
             if let _ = try ManagedPlayer.getFirst(with: url, in: context) {
                 try ManagedPlayer.getFirst(with: url, in: context)
                     .map { $0.data = data }
-                    .map(context.save)
+                    .map(context.save) //TODO: "-[__NSCFSet addObject:]: attempt to insert nil"
             }
         }
     }
