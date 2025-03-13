@@ -12,8 +12,9 @@ class ManagedTeam: NSManagedObject {
     @NSManaged var id: String
     @NSManaged var name: String
     @NSManaged var data: Data?
-    @NSManaged var logoURL: URL?
+    @NSManaged var logoURL: URL
     @NSManaged var league: ManagedLeague
+    @NSManaged var players: NSOrderedSet
 }
 
 extension ManagedTeam {
@@ -37,24 +38,36 @@ extension ManagedTeam {
             managed.id = local.id
             managed.name = local.name
             managed.logoURL = local.logoURL
-            if let url = local.logoURL, let imageData = context.userInfo[url] as? Data {
-                managed.data = imageData
-            } else {
-                managed.data = nil
-            }
+            managed.data = context.userInfo[local.logoURL] as? Data
             return managed
         })
         context.userInfo.removeAllObjects()
         return teams
+    }
+    
+    static func find(with id: String, in context: NSManagedObjectContext) throws -> ManagedTeam? {
+        let request = NSFetchRequest<ManagedTeam>(entityName: entity().name!)
+        request.predicate = NSPredicate(format: "id == %@", id)
+        request.returnsObjectsAsFaults = false
+        request.fetchLimit = 1
+        return try context.fetch(request).first
+    }
+    
+    static func deleteCache(with id: String, in context: NSManagedObjectContext) throws {
+        try find(with: id, in: context).map(context.delete).map(context.save)
     }
 
     var local: LocalTeam {
         return LocalTeam(id: id, name: name, logoURL: logoURL)
     }
     
+    var localPlayers: [LocalPlayer] {
+        return players.compactMap { ($0 as? ManagedPlayer)?.local }
+    }
+    
     override func prepareForDeletion() {
         super.prepareForDeletion()
 
-        managedObjectContext?.userInfo[logoURL ?? ""] = data
+        managedObjectContext?.userInfo[logoURL] = data
     }
 }

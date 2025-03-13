@@ -58,13 +58,7 @@ struct LeagueView: View {
 
 #Preview {
     let leagueViewModel = LeagueViewModel(leagueLoader: MockLeagueViewModel.mockLeagueLoader)
-    
-    let imageLoader = {
-        Data()
-    }
-    let imageViewModel = ImageViewModel(imageLoader: imageLoader,
-                                        imageTransformer: UIImage.init)
-    
+        
     LeagueView(leagueViewModel: leagueViewModel,
                navigationPath: .constant(NavigationPath()),
                imageView: MockImageView.mockImageView)

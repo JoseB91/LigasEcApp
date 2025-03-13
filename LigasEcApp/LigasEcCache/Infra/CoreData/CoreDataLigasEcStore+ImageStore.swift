@@ -14,18 +14,26 @@ extension CoreDataLigasEcStore: ImageStore { //TODO: Tests
             try ManagedLeague.getFirst(with: url, in: context)
                 .map { $0.data = data }
                 .map(context.save)
-        } else {
+        } else if table == .Team {
             try ManagedTeam.getFirst(with: url, in: context)
                 .map { $0.data = data }
                 .map(context.save)
+        }  else {
+            if let _ = try ManagedPlayer.getFirst(with: url, in: context) {
+                try ManagedPlayer.getFirst(with: url, in: context)
+                    .map { $0.data = data }
+                    .map(context.save)
+            }
         }
     }
     
     public func retrieve(dataFor url: URL, on table: Table) throws -> Data?  {
         if table == .League {
             try ManagedLeague.getImageData(with: url, in: context)
-        } else {
+        } else if table == .Team {
             try ManagedTeam.getImageData(with: url, in: context)
+        } else {
+            try ManagedPlayer.getImageData(with: url, in: context)
         }
     }
     

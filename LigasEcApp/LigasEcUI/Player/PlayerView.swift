@@ -32,6 +32,11 @@ struct PlayerView: View {
                                     if let url = player.photoURL {
                                         imageView(url, Table.Player)
                                             .frame(width: 96, height: 48)
+                                    } else {
+                                        Image(systemName: "person.circle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 96, height: 48)
                                     }
                                     Text(player.name)
                                         .font(.title2)
@@ -67,5 +72,5 @@ struct PlayerView: View {
 #Preview {
     let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
     
-    PlayerView(playerViewModel: playerViewModel)
+    PlayerView(playerViewModel: playerViewModel, imageView: MockImageView.mockImageView)
 }

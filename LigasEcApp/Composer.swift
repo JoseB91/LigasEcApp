@@ -18,6 +18,7 @@ class Composer {
     private let localLeagueLoader: LocalLeagueLoader
     private let localImageLoader: LocalImageLoader
     private let localTeamLoader: LocalTeamLoader
+    private let localPlayerLoader: LocalPlayerLoader
 
     //let logger = Logger(subsystem: "com.joseB91.LatinCoaches", category: "main")
 
@@ -25,12 +26,14 @@ class Composer {
          httpClient: URLSessionHTTPClient,
          localLeagueLoader: LocalLeagueLoader,
          localImageLoader: LocalImageLoader,
-         localTeamLoader: LocalTeamLoader) {
+         localTeamLoader: LocalTeamLoader,
+         localPlayerLoader: LocalPlayerLoader) {
         self.baseURL = baseURL
         self.httpClient = httpClient
         self.localLeagueLoader = localLeagueLoader
         self.localImageLoader = localImageLoader
         self.localTeamLoader = localTeamLoader
+        self.localPlayerLoader = localPlayerLoader
     }
     
     static func makeComposer() -> Composer {
@@ -40,12 +43,14 @@ class Composer {
         let localLeagueLoader = LocalLeagueLoader(store: store, currentDate: Date.init)
         let localImageLoader = LocalImageLoader(store: store)
         let localTeamLoader = LocalTeamLoader(store: store, currentDate: Date.init)
+        let localPlayerLoader = LocalPlayerLoader(store: store, currentDate: Date.init)
         
         return Composer(baseURL: baseURL,
                         httpClient: httpClient,
                         localLeagueLoader: localLeagueLoader,
                         localImageLoader: localImageLoader,
-                        localTeamLoader: localTeamLoader)
+                        localTeamLoader: localTeamLoader,
+                        localPlayerLoader: localPlayerLoader)
     }
     
     private static func makeHTTPClient() -> URLSessionHTTPClient {
@@ -73,7 +78,7 @@ class Composer {
             apiKey: apiKey)
     }
     
-    private static func makeStore() -> LeagueStore & ImageStore & TeamStore {
+    private static func makeStore() -> LeagueStore & ImageStore & TeamStore & PlayerStore {
         do {
             return try CoreDataLigasEcStore(
                 storeURL: NSPersistentContainer
@@ -133,13 +138,24 @@ class Composer {
     }
     
     func composePlayerViewModel(for team: Team) -> PlayerViewModel {
-        let playerLoader: () async throws -> [Player] = { [httpClient] in
-            let url = PlayerEndpoint.get(sportId: 1,
-                                       locale: "es_MX",
-                                       teamId: team.id).url(baseURL: self.baseURL)
-            let (data, response) = try await httpClient.get(from: url)
+        let playerLoader: () async throws -> [Player] = { [httpClient, localPlayerLoader] in
             
-            return try PlayerMapper.map(data, from: response)
+            do {
+                return try localPlayerLoader.load(with: team.id)
+            } catch {
+                let url = PlayerEndpoint.get(sportId: 1,
+                                             locale: "es_MX",
+                                             teamId: team.id).url(baseURL: self.baseURL)
+                let (data, response) = try await httpClient.get(from: url)
+                
+                let players = try PlayerMapper.map(data, from: response)
+                
+                Task {
+                    localPlayerLoader.saveIgnoringResult(players, with: team.id)
+                }
+                
+                return players
+            }
         }
         return PlayerViewModel(playerLoader: playerLoader)
     }
@@ -176,6 +192,12 @@ private extension LeagueCache {
 private extension TeamCache {
     func saveIgnoringResult(_ teams: [Team], with id: String) {
         try? save(teams, with: id)
+    }
+}
+
+private extension PlayerCache {
+    func saveIgnoringResult(_ players: [Player], with id: String) {
+        try? save(players, with: id)
     }
 }
 

@@ -25,10 +25,8 @@ struct TeamView: View {
                         navigationPath.append(team)
                     } label: {
                         HStack {
-                            if let url = team.logoURL {
-                                imageView(url, Table.Team)
-                                    .frame(width: 96, height: 48)
-                            }
+                            imageView(team.logoURL, Table.Team)
+                                .frame(width: 96, height: 48)
                             Text(team.name)
                                 .font(.title2)
                         }

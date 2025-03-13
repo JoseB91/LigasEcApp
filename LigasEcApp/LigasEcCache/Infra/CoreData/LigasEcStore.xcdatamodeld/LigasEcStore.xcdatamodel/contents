@@ -13,11 +13,20 @@
         <relationship name="cache" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="leagues" inverseEntity="ManagedCache"/>
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ManagedTeam" inverseName="league" inverseEntity="ManagedTeam"/>
     </entity>
+    <entity name="ManagedPlayer" representedClassName="ManagedPlayer" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="photoURL" optional="YES" attributeType="URI"/>
+        <attribute name="position" optional="YES" attributeType="String"/>
+        <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedTeam" inverseName="players" inverseEntity="ManagedTeam"/>
+    </entity>
     <entity name="ManagedTeam" representedClassName="ManagedTeam" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary"/>
         <attribute name="id" attributeType="String"/>
-        <attribute name="logoURL" optional="YES" attributeType="URI"/>
+        <attribute name="logoURL" attributeType="URI"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="league" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedLeague" inverseName="teams" inverseEntity="ManagedLeague"/>
+        <relationship name="players" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ManagedPlayer" inverseName="team" inverseEntity="ManagedPlayer"/>
     </entity>
 </model>

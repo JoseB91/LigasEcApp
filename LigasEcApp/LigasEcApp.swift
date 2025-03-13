@@ -35,7 +35,8 @@ struct LigasEcApp: App {
                                  imageView: composer.composeImageView)
                     }
                     .navigationDestination(for: Team.self) { team in
-                        PlayerView(playerViewModel: composer.composePlayerViewModel(for: team))
+                        PlayerView(playerViewModel: composer.composePlayerViewModel(for: team),
+                                   imageView: composer.composeImageView)
                     }
             }
         }

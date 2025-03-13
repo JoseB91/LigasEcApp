@@ -27,6 +27,8 @@
 		B05361ED2D821B8500BE41F0 /* LeagueLocalizedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361DB2D821B8500BE41F0 /* LeagueLocalizedTests.swift */; };
 		B053621C2D82326900BE41F0 /* CoreDataLigasEcStore+LeagueStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B053621B2D82326900BE41F0 /* CoreDataLigasEcStore+LeagueStore.swift */; };
 		B053621E2D8232CA00BE41F0 /* ManagedLeague.swift in Sources */ = {isa = PBXBuildFile; fileRef = B053621D2D8232CA00BE41F0 /* ManagedLeague.swift */; };
+		B05362272D82AB3B00BE41F0 /* ManagedPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05362262D82AB3B00BE41F0 /* ManagedPlayer.swift */; };
+		B05362322D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */; };
 		B095811A2D6CE61400C4B206 /* LigasEcAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09581162D6CE59100C4B206 /* LigasEcAPI.framework */; };
 		B095811B2D6CE61400C4B206 /* LigasEcAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B09581162D6CE59100C4B206 /* LigasEcAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B09583B32D6CEB0900C4B206 /* SharedAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09581122D6CE59100C4B206 /* SharedAPI.framework */; };
@@ -96,6 +98,8 @@
 		B05361DB2D821B8500BE41F0 /* LeagueLocalizedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueLocalizedTests.swift; sourceTree = "<group>"; };
 		B053621B2D82326900BE41F0 /* CoreDataLigasEcStore+LeagueStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataLigasEcStore+LeagueStore.swift"; sourceTree = "<group>"; };
 		B053621D2D8232CA00BE41F0 /* ManagedLeague.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedLeague.swift; sourceTree = "<group>"; };
+		B05362262D82AB3B00BE41F0 /* ManagedPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedPlayer.swift; sourceTree = "<group>"; };
+		B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataLigasEcStore+PlayerStore.swift"; sourceTree = "<group>"; };
 		B09581082D6CE59100C4B206 /* LigasEcAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LigasEcAPI.xcodeproj; path = ../LigasEcAPI/LigasEcAPI.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -155,6 +159,11 @@
 			path = League;
 			sourceTree = "<group>";
 		};
+		B05362282D82ABCB00BE41F0 /* Player */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Player;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,12 +211,14 @@
 			children = (
 				B053615F2D821B3300BE41F0 /* CoreDataLigasEcStore.swift */,
 				B053621B2D82326900BE41F0 /* CoreDataLigasEcStore+LeagueStore.swift */,
-				B05361602D821B3300BE41F0 /* CoreDataLigasEcStore+ImageStore.swift */,
 				B05361612D821B3300BE41F0 /* CoreDataLigasEcStore+TeamStore.swift */,
+				B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */,
+				B05361602D821B3300BE41F0 /* CoreDataLigasEcStore+ImageStore.swift */,
 				B05361622D821B3300BE41F0 /* LigasEcStore.xcdatamodeld */,
 				B05361632D821B3300BE41F0 /* ManagedCache.swift */,
 				B05361642D821B3300BE41F0 /* ManagedTeam.swift */,
 				B053621D2D8232CA00BE41F0 /* ManagedLeague.swift */,
+				B05362262D82AB3B00BE41F0 /* ManagedPlayer.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -232,6 +243,7 @@
 		B053616E2D821B3300BE41F0 /* LigasEcCache */ = {
 			isa = PBXGroup;
 			children = (
+				B05362282D82ABCB00BE41F0 /* Player */,
 				B05362222D829A3400BE41F0 /* League */,
 				B05361AD2D821B4600BE41F0 /* Team */,
 				B05361A72D821B4300BE41F0 /* Image */,
@@ -363,6 +375,7 @@
 				B05361BD2D821B5F00BE41F0 /* Player */,
 				B05361C22D821B6100BE41F0 /* Team */,
 				B05362222D829A3400BE41F0 /* League */,
+				B05362282D82ABCB00BE41F0 /* Player */,
 			);
 			name = LigasEcApp;
 			packageProductDependencies = (
@@ -495,9 +508,11 @@
 				B05361902D821B3300BE41F0 /* InMemoryStore.swift in Sources */,
 				B05361942D821B3300BE41F0 /* CachePolicy.swift in Sources */,
 				B053621E2D8232CA00BE41F0 /* ManagedLeague.swift in Sources */,
+				B05362322D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift in Sources */,
 				B053621C2D82326900BE41F0 /* CoreDataLigasEcStore+LeagueStore.swift in Sources */,
 				B053619D2D821B3300BE41F0 /* Composer.swift in Sources */,
 				B053619E2D821B3300BE41F0 /* KeychainManager.swift in Sources */,
+				B05362272D82AB3B00BE41F0 /* ManagedPlayer.swift in Sources */,
 				B053619F2D821B3300BE41F0 /* LigasEcApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
