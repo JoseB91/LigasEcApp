@@ -11,18 +11,19 @@ extension CoreDataLigasEcStore: ImageStore { //TODO: Tests
     
     public func insert(_ data: Data, for url: URL, on table: Table) throws {
         if table == .League {
-            try ManagedLeague.getFirst(with: url, in: context)
-                .map { $0.data = data }
-                .map(context.save)
+            if let managedLeague = try ManagedLeague.getFirst(with: url, in: context) {
+                managedLeague.data = data
+                try context.save()
+            }
         } else if table == .Team {
-            try ManagedTeam.getFirst(with: url, in: context)
-                .map { $0.data = data }
-                .map(context.save)
+            if let managedTeam =  try ManagedTeam.getFirst(with: url, in: context) {
+                managedTeam.data = data
+                try context.save()
+            }
         }  else {
-            if let _ = try ManagedPlayer.getFirst(with: url, in: context) {
-                try ManagedPlayer.getFirst(with: url, in: context)
-                    .map { $0.data = data }
-                    .map(context.save) //TODO: "-[__NSCFSet addObject:]: attempt to insert nil"
+            if let managedPlayer = try ManagedPlayer.getFirst(with: url, in: context) {
+                managedPlayer.data = data
+                try context.save()
             }
         }
     }

@@ -10,11 +10,9 @@ import LigasEcAPI
 
 public final class LocalPlayerLoader {
     private let store: PlayerStore
-    private let currentDate: () -> Date
         
-    public init(store: PlayerStore, currentDate: @escaping () -> Date) {
+    public init(store: PlayerStore) {
         self.store = store
-        self.currentDate = currentDate
     }
 }
 
@@ -25,7 +23,7 @@ public protocol PlayerCache {
 extension LocalPlayerLoader: PlayerCache {
     public func save(_ players: [Player], with id: String) throws {
         //try store.deleteTeams(with: id)
-        try store.insert(players.toLocal(), with: id, timestamp: currentDate())
+        try store.insert(players.toLocal(), with: id)
     }
 }
 
@@ -33,35 +31,13 @@ extension LocalPlayerLoader {
     private struct EmptyData: Error {}
     
     public func load(with id: String) throws -> [Player] {
-        if let cachedPlayers = try store.retrieve(with: id),
-           CachePolicy.validate(cachedPlayers.timestamp,
-                                against: currentDate()) {
-            let players = cachedPlayers.players.toModels()
-            if players.isEmpty {
-                throw EmptyData()
-            } else {
-                return players
-            }
+        if let retrievedPlayers = try store.retrieve(with: id), !retrievedPlayers.isEmpty {
+            return retrievedPlayers.toModels()
         } else {
             throw EmptyData()
         }
     }
 }
-
-//extension LocalTeamLoader {
-//    private struct InvalidCache: Error {}
-//
-//    public func validateCache() throws {
-//        do {
-//            if let cache = try store.retrieve(), !CachePolicy.validate(cache.timestamp,
-//                                                                              against: currentDate()) {
-//                throw InvalidCache()
-//            }
-//        } catch {
-//            try store.delete()
-//        }
-//    }
-//}
 
 extension Array where Element == Player {
     public func toLocal() -> [LocalPlayer] {

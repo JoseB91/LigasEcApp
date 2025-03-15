@@ -42,8 +42,8 @@ class Composer {
         let store = makeStore()
         let localLeagueLoader = LocalLeagueLoader(store: store, currentDate: Date.init)
         let localImageLoader = LocalImageLoader(store: store)
-        let localTeamLoader = LocalTeamLoader(store: store, currentDate: Date.init)
-        let localPlayerLoader = LocalPlayerLoader(store: store, currentDate: Date.init)
+        let localTeamLoader = LocalTeamLoader(store: store)
+        let localPlayerLoader = LocalPlayerLoader(store: store)
         
         return Composer(baseURL: baseURL,
                         httpClient: httpClient,

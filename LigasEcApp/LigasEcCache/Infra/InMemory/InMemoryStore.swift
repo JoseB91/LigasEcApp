@@ -9,8 +9,8 @@ import Foundation
 
 public class InMemoryStore {
     private var leaguesCache: CachedLeagues?
-    private var teamsCache: CachedTeams?
-    private var playersCache: CachedPlayers?
+    private var teamsCache: [LocalTeam]?
+    private var playersCache: [LocalPlayer]?
     private var leagueImageCacheData = NSCache<NSURL, NSData>()
 
     public init() {}
@@ -35,11 +35,11 @@ extension InMemoryStore: TeamStore {
         teamsCache = nil
     }
     
-    public func insert(_ teams: [LocalTeam], with id: String, timestamp: Date) throws {
-        teamsCache = CachedTeams(teams: teams, timestamp: timestamp)
+    public func insert(_ teams: [LocalTeam], with id: String) throws {
+        teamsCache = teams
     }
     
-    public func retrieve(with id: String) throws -> CachedTeams? {
+    public func retrieve(with id: String) throws -> [LocalTeam]? {
         teamsCache
     }
 }
@@ -49,11 +49,11 @@ extension InMemoryStore: PlayerStore {
         playersCache = nil
     }
     
-    public func insert(_ players: [LocalPlayer], with id: String, timestamp: Date) throws {
-        playersCache = CachedPlayers(players: players, timestamp: timestamp)
+    public func insert(_ players: [LocalPlayer], with id: String) throws {
+        playersCache = players
     }
     
-    public func retrieve(with id: String) throws -> CachedPlayers? {
+    public func retrieve(with id: String) throws -> [LocalPlayer]? {
         playersCache
     }
 }

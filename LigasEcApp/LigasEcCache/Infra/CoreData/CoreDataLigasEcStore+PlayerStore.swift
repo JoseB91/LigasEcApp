@@ -10,15 +10,12 @@ import CoreData
 extension CoreDataLigasEcStore: PlayerStore {
     //TODO: Tests
     
-    public func retrieve(with id: String) throws -> CachedPlayers? {
-        try ManagedTeam.find(with: id, in: context).map {
-            CachedPlayers(players: $0.localPlayers, timestamp: Date())
-        }
+    public func retrieve(with id: String) throws -> [LocalPlayer]? {
+        try ManagedTeam.find(with: id, in: context).map { $0.localPlayers }
     }
     
-    public func insert(_ players: [LocalPlayer], with id: String, timestamp: Date) throws {
+    public func insert(_ players: [LocalPlayer], with id: String) throws {
         let managedTeam = try ManagedTeam.find(with: id, in: context)
-        managedTeam?.league.cache.timestamp = timestamp
         managedTeam?.players = ManagedPlayer.fetchPlayers(from: players, in: context)
         try context.save()
     }
