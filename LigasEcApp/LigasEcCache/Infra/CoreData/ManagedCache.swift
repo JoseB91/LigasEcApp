@@ -30,7 +30,7 @@ extension ManagedCache {
     }
     
     static func cacheExists(in context: NSManagedObjectContext) throws -> Bool {
-        try ManagedCache.find(in: context) != nil
+        try find(in: context) != nil
     }
     
     var localLeagues: [LocalLeague] {

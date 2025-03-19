@@ -22,7 +22,6 @@ public protocol PlayerCache {
 
 extension LocalPlayerLoader: PlayerCache {
     public func save(_ players: [Player], with id: String) throws {
-        //try store.deleteTeams(with: id)
         try store.insert(players.toLocal(), with: id)
     }
 }

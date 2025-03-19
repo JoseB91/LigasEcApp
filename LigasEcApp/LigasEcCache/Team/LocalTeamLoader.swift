@@ -22,7 +22,6 @@ public protocol TeamCache {
 
 extension LocalTeamLoader: TeamCache {
     public func save(_ teams: [Team], with id: String) throws {
-        //try store.deleteTeams(with: id)
         try store.insert(teams.toLocal(), with: id)
     }
 }

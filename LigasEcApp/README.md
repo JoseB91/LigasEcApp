@@ -7,7 +7,7 @@
 
 ### Story: Customer requests to see Ecuadorian leagues
 
-### Narrative #1
+### Narrative
 
 ```
 As an online/offline customer
@@ -29,7 +29,7 @@ Given an online/offline customer
   And there's a cached version of the leagues
  When the customer requests to see the leagues
  Then the app should display two hardcoded leagues
-  And not save those leagues to cache
+  And don't save those leagues to cache
 ```
 
 ## Use Cases
@@ -151,26 +151,50 @@ Given an online/offline customer
 
 ### Story: Customer requests to see leagues' teams
 
-### Narrative
+### Narrative #1
 
 ```
 As an online customer
-I want the app to load image commments
-So I can see how people are engaging with images in my feed
+I want the app to load teams of a selected ecuadorian league
+So I can choose one of them
 ```
 
 #### Scenarios (Acceptance criteria)
 
 ```
 Given the customer has connectivity
- When the customer requests to see comments on an image
- Then the app should display all comments for that image
+  And the cache is empty
+ When the customer requests to see teams of a league
+ Then the app should display all teams from remote
+  And save those teams to cache
+
+Given the customer has connectivity
+  And there's a cached version of the teams
+ When the customer requests to see teams of a league
+ Then the app should display all teams from cache
+  And don't save those teams to cache
 ```
+
+### Narrative #2
+
+```
+As an offline customer
+I want the app to load teams of a selected ecuadorian league
+So I can choose one of them
+```
+
+#### Scenarios (Acceptance criteria)
 
 ```
 Given the customer doesn't have connectivity
- When the customer requests to see comments on an image
+  And the cache is empty
+ When the customer requests to see the teams
  Then the app should display an error message
+ 
+Given the customer doesn't have connectivity
+  And there's a cached version of the teams
+ When the customer requests to see the teams
+ Then the app should display the teams from cache
 ```
 
 ## Use Cases
