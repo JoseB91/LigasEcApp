@@ -10,42 +10,26 @@
 ### Narrative #1
 
 ```
-As an online customer
-I want the app to automatically load ecuadorian leagues
+As an online/offline customer
+I want the app to show ecuadorian leagues
 So I can choose one of them 
 ```
 
 #### Scenarios (Acceptance criteria)
 
 ```
-Given the customer has connectivity
+Given an online/offline customer
   And the cache is empty
  When the customer requests to see the leagues
  Then the app should display two hardcoded leagues
   And save those leagues to cache 
   And if saving fails, delete the cache
   
-Given the customer has connectivity
+Given an online/offline customer
   And there's a cached version of the leagues
  When the customer requests to see the leagues
  Then the app should display two hardcoded leagues
   And not save those leagues to cache
-```
-
-### Narrative #2
-
-```
-As an offline customer
-I want the app to show the latest saved version of ecuadorian leagues
-So I can choose one of them
-```
-
-#### Scenarios (Acceptance criteria)
-
-```
-Given the customer doesn't have connectivity
- When the customer requests to see the leagues
- Then the app should display two hardcoded leagues
 ```
 
 ## Use Cases
