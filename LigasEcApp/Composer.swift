@@ -105,7 +105,9 @@ class Composer {
                        logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!)
             ]
             
-            localLeagueLoader.saveIgnoringResult(hardcodedLeagues)
+            Task {
+                localLeagueLoader.saveIgnoringResult(hardcodedLeagues)
+            }
             
             return hardcodedLeagues
         }
@@ -180,6 +182,12 @@ class Composer {
         let imageViewModel = ImageViewModel(imageLoader: imageLoader,
                                             imageTransformer: UIImage.init)
         return ImageView(imageViewModel: imageViewModel)
+    }
+    
+    func validateCache() {
+        Task {
+            try? localLeagueLoader.validateCache()
+        }
     }
 }
 

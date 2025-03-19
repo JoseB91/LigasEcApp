@@ -39,6 +39,9 @@ struct LigasEcApp: App {
                                    imageView: composer.composeImageView)
                     }
             }
+            .onAppear {
+                composer.validateCache()
+            }
         }
     }
     
