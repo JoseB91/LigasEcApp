@@ -1,6 +1,7 @@
 
 # LigasEc 
-![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/CI-iOS/badge.svg) ![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/CI-macOS/badge.svg) ![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/Deploy/badge.svg)
+<!-- ![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/CI-iOS/badge.svg) -->
+<!-- Add badge -->
 
 ## Leagues Feature Specs
 
@@ -20,14 +21,15 @@ So I can choose one of them
 Given the customer has connectivity
   And the cache is empty
  When the customer requests to see the leagues
- Then the app should display the latest leagues from remote
-  And replace the cache with those leagues
+ Then the app should display two hardcoded leagues
+  And save those leagues to cache 
+  And if saving fails, delete the cache
   
 Given the customer has connectivity
-  And there’s a cached version of the leagues
+  And there's a cached version of the leagues
  When the customer requests to see the leagues
- Then the app should display the latest leagues from local
-  And replace the cache with those leagues
+ Then the app should display two hardcoded leagues
+  And not save those leagues to cache
 ```
 
 ### Narrative #2
@@ -42,42 +44,21 @@ So I can choose one of them
 
 ```
 Given the customer doesn't have connectivity
-  And there’s a cached version of the leagues
-  And the cache is less than seven days old
  When the customer requests to see the leagues
- Then the app should display the latest leagues from local
-
-Given the customer doesn't have connectivity
-  And there’s a cached version of the leagues
-  And the cache is seven days old or more
- When the customer requests to see the leagues
- Then the app should display an error message
-
-Given the customer doesn't have connectivity
-  And the cache is empty
- When the customer requests to see the leagues
- Then the app should display an error message
+ Then the app should display two hardcoded leagues
 ```
 
 ## Use Cases
 
-### Load Leagues From Remote Use Case
+### Load Leagues Use Case
 
 #### Data:
-- URL
+- Hardcoded leagues
 
 #### Primary course (happy path):
-1. Execute get command with above data.
-2. System downloads data from the URL.
-3. System validates downloaded data.
-4. System creates leagues from valid data.
-5. System delivers leagues.
+1. System creates leagues from hardcoded data.
+2. System shows leagues.
 
-#### Invalid data – error course (sad path): //TODO: Improve
-1. System delivers invalid data error.
-
-#### Other errors – error course (sad path): //TODO: Validate
-1. System delivers respective error.
 ---
 
 ### Load League Image From Remote Use Case
@@ -86,7 +67,7 @@ Given the customer doesn't have connectivity
 - URL
 
 #### Primary course (happy path):
-1. Execute get command with above data.
+1. Execute get command.
 2. System downloads data from the URL.
 3. System validates downloaded data.
 4. System delivers image data.
@@ -99,33 +80,13 @@ Given the customer doesn't have connectivity
 
 ---
 
-### Load Leagues From Local Use Case
-
-#### Primary course:
-1. Execute load command with above data.
-2. System retrieves leagues data from cache.
-3. System validates cache is less than seven days old.
-4. System creates leagues from cached data.
-5. System delivers leagues.
-
-#### Retrieval error course (sad path):
-1. System delivers error.
-
-#### Expired cache course (sad path): 
-1. System delivers no leagues.
-
-#### Empty cache course (sad path): 
-1. System delivers no leagues.
-
----
-
 ### Load League Image From Local Use Case
 
 #### Data:
 - URL
 
 #### Primary course (happy path):
-1. Execute load command with above data.
+1. Execute load command.
 2. System retrieves data from the cache.
 3. System delivers cached image data.
 
@@ -143,7 +104,7 @@ Given the customer doesn't have connectivity
 ### Validate League Cache Use Case
 
 #### Primary course:
-1. Execute "Validate Cache" command with above data.
+1. Execute "Validate Cache" command upon app launch.
 2. System retrieves leagues data from cache.
 3. System validates cache is less than seven days old.
 
@@ -161,17 +122,16 @@ Given the customer doesn't have connectivity
 - League
 
 #### Primary course (happy path):
-1. Execute save command with above data.
-2. System deletes old cache data.
+1. Execute save command.
 3. System encodes leagues.
 4. System timestamps the new cache.
 5. System saves new cache data.
 
 #### Deleting error course (sad path):
-1. System delivers error.
+1. System deletes cache.
 
 #### Saving error course (sad path):
-1. System delivers error.
+1. System deletes cache.
 
 ---
 
@@ -181,7 +141,7 @@ Given the customer doesn't have connectivity
 - Image Data
 
 #### Primary course (happy path):
-1. Execute save command with above data.
+1. Execute save command.
 2. System caches image data.
 
 #### Saving error course (sad path):
@@ -190,7 +150,6 @@ Given the customer doesn't have connectivity
 ---
 
 ## Flowchart
-
 
 ## Model Specs
 
@@ -203,45 +162,10 @@ Given the customer doesn't have connectivity
 | `name`        | `String`            |
 | `logoURL`     | `URL`               |
 
-### Payload contract
 
-```
-GET /feed
+## Teams Feature Specs
 
-200 RESPONSE
-
-{
-    "items": [
-        {
-            "id": "a UUID",
-            "description": "a description",
-            "location": "a location",
-            "image": "https://a-image.url",
-        },
-        {
-            "id": "another UUID",
-            "description": "another description",
-            "image": "https://another-image.url"
-        },
-        {
-            "id": "even another UUID",
-            "location": "even another location",
-            "image": "https://even-another-image.url"
-        },
-        {
-            "id": "yet another UUID",
-            "image": "https://yet-another-image.url"
-        }
-        ...
-    ]
-}
-```
-
----
-
-## Image Comments Feature Specs
-
-### Story: Customer requests to see image comments
+### Story: Customer requests to see leagues' teams
 
 ### Narrative
 

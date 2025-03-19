@@ -25,8 +25,12 @@ extension ManagedCache {
     }
     
     static func newUniqueInstance(in context: NSManagedObjectContext) throws -> ManagedCache {
-        //try deleteCache(in: context)
+        try deleteCache(in: context)
         return ManagedCache(context: context)
+    }
+    
+    static func cacheExists(in context: NSManagedObjectContext) throws -> Bool {
+        try ManagedCache.find(in: context) != nil
     }
     
     var localLeagues: [LocalLeague] {

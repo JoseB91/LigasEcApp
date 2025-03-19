@@ -25,7 +25,6 @@ final class LeagueViewModel: ObservableObject {
     
     init(leagueLoader: @escaping () async throws -> [League]) {
         self.leagueLoader = leagueLoader
-        let libraryDirectory = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
     }
     
     @MainActor

@@ -10,7 +10,7 @@ import Foundation
 public typealias CachedLeagues = (leagues: [LocalLeague], timestamp: Date)
     
 public protocol LeagueStore {
-    func deleteLeagues() throws
+    func deleteCache() throws
     func insert(_ leagues: [LocalLeague], timestamp: Date) throws
     func retrieve() throws -> CachedLeagues?
 }

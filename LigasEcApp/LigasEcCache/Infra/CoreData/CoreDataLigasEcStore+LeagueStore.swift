@@ -16,13 +16,15 @@ extension CoreDataLigasEcStore: LeagueStore { //TODO: Tests
     }
     
     public func insert(_ leagues: [LocalLeague], timestamp: Date) throws {
-        let managedCache = try ManagedCache.newUniqueInstance(in: context)
-        managedCache.timestamp = timestamp
-        managedCache.leagues = ManagedLeague.fetchLeagues(from: leagues, in: context)
-        try context.save()
+        if try !ManagedCache.cacheExists(in: context) {
+            let managedCache = try ManagedCache.newUniqueInstance(in: context)
+            managedCache.timestamp = timestamp
+            managedCache.leagues = ManagedLeague.fetchLeagues(from: leagues, in: context)
+            try context.save()
+        }
     }
     
-    public func deleteLeagues() throws {
+    public func deleteCache() throws {
         try ManagedCache.deleteCache(in: context)
     }
 }

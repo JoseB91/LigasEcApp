@@ -17,7 +17,7 @@ public class InMemoryStore {
 }
 
 extension InMemoryStore: LeagueStore {
-    public func deleteLeagues() throws {
+    public func deleteCache() throws {
         leaguesCache = nil
     }
 

@@ -24,21 +24,10 @@ public protocol LeagueCache {
 
 extension LocalLeagueLoader: LeagueCache {
     public func save(_ leagues: [League]) throws {
-        //try store.deleteLeagues()
-        try store.insert(leagues.toLocal(), timestamp: currentDate())
-    }
-}
-
-extension LocalLeagueLoader {
-    private struct EmptyData: Error {}
-    
-    public func load() throws -> [League] {
-        if let cache = try store.retrieve(),
-           CachePolicy.validate(cache.timestamp,
-                                against: currentDate()) {
-            return cache.leagues.toModels()
-        } else {
-            throw EmptyData()
+        do {
+            try store.insert(leagues.toLocal(), timestamp: currentDate())
+        } catch {
+            try store.deleteCache()
         }
     }
 }
@@ -53,7 +42,7 @@ extension LocalLeagueLoader {
                 throw InvalidCache()
             }
         } catch {
-            try store.deleteLeagues()
+            try store.deleteCache()
         }
     }
 }
