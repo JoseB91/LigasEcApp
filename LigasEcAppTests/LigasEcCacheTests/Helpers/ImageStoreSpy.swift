@@ -19,11 +19,11 @@ public class ImageStoreSpy: ImageStore {
     private var insertionResult: Result<Void, Error>?
     
     // MARK: Insert
-    public func insert(_ data: Data, for url: URL) throws {
+    public func insert(_ data: Data, for url: URL, on table: Table) throws {
         receivedMessages.append(.insert(data: data, for: url))
         try insertionResult?.get()
     }
-    
+
     func completeInsertion(with error: Error) {
         insertionResult = .failure(error)
     }
@@ -33,7 +33,7 @@ public class ImageStoreSpy: ImageStore {
     }
     
     // MARK: Retrieve
-    public func retrieve(dataForURL url: URL) throws -> Data? {
+    public func retrieve(dataFor url: URL, on table: Table) throws -> Data? {
         receivedMessages.append(.retrieve(dataFor: url))
         return try retrievalResult?.get()
     }

@@ -166,6 +166,11 @@
 			path = Player;
 			sourceTree = "<group>";
 		};
+		B0F482302D91D20500874AA8 /* League */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = League;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +308,7 @@
 		B05361D82D821B8500BE41F0 /* LigasEcCacheTests */ = {
 			isa = PBXGroup;
 			children = (
+				B0F482302D91D20500874AA8 /* League */,
 				B05361F12D821B8A00BE41F0 /* Helpers */,
 				B05361FC2D821B9400BE41F0 /* Team */,
 				B05361F72D821B8F00BE41F0 /* Image */,
@@ -405,6 +411,7 @@
 				B05361F72D821B8F00BE41F0 /* Image */,
 				B05361FC2D821B9400BE41F0 /* Team */,
 				B05362112D821BD600BE41F0 /* Infra */,
+				B0F482302D91D20500874AA8 /* League */,
 			);
 			name = LigasEcAppTests;
 			packageProductDependencies = (

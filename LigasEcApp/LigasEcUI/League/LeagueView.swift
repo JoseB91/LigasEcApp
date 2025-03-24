@@ -46,7 +46,7 @@ struct LeagueView: View {
         .task {
             await leagueViewModel.loadLeagues()
         }
-        .alert(item: $leagueViewModel.errorMessage) { error in
+        .alert(item: $leagueViewModel.errorMessage) { error in // TODO: Change to use ContentUnavailable~
             Alert(
                 title: Text("Error"),
                 message: Text(error.message),

@@ -12,7 +12,7 @@ import SwiftUI
 final class LeagueLocalizedTests: XCTestCase {
 
     func test_leagueTitle_isLocalized() {
-        let leagueViewModel = LeagueViewModel()
+        let leagueViewModel = LeagueViewModel(leagueLoader: MockLeagueViewModel.mockLeagueLoader)
         XCTAssertEqual(leagueViewModel.title, localized("LEAGUE_VIEW_TITLE"))
     }
     

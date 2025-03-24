@@ -15,18 +15,19 @@ class LoadImageCacheTests: XCTestCase {
         // Arrange
         let (_, store) = makeSUT()
 
+        // Assert
         XCTAssertTrue(store.receivedMessages.isEmpty)
     }
     
     func test_loadImageDataFromURL_requestsStoredDataForURL() {
         // Arrange
         let (sut, store) = makeSUT()
-        let url = anyURL()
 
         // Act
-        _ = try? sut.loadImageData(from: url)
+        _ = try? sut.loadImageData(from: anyURL(), on: anyTable())
 
-        XCTAssertEqual(store.receivedMessages, [.retrieve(dataFor: url)])
+        // Assert
+        XCTAssertEqual(store.receivedMessages, [.retrieve(dataFor: anyURL())])
     }
     
     func test_loadImageDataFromURL_failsOnStoreError() {
@@ -34,7 +35,7 @@ class LoadImageCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
 
         // Act & Assert
-        expect(sut, toCompleteWith: failed(), when: {
+        expect(sut, on: anyTable(), toCompleteWith: failed(), when: {
             let retrievalError = anyNSError()
             store.completeRetrieval(with: retrievalError)
         })
@@ -45,7 +46,7 @@ class LoadImageCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
 
         // Act & Assert
-        expect(sut, toCompleteWith: notFound(), when: {
+        expect(sut, on: anyTable(), toCompleteWith: notFound(), when: {
             store.completeRetrieval(with: .none)
         })
     }
@@ -56,7 +57,7 @@ class LoadImageCacheTests: XCTestCase {
         let foundData = anyData()
 
         // Act & Assert
-        expect(sut, toCompleteWith: .success(foundData), when: {
+        expect(sut, on: anyTable(), toCompleteWith: .success(foundData), when: {
             store.completeRetrieval(with: foundData)
         })
     }
@@ -79,12 +80,12 @@ class LoadImageCacheTests: XCTestCase {
         return .failure(LocalImageLoader.LoadError.notFound)
     }
     
-    private func expect(_ sut: LocalImageLoader, toCompleteWith expectedResult: Result<Data, Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+    private func expect(_ sut: LocalImageLoader, on table: Table, toCompleteWith expectedResult: Result<Data, Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         
         // Act
         action()
         
-        let receivedResult = Result { try sut.loadImageData(from: anyURL()) }
+        let receivedResult = Result { try sut.loadImageData(from: anyURL(), on: table) }
         
         switch (receivedResult, expectedResult) {
         case let (.success(receivedData), .success(expectedData)):

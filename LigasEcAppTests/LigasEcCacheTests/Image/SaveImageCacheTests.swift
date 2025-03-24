@@ -25,7 +25,7 @@ class SaveImageCacheTests: XCTestCase {
         let data = anyData()
 
         // Act
-        try? sut.save(data, for: url)
+        try? sut.save(data, for: url, on: anyTable())
         
         // Assert
         XCTAssertEqual(store.receivedMessages, [.insert(data: data, for: url)])
@@ -36,7 +36,7 @@ class SaveImageCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
 
         // Act & Assert
-        expect(sut, toCompleteWith: failed(), when: {
+        expect(sut, on: anyTable(), toCompleteWith: failed(), when: {
             let insertionError = anyNSError()
             store.completeInsertion(with: insertionError)
         })
@@ -47,7 +47,7 @@ class SaveImageCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
 
         // Act & Assert
-        expect(sut, toCompleteWith: .success(()), when: {
+        expect(sut, on: anyTable(), toCompleteWith: .success(()), when: {
             store.completeInsertionSuccessfully()
         })
     }
@@ -66,12 +66,12 @@ class SaveImageCacheTests: XCTestCase {
         return .failure(LocalImageLoader.SaveError.failed)
     }
 
-    private func expect(_ sut: LocalImageLoader, toCompleteWith expectedResult: Result<Void, Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+    private func expect(_ sut: LocalImageLoader, on table: Table, toCompleteWith expectedResult: Result<Void, Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
 
         // Act
         action()
         
-        let receivedResult = Result { try sut.save(anyData(), for: anyURL()) }
+        let receivedResult = Result { try sut.save(anyData(), for: anyURL(), on: table) }
 
                 switch (receivedResult, expectedResult) {
                 case (.success, .success):

@@ -29,6 +29,10 @@ func anyData() -> Data {
     return Data("any data".utf8)
 }
 
+func anyTable() -> Table {
+    return Table.League
+}
+
 func mockTeams() -> (models: [Team], local: [LocalTeam]) {
     let models = [mockTeam(), mockTeam()]
     let local = models.toLocal()

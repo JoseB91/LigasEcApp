@@ -74,7 +74,7 @@ extension ImageStoreSpecs where Self: XCTestCase {
     }
 
     func expect(_ sut: ImageStore, toCompleteRetrievalWith expectedResult: Result<Data?, Error>, for url: URL,  file: StaticString = #filePath, line: UInt = #line) {
-        let receivedResult = Result { try sut.retrieve(dataForURL: url) }
+        let receivedResult = Result { try sut.retrieve(dataFor: url, on: anyTable()) }
 
         switch (receivedResult, expectedResult) {
         case let (.success( receivedData), .success(expectedData)):
@@ -87,7 +87,7 @@ extension ImageStoreSpecs where Self: XCTestCase {
 
     func insert(_ data: Data, for url: URL, into sut: ImageStore, file: StaticString = #filePath, line: UInt = #line) {
         do {
-            try sut.insert(data, for: url)
+            try sut.insert(data, for: url, on: anyTable())
         } catch {
             XCTFail("Failed to insert image data: \(data) - error: \(error)", file: file, line: line)
         }
