@@ -29,15 +29,15 @@ class LoadImageCacheTests: XCTestCase {
         // Assert
         XCTAssertEqual(store.receivedMessages, [.retrieve(dataFor: anyURL())])
     }
-    
-    func test_loadImageDataFromURL_failsOnStoreError() {
+
+    func test_loadImageDataFromURL_deliversStoredDataOnFoundData() {
         // Arrange
         let (sut, store) = makeSUT()
+        let foundData = anyData()
 
         // Act & Assert
-        expect(sut, on: anyTable(), toCompleteWith: failed(), when: {
-            let retrievalError = anyNSError()
-            store.completeRetrieval(with: retrievalError)
+        expect(sut, on: anyTable(), toCompleteWith: .success(foundData), when: {
+            store.completeRetrieval(with: foundData)
         })
     }
     
@@ -51,17 +51,17 @@ class LoadImageCacheTests: XCTestCase {
         })
     }
     
-    func test_loadImageDataFromURL_deliversStoredDataOnFoundData() {
+    func test_loadImageDataFromURL_deliversFailedErrorOnRetrieveError() {
         // Arrange
         let (sut, store) = makeSUT()
-        let foundData = anyData()
 
         // Act & Assert
-        expect(sut, on: anyTable(), toCompleteWith: .success(foundData), when: {
-            store.completeRetrieval(with: foundData)
+        expect(sut, on: anyTable(), toCompleteWith: failed(), when: {
+            let retrievalError = anyNSError()
+            store.completeRetrieval(with: retrievalError)
         })
     }
-        
+    
     // MARK: - Helpers
 
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #file, line: UInt = #line) -> (sut: LocalImageLoader, store: ImageStoreSpy) {

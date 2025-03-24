@@ -31,6 +31,16 @@ class SaveImageCacheTests: XCTestCase {
         XCTAssertEqual(store.receivedMessages, [.insert(data: data, for: url)])
     }
     
+    func test_saveImageDataFromURL_succeedsOnSuccessfulStoreInsertion() {
+        // Arrange
+        let (sut, store) = makeSUT()
+
+        // Act & Assert
+        expect(sut, on: anyTable(), toCompleteWith: .success(()), when: {
+            store.completeInsertionSuccessfully()
+        })
+    }
+    
     func test_saveImageDataFromURL_failsOnStoreInsertionError() {
         // Arrange
         let (sut, store) = makeSUT()
@@ -39,16 +49,6 @@ class SaveImageCacheTests: XCTestCase {
         expect(sut, on: anyTable(), toCompleteWith: failed(), when: {
             let insertionError = anyNSError()
             store.completeInsertion(with: insertionError)
-        })
-    }
-    
-    func test_saveImageDataFromURL_succeedsOnSuccessfulStoreInsertion() {
-        // Arrange
-        let (sut, store) = makeSUT()
-
-        // Act & Assert
-        expect(sut, on: anyTable(), toCompleteWith: .success(()), when: {
-            store.completeInsertionSuccessfully()
         })
     }
     

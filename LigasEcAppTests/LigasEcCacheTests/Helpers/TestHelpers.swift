@@ -33,6 +33,19 @@ func anyTable() -> Table {
     return Table.League
 }
 
+func mockLeagues() -> (models: [League], local: [LocalLeague]) {
+    let models = [mockLeague(), mockLeague()]
+    let local = models.toLocal()
+    return (models, local)
+}
+
+func mockLeague() -> League {
+    return League(id: "IaFDigtm",
+                  stageId: "OO37de6i",
+                  name: "LigaPro Serie A",
+                  logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!)
+}
+
 func mockTeams() -> (models: [Team], local: [LocalTeam]) {
     let models = [mockTeam(), mockTeam()]
     let local = models.toLocal()

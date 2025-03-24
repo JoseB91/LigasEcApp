@@ -85,18 +85,17 @@ Given an online/offline customer
 
 ---
 
-### Validate League Cache Use Case
+### Save League Image To Local Use Case
 
-#### Primary course:
-1. Execute "Validate Cache" command upon app launch.
-2. System retrieves leagues data from cache.
-3. System validates cache is less than seven days old.
+#### Data:
+- Image Data
 
-#### Retrieval error course (sad path):
-1. System deletes cache.
+#### Primary course (happy path):
+1. Execute save command.
+2. System caches image data.
 
-#### Expired cache course (sad path): 
-1. System deletes cache.
+#### Saving error course (sad path):
+1. System delivers error.
 
 ---
 
@@ -111,25 +110,25 @@ Given an online/offline customer
 4. System timestamps the new cache.
 5. System saves new cache data.
 
-#### Deleting error course (sad path):
-1. System deletes cache.
-
 #### Saving error course (sad path):
 1. System deletes cache.
 
+#### Saving and deleting cache error course (sad path):
+1. System delivers error.
 ---
 
-### Save League Image To Local Use Case
+### Validate League Cache Use Case
 
-#### Data:
-- Image Data
+#### Primary course:
+1. Execute "Validate Cache" command upon app launch.
+2. System retrieves leagues data from cache.
+3. System validates cache is less than seven days old.
 
-#### Primary course (happy path):
-1. Execute save command.
-2. System caches image data.
+#### Retrieval error course (sad path):
+1. System deletes cache.
 
-#### Saving error course (sad path):
-1. System delivers error.
+#### Expired cache course (sad path): 
+1. System deletes cache.
 
 ---
 
