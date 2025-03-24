@@ -1,133 +1,80 @@
-
 # LigasEc 
-![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/CI-iOS/badge.svg) ![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/CI-macOS/badge.svg) ![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/Deploy/badge.svg)
+<!-- ![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/CI-iOS/badge.svg) -->
+<!-- Add badge -->
 
 ## Leagues Feature Specs
 
 ### Story: Customer requests to see Ecuadorian leagues
 
-### Narrative #1
+### Narrative
 
 ```
-As an online customer
-I want the app to automatically load ecuadorian leagues
+As an online/offline customer
+I want the app to show ecuadorian leagues
 So I can choose one of them 
 ```
 
 #### Scenarios (Acceptance criteria)
 
 ```
-Given the customer has connectivity
- When the customer requests to see their feed
- Then the app should display the latest feed from remote
-  And replace the cache with the new feed
-```
-
-### Narrative #2
-
-```
-As an offline customer
-I want the app to show the latest saved version of my image feed
-So I can always enjoy images of my friends
-```
-
-#### Scenarios (Acceptance criteria)
-
-```
-Given the customer doesn't have connectivity
-  And there’s a cached version of the feed
-  And the cache is less than seven days old
- When the customer requests to see the feed
- Then the app should display the latest feed saved
-
-Given the customer doesn't have connectivity
-  And there’s a cached version of the feed
-  And the cache is seven days old or more
- When the customer requests to see the feed
- Then the app should display an error message
-
-Given the customer doesn't have connectivity
+Given an online/offline customer
   And the cache is empty
- When the customer requests to see the feed
- Then the app should display an error message
+ When the customer requests to see the leagues
+ Then the app should display two hardcoded leagues
+  And save those leagues to cache 
+  And if saving fails, delete the cache
+  
+Given an online/offline customer
+  And there's a cached version of the leagues
+ When the customer requests to see the leagues
+ Then the app should display two hardcoded leagues
+  And don't save those leagues to cache
 ```
 
 ## Use Cases
 
-### Load Feed From Remote Use Case
+### Load Leagues Use Case
 
 #### Data:
-- URL
+- Hardcoded leagues
 
 #### Primary course (happy path):
-1. Execute "Load Image Feed" command with above data.
-2. System downloads data from the URL.
-3. System validates downloaded data.
-4. System creates image feed from valid data.
-5. System delivers image feed.
-
-#### Invalid data – error course (sad path):
-1. System delivers invalid data error.
-
-#### No connectivity – error course (sad path):
-1. System delivers connectivity error.
+1. System creates leagues from hardcoded data.
+2. System shows leagues.
 
 ---
 
-### Load Feed Image Data From Remote Use Case
+### Load League Image From Remote Use Case
 
 #### Data:
 - URL
 
 #### Primary course (happy path):
-1. Execute "Load Image Data" command with above data.
+1. Execute get command.
 2. System downloads data from the URL.
 3. System validates downloaded data.
 4. System delivers image data.
 
 #### Cancel course:
-1. System does not deliver image data nor error.
+1. System does not deliver image data nor error. //TODO: Implement
 
-#### Invalid data – error course (sad path):
-1. System delivers invalid data error.
-
-#### No connectivity – error course (sad path):
-1. System delivers connectivity error.
+#### Any error – error course (sad path):
+1. System delivers respective error.
 
 ---
 
-### Load Feed From Cache Use Case
-
-#### Primary course:
-1. Execute "Load Image Feed" command with above data.
-2. System retrieves feed data from cache.
-3. System validates cache is less than seven days old.
-4. System creates image feed from cached data.
-5. System delivers image feed.
-
-#### Retrieval error course (sad path):
-1. System delivers error.
-
-#### Expired cache course (sad path): 
-1. System delivers no feed images.
-
-#### Empty cache course (sad path): 
-1. System delivers no feed images.
-
----
-
-### Load Feed Image Data From Cache Use Case
+### Load League Image From Local Use Case
 
 #### Data:
 - URL
 
 #### Primary course (happy path):
-1. Execute "Load Image Data" command with above data.
+1. Execute load command.
 2. System retrieves data from the cache.
 3. System delivers cached image data.
 
 #### Cancel course:
-1. System does not deliver image data nor error.
+1. System does not deliver image data nor error. // TODO: Implement
 
 #### Retrieval error course (sad path):
 1. System delivers error.
@@ -137,11 +84,43 @@ Given the customer doesn't have connectivity
 
 ---
 
-### Validate Feed Cache Use Case
+### Save League Image To Local Use Case
+
+#### Data:
+- Image Data
+
+#### Primary course (happy path):
+1. Execute save command.
+2. System caches image data.
+
+#### Saving error course (sad path):
+1. System delivers error.
+
+---
+
+### Save Leagues To Local Use Case
+
+#### Data:
+- League
+
+#### Primary course (happy path):
+1. Execute save command.
+3. System encodes leagues.
+4. System timestamps the new cache.
+5. System saves new cache data.
+
+#### Saving error course (sad path):
+1. System deletes cache.
+
+#### Saving and deleting cache error course (sad path):
+1. System delivers error.
+---
+
+### Validate League Cache Use Case
 
 #### Primary course:
-1. Execute "Validate Cache" command with above data.
-2. System retrieves feed data from cache.
+1. Execute "Validate Cache" command upon app launch.
+2. System retrieves leagues data from cache.
 3. System validates cache is less than seven days old.
 
 #### Retrieval error course (sad path):
@@ -152,117 +131,68 @@ Given the customer doesn't have connectivity
 
 ---
 
-### Cache Feed Use Case
-
-#### Data:
-- Image Feed
-
-#### Primary course (happy path):
-1. Execute "Save Image Feed" command with above data.
-2. System deletes old cache data.
-3. System encodes image feed.
-4. System timestamps the new cache.
-5. System saves new cache data.
-6. System delivers success message.
-
-#### Deleting error course (sad path):
-1. System delivers error.
-
-#### Saving error course (sad path):
-1. System delivers error.
-
----
-
-### Cache Feed Image Data Use Case
-
-#### Data:
-- Image Data
-
-#### Primary course (happy path):
-1. Execute "Save Image Data" command with above data.
-2. System caches image data.
-3. System delivers success message.
-
-#### Saving error course (sad path):
-1. System delivers error.
-
----
-
 ## Flowchart
-
-![Feed Loading Feature](feed_flowchart.png)
 
 ## Model Specs
 
-### Feed Image
+### League
 
 | Property      | Type                |
 |---------------|---------------------|
-| `id`          | `UUID`              |
-| `description` | `String` (optional) |
-| `location`    | `String` (optional) |
-| `url`            | `URL`               |
+| `id`          | `String`            |
+| `stageId`     | `String`            |
+| `name`        | `String`            |
+| `logoURL`     | `URL`               |
 
-### Payload contract
 
-```
-GET /feed
+## Teams Feature Specs
 
-200 RESPONSE
+### Story: Customer requests to see leagues' teams
 
-{
-    "items": [
-        {
-            "id": "a UUID",
-            "description": "a description",
-            "location": "a location",
-            "image": "https://a-image.url",
-        },
-        {
-            "id": "another UUID",
-            "description": "another description",
-            "image": "https://another-image.url"
-        },
-        {
-            "id": "even another UUID",
-            "location": "even another location",
-            "image": "https://even-another-image.url"
-        },
-        {
-            "id": "yet another UUID",
-            "image": "https://yet-another-image.url"
-        }
-        ...
-    ]
-}
-```
-
----
-
-## Image Comments Feature Specs
-
-### Story: Customer requests to see image comments
-
-### Narrative
+### Narrative #1
 
 ```
 As an online customer
-I want the app to load image commments
-So I can see how people are engaging with images in my feed
+I want the app to load teams of a selected ecuadorian league
+So I can choose one of them
 ```
 
 #### Scenarios (Acceptance criteria)
 
 ```
 Given the customer has connectivity
- When the customer requests to see comments on an image
- Then the app should display all comments for that image
+  And the cache is empty
+ When the customer requests to see teams of a league
+ Then the app should display all teams from remote
+  And save those teams to cache
+
+Given the customer has connectivity
+  And there's a cached version of the teams
+ When the customer requests to see teams of a league
+ Then the app should display all teams from cache
+  And don't save those teams to cache
 ```
+
+### Narrative #2
+
+```
+As an offline customer
+I want the app to load teams of a selected ecuadorian league
+So I can choose one of them
+```
+
+#### Scenarios (Acceptance criteria)
 
 ```
 Given the customer doesn't have connectivity
- When the customer requests to see comments on an image
+  And the cache is empty
+ When the customer requests to see the teams
  Then the app should display an error message
+ 
+Given the customer doesn't have connectivity
+  And there's a cached version of the teams
+ When the customer requests to see the teams
+ Then the app should display the teams from cache
 ```
 
 ## Use Cases
@@ -338,4 +268,4 @@ GET /image/{image-id}/comments
 
 ## App Architecture
 
-![](architecture.png)
+

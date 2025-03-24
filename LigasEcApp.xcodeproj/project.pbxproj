@@ -29,11 +29,11 @@
 		B053621E2D8232CA00BE41F0 /* ManagedLeague.swift in Sources */ = {isa = PBXBuildFile; fileRef = B053621D2D8232CA00BE41F0 /* ManagedLeague.swift */; };
 		B05362272D82AB3B00BE41F0 /* ManagedPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05362262D82AB3B00BE41F0 /* ManagedPlayer.swift */; };
 		B05362322D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */; };
-		B05362D12D89DC6200BE41F0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B05362D02D89DC6200BE41F0 /* README.md */; };
 		B095811A2D6CE61400C4B206 /* LigasEcAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09581162D6CE59100C4B206 /* LigasEcAPI.framework */; };
 		B095811B2D6CE61400C4B206 /* LigasEcAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B09581162D6CE59100C4B206 /* LigasEcAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B09583B32D6CEB0900C4B206 /* SharedAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09581122D6CE59100C4B206 /* SharedAPI.framework */; };
 		B09583B42D6CEB0900C4B206 /* SharedAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B09581122D6CE59100C4B206 /* SharedAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B0F482382D920BF400874AA8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B0F482372D920BF400874AA8 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,8 +101,8 @@
 		B053621D2D8232CA00BE41F0 /* ManagedLeague.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedLeague.swift; sourceTree = "<group>"; };
 		B05362262D82AB3B00BE41F0 /* ManagedPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedPlayer.swift; sourceTree = "<group>"; };
 		B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataLigasEcStore+PlayerStore.swift"; sourceTree = "<group>"; };
-		B05362D02D89DC6200BE41F0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B09581082D6CE59100C4B206 /* LigasEcAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LigasEcAPI.xcodeproj; path = ../LigasEcAPI/LigasEcAPI.xcodeproj; sourceTree = SOURCE_ROOT; };
+		B0F482372D920BF400874AA8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -196,6 +196,7 @@
 		B03E6F842D6CE44F00DE1485 = {
 			isa = PBXGroup;
 			children = (
+				B0F482372D920BF400874AA8 /* README.md */,
 				B09581082D6CE59100C4B206 /* LigasEcAPI.xcodeproj */,
 				B05361862D821B3300BE41F0 /* LigasEcApp */,
 				B05361DD2D821B8500BE41F0 /* LigasEcAppTests */,
@@ -292,7 +293,6 @@
 		B05361862D821B3300BE41F0 /* LigasEcApp */ = {
 			isa = PBXGroup;
 			children = (
-				B05362D02D89DC6200BE41F0 /* README.md */,
 				B053616E2D821B3300BE41F0 /* LigasEcCache */,
 				B053617B2D821B3300BE41F0 /* LigasEcUI */,
 				B05361802D821B3300BE41F0 /* Utils */,
@@ -488,9 +488,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0F482382D920BF400874AA8 /* README.md in Resources */,
 				B05361A02D821B3300BE41F0 /* Preview Assets.xcassets in Resources */,
 				B05361A12D821B3300BE41F0 /* Assets.xcassets in Resources */,
-				B05362D12D89DC6200BE41F0 /* README.md in Resources */,
 				B05361A22D821B3300BE41F0 /* LigasEc.xcstrings in Resources */,
 				B05361A32D821B3300BE41F0 /* Config.xcconfig in Resources */,
 			);
