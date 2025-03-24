@@ -5,11 +5,6 @@
 //  Created by José Briones on 10/3/25.
 //
 
-
-//TODO: ValidateCacheTests
-//TODO: InMemoryLeagueStoreTests
-//TODO: CoreDataImageStoreTests
-//TODO: CoreDataLeagueStoreTests
 import XCTest
 @testable import LigasEcApp
 

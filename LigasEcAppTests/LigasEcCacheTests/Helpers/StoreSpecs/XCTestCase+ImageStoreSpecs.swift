@@ -17,6 +17,7 @@ extension ImageStoreSpecs where Self: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
+        // Act &  Assert
         expect(sut, toCompleteRetrievalWith: notFound(), for: imageDataURL, file: file, line: line)
     }
 
@@ -26,10 +27,13 @@ extension ImageStoreSpecs where Self: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
+        // Arrange
         let nonMatchingURL = URL(string: "http://a-non-matching-url.com")!
 
+        // Act
         insert(anyData(), for: imageDataURL, into: sut, file: file, line: line)
 
+        // Act &  Assert
         expect(sut, toCompleteRetrievalWith: notFound(), for: nonMatchingURL, file: file, line: line)
     }
 
@@ -39,10 +43,13 @@ extension ImageStoreSpecs where Self: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
+        // Arrange
         let storedData = anyData()
 
+        // Act
         insert(storedData, for: imageDataURL, into: sut, file: file, line: line)
 
+        // Act &  Assert
         expect(sut, toCompleteRetrievalWith: found(storedData), for: imageDataURL, file: file, line: line)
     }
 
@@ -52,12 +59,15 @@ extension ImageStoreSpecs where Self: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
+        // Arrange
         let firstStoredData = Data("first".utf8)
         let lastStoredData = Data("last".utf8)
 
+        // Act
         insert(firstStoredData, for: imageDataURL, into: sut, file: file, line: line)
         insert(lastStoredData, for: imageDataURL, into: sut, file: file, line: line)
 
+        // Assert
         expect(sut, toCompleteRetrievalWith: found(lastStoredData), for: imageDataURL, file: file, line: line)
     }
 
@@ -74,21 +84,26 @@ extension ImageStoreSpecs where Self: XCTestCase {
     }
 
     func expect(_ sut: ImageStore, toCompleteRetrievalWith expectedResult: Result<Data?, Error>, for url: URL,  file: StaticString = #filePath, line: UInt = #line) {
+        // Act
         let receivedResult = Result { try sut.retrieve(dataFor: url, on: anyTable()) }
 
         switch (receivedResult, expectedResult) {
         case let (.success( receivedData), .success(expectedData)):
+            // Assert
             XCTAssertEqual(receivedData, expectedData, file: file, line: line)
 
         default:
+            // Assert
             XCTFail("Expected \(expectedResult), got \(receivedResult) instead", file: file, line: line)
         }
     }
 
     func insert(_ data: Data, for url: URL, into sut: ImageStore, file: StaticString = #filePath, line: UInt = #line) {
         do {
+            // Act
             try sut.insert(data, for: url, on: anyTable())
         } catch {
+            // Assert
             XCTFail("Failed to insert image data: \(data) - error: \(error)", file: file, line: line)
         }
     }
