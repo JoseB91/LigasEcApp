@@ -1,11 +1,11 @@
 //
-//  StoreSpecs.swift
+//  LeagueStoreSpecs.swift
 //  LigasEcAppTests
 //
 //  Created by José Briones on 10/3/25.
 //
 
-protocol StoreSpecs {
+protocol LeagueStoreSpecs {
     func test_retrieve_deliversEmptyOnEmptyCache() throws
     func test_retrieve_hasNoSideEffectsOnEmptyCache() throws
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() throws
@@ -21,19 +21,19 @@ protocol StoreSpecs {
     func test_delete_emptiesPreviouslyInsertedCache() throws
 }
 
-protocol FailableRetrieveFeedStoreSpecs: StoreSpecs {
+protocol FailableRetrieveLeagueStoreSpecs: LeagueStoreSpecs {
     func test_retrieve_deliversFailureOnRetrievalError() throws
     func test_retrieve_hasNoSideEffectsOnFailure() throws
 }
 
-protocol FailableInsertFeedStoreSpecs: StoreSpecs {
+protocol FailableInsertLeagueStoreSpecs: LeagueStoreSpecs {
     func test_insert_deliversErrorOnInsertionError() throws
     func test_insert_hasNoSideEffectsOnInsertionError() throws
 }
 
-protocol FailableDeleteFeedStoreSpecs: StoreSpecs {
+protocol FailableDeleteLeagueStoreSpecs: LeagueStoreSpecs {
     func test_delete_deliversErrorOnDeletionError() throws
     func test_delete_hasNoSideEffectsOnDeletionError() throws
 }
 
-typealias FailableFeedStoreSpecs = FailableRetrieveFeedStoreSpecs & FailableInsertFeedStoreSpecs & FailableDeleteFeedStoreSpecs
+typealias FailableLeagueStoreSpecs = FailableRetrieveLeagueStoreSpecs & FailableInsertLeagueStoreSpecs & FailableDeleteLeagueStoreSpecs

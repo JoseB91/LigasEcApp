@@ -10,6 +10,18 @@ import XCTest
 
 class InMemoryImageStoreTests: XCTestCase, ImageStoreSpecs {
 
+    func test_retrieveImageData_deliversLastInsertedValue() throws {
+        let sut = makeSUT()
+
+        assertThatRetrieveImageDataDeliversLastInsertedValueForURL(on: sut)
+    }
+    
+    func test_retrieveImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws {
+        let sut = makeSUT()
+
+        assertThatRetrieveImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut)
+    }
+    
     func test_retrieveImageData_deliversNotFoundWhenEmpty() throws {
         let sut = makeSUT()
 
@@ -20,18 +32,6 @@ class InMemoryImageStoreTests: XCTestCase, ImageStoreSpecs {
         let sut = makeSUT()
 
         assertThatRetrieveImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut)
-    }
-
-    func test_retrieveImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws {
-        let sut = makeSUT()
-
-        assertThatRetrieveImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut)
-    }
-
-    func test_retrieveImageData_deliversLastInsertedValue() throws {
-        let sut = makeSUT()
-
-        assertThatRetrieveImageDataDeliversLastInsertedValueForURL(on: sut)
     }
 
     // - MARK: Helpers
