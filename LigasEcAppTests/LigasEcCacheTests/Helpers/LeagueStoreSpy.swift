@@ -58,6 +58,10 @@ public class LeagueStoreSpy: LeagueStore {
     func completeRetrieval(with error: Error) {
         retrievalResult = .failure(error)
     }
+    
+    func completeRetrievalWithEmptyCache() {
+        retrievalResult = .success(.none)
+    }
 
     func completeRetrieval(with leagues: [LocalLeague], timestamp: Date) {
         retrievalResult = .success(CachedLeagues(leagues: leagues, timestamp: timestamp))
