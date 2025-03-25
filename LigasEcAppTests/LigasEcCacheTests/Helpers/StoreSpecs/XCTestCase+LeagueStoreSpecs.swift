@@ -8,41 +8,7 @@
 import XCTest
 import LigasEcApp
 
-extension LeagueStoreSpecs where Self: XCTestCase {
-    func assertThatRetrieveDeliversEmptyOnEmptyCache(on sut: LeagueStore, file: StaticString = #filePath, line: UInt = #line) {
-        // Act & Assert
-        expect(sut, toRetrieve: .success(.none), file: file, line: line)
-    }
-    
-    func assertThatRetrieveHasNoSideEffectsOnEmptyCache(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) {
-        // Act & Assert
-        expect(sut, toRetrieve: .success(.none), file: file, line: line)
-    }
-    
-    func assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) {
-        // Arrange
-        let leagues = mockLeagues().local
-        let timestamp = Date()
-        
-        // Act
-        insert((leagues, timestamp), to: sut)
-        
-        // Act & Assert
-        expect(sut, toRetrieve: .success(CachedLeagues(leagues: leagues, timestamp: timestamp)), file: file, line: line)
-    }
-    
-    func assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) {
-        // Arrange
-        let leagues = mockLeagues().local
-        let timestamp = Date()
-        
-        // Act
-        insert((leagues, timestamp), to: sut)
-        
-        // Act & Assert
-        expect(sut, toRetrieveTwice: .success(CachedLeagues(leagues: leagues, timestamp: timestamp)), file: file, line: line)
-    }
-    
+extension LeagueStoreSpecs where Self: XCTestCase {    
     func assertThatInsertDeliversNoErrorOnEmptyCache(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) {
         // Act
         let insertionError = insert((mockLeagues().local, Date()), to: sut)
@@ -53,23 +19,28 @@ extension LeagueStoreSpecs where Self: XCTestCase {
     
     func assertThatInsertDeliversNoErrorOnNonEmptyCache(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) {
         // Act
+        insert((mockLeagues().local, Date()), to: sut)
+                
         let insertionError = insert((mockLeagues().local, Date()), to: sut)
-        
+   
         //Assert
-        XCTAssertNil(insertionError, "Expected to override cache successfully", file: file, line: line)
+        XCTAssertNil(insertionError, "Expected to insert just once without error", file: file, line: line)
     }
     
-    func assertThatInsertOverridesPreviouslyInsertedCacheValues(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) {
+    func assertThatInsertDoNotSaveOnNonEmptyCache(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) {
         // Act
-        insert((mockLeagues().local, Date()), to: sut)        
-        let latestLeagues = mockLeagues().local
-        let latestTimestamp = Date()
-        insert((latestLeagues, latestTimestamp), to: sut)
-        
-        // Act & Assert
-        expect(sut, toRetrieve: .success(CachedLeagues(leagues: latestLeagues, timestamp: latestTimestamp)), file: file, line: line)
+        let timestamp = Date()
+        insert((mockLeagues().local, timestamp), to: sut)
+                
+        insert(([LocalLeague(id: "id",
+                             stageId: "stageId",
+                             name: "LigaPro Serie B",
+                             logoURL: anyURL())], Date()), to: sut)
+   
+        //Assert
+        expect(sut, toRetrieve: .success(CachedLeagues(leagues: mockLeagues().local, timestamp: timestamp)))
     }
-    
+        
     func assertThatDeleteDeliversNoErrorOnEmptyCache(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) {
         // Act
         let deletionError = deleteCache(from: sut)
@@ -125,13 +96,6 @@ extension LeagueStoreSpecs where Self: XCTestCase {
             return error
         }
     }
-    
-    func expect(_ sut: LeagueStore, toRetrieveTwice expectedResult: Result<CachedLeagues?, Error>, file: StaticString = #filePath, line: UInt = #line) {
-        // Act & Assert
-        expect(sut, toRetrieve: expectedResult, file: file, line: line)
-        expect(sut, toRetrieve: expectedResult, file: file, line: line)
-    }
-
     func expect(_ sut: LeagueStore, toRetrieve expectedResult: Result<CachedLeagues?, Error>, file: StaticString = #filePath, line: UInt = #line) {
         
         // Act

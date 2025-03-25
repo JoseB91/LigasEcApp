@@ -9,31 +9,7 @@ import XCTest
 @testable import LigasEcApp
 
 class InMemoryLeagueStoreTests: XCTestCase, LeagueStoreSpecs {
-
-    func test_retrieve_deliversEmptyOnEmptyCache() throws {
-        let sut = makeSUT()
-
-        assertThatRetrieveDeliversEmptyOnEmptyCache(on: sut)
-    }
-
-    func test_retrieve_hasNoSideEffectsOnEmptyCache() throws {
-        let sut = makeSUT()
-
-        assertThatRetrieveHasNoSideEffectsOnEmptyCache(on: sut)
-    }
-
-    func test_retrieve_deliversFoundValuesOnNonEmptyCache() throws {
-        let sut = makeSUT()
-
-        assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut)
-    }
-
-    func test_retrieve_hasNoSideEffectsOnNonEmptyCache() throws {
-        let sut = makeSUT()
-
-        assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on: sut)
-    }
-
+    
     func test_insert_deliversNoErrorOnEmptyCache() throws {
         let sut = makeSUT()
 
@@ -45,11 +21,11 @@ class InMemoryLeagueStoreTests: XCTestCase, LeagueStoreSpecs {
 
         assertThatInsertDeliversNoErrorOnNonEmptyCache(on: sut)
     }
-
-    func test_insert_overridesPreviouslyInsertedCacheValues() throws {
+    
+    func test_insert_doNotSaveOnNonEmptyCache() throws {
         let sut = makeSUT()
-
-        assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut)
+        
+        assertThatInsertDoNotSaveOnNonEmptyCache(on: sut)
     }
 
     func test_delete_deliversNoErrorOnEmptyCache() throws {

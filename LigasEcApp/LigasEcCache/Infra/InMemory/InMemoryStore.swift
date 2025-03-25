@@ -22,7 +22,9 @@ extension InMemoryStore: LeagueStore {
     }
 
     public func insert(_ leagues: [LocalLeague], timestamp: Date) throws {
-        leaguesCache = CachedLeagues(leagues: leagues, timestamp: timestamp)
+        if leaguesCache == nil {
+            leaguesCache = CachedLeagues(leagues: leagues, timestamp: timestamp)
+        }
     }
 
     public func retrieve() throws -> CachedLeagues? {
