@@ -33,10 +33,6 @@ extension InMemoryStore: LeagueStore {
 }
 
 extension InMemoryStore: TeamStore {
-    public func deleteTeams(with id: String) throws {
-        teamsCache = nil
-    }
-    
     public func insert(_ teams: [LocalTeam], with id: String) throws {
         teamsCache = teams
     }
@@ -46,11 +42,7 @@ extension InMemoryStore: TeamStore {
     }
 }
 
-extension InMemoryStore: PlayerStore {
-    public func deletePlayers(with id: String) throws {
-        playersCache = nil
-    }
-    
+extension InMemoryStore: PlayerStore {    
     public func insert(_ players: [LocalPlayer], with id: String) throws {
         playersCache = players
     }

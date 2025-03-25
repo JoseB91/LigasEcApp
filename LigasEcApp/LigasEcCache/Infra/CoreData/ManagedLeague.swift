@@ -55,10 +55,6 @@ extension ManagedLeague {
         return try context.fetch(request).first
     }
     
-    static func deleteCache(with id: String, in context: NSManagedObjectContext) throws {
-        try find(with: id, in: context).map(context.delete).map(context.save)
-    }
-
     var local: LocalLeague {
         return LocalLeague(id: id, stageId: stageId, name: name, logoURL: logoURL)
     }

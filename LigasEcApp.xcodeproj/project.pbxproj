@@ -13,7 +13,6 @@
 		B053618D2D821B3300BE41F0 /* LigasEcStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B05361622D821B3300BE41F0 /* LigasEcStore.xcdatamodeld */; };
 		B053618E2D821B3300BE41F0 /* ManagedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361632D821B3300BE41F0 /* ManagedCache.swift */; };
 		B053618F2D821B3300BE41F0 /* ManagedTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361642D821B3300BE41F0 /* ManagedTeam.swift */; };
-		B05361902D821B3300BE41F0 /* InMemoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361662D821B3300BE41F0 /* InMemoryStore.swift */; };
 		B05361942D821B3300BE41F0 /* CachePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B053616D2D821B3300BE41F0 /* CachePolicy.swift */; };
 		B053619D2D821B3300BE41F0 /* Composer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361812D821B3300BE41F0 /* Composer.swift */; };
 		B053619E2D821B3300BE41F0 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361842D821B3300BE41F0 /* KeychainManager.swift */; };
@@ -83,7 +82,6 @@
 		B05361612D821B3300BE41F0 /* CoreDataLigasEcStore+TeamStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataLigasEcStore+TeamStore.swift"; sourceTree = "<group>"; };
 		B05361632D821B3300BE41F0 /* ManagedCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedCache.swift; sourceTree = "<group>"; };
 		B05361642D821B3300BE41F0 /* ManagedTeam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedTeam.swift; sourceTree = "<group>"; };
-		B05361662D821B3300BE41F0 /* InMemoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryStore.swift; sourceTree = "<group>"; };
 		B053616D2D821B3300BE41F0 /* CachePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachePolicy.swift; sourceTree = "<group>"; };
 		B053617C2D821B3300BE41F0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B053617E2D821B3300BE41F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -171,6 +169,11 @@
 			path = League;
 			sourceTree = "<group>";
 		};
+		B0F4823F2D93467E00874AA8 /* InMemory */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = InMemory;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,19 +234,11 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
-		B05361672D821B3300BE41F0 /* InMemory */ = {
-			isa = PBXGroup;
-			children = (
-				B05361662D821B3300BE41F0 /* InMemoryStore.swift */,
-			);
-			path = InMemory;
-			sourceTree = "<group>";
-		};
 		B05361682D821B3300BE41F0 /* Infra */ = {
 			isa = PBXGroup;
 			children = (
 				B05361652D821B3300BE41F0 /* CoreData */,
-				B05361672D821B3300BE41F0 /* InMemory */,
+				B0F4823F2D93467E00874AA8 /* InMemory */,
 			);
 			path = Infra;
 			sourceTree = "<group>";
@@ -385,6 +380,7 @@
 				B05361C22D821B6100BE41F0 /* Team */,
 				B05362222D829A3400BE41F0 /* League */,
 				B05362282D82ABCB00BE41F0 /* Player */,
+				B0F4823F2D93467E00874AA8 /* InMemory */,
 			);
 			name = LigasEcApp;
 			packageProductDependencies = (
@@ -516,7 +512,6 @@
 				B053618D2D821B3300BE41F0 /* LigasEcStore.xcdatamodeld in Sources */,
 				B053618E2D821B3300BE41F0 /* ManagedCache.swift in Sources */,
 				B053618F2D821B3300BE41F0 /* ManagedTeam.swift in Sources */,
-				B05361902D821B3300BE41F0 /* InMemoryStore.swift in Sources */,
 				B05361942D821B3300BE41F0 /* CachePolicy.swift in Sources */,
 				B053621E2D8232CA00BE41F0 /* ManagedLeague.swift in Sources */,
 				B05362322D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift in Sources */,

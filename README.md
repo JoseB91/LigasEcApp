@@ -170,7 +170,6 @@ Given the customer has connectivity
   And there's a cached version of the teams
  When the customer requests to see teams of a league
  Then the app should display all teams from cache
-  And don't save those teams to cache
 ```
 
 ### Narrative #2
@@ -197,42 +196,70 @@ Given the customer doesn't have connectivity
 
 ## Use Cases
 
-### Load Image Comments From Remote Use Case
+### Load Teams From Local Use Case
 
 #### Data:
-- ImageID
+- URL
 
 #### Primary course (happy path):
-1. Execute "Load Image Comments" command with above data.
-2. System loads data from remote service.
-3. System validates data.
-4. System creates comments from valid data.
-5. System delivers comments.
+1. Execute load command.
+2. System retrieves data from the cache.
+3. System delivers teams.
 
-#### Invalid data – error course (sad path):
-1. System delivers invalid data error.
+#### Load empty data with succesfull remote (sad path):
+1. Execute load command.
+2. System gets empty data.
+3. Execute get command from remote.
+4. System retrieves data from remote
+5. System delivers teams.
 
-#### No connectivity – error course (sad path):
-1. System delivers connectivity error.
+#### Load empty data with failing remote (sad path):
+1. Execute load command.
+2. System gets empty data.
+3. Execute get command from remote.
+4. System retrieves data from remote
+5. System delivers error.
 
+#### Load error course with successfull remote (sad path):
+1. Execute load command.
+2. System delivers error.
+3. Execute get command from remote.
+4. System retrieves data from remote
+5. System delivers teams.
+
+#### Load error course with failing remote (sad path):
+1. Execute load command.
+2. System delivers error.
+3. Execute get command from remote.
+4. System retrieves data from remote
+5. System delivers error.
 ---
+
+### Save Teams To Local Use Case
+
+#### Data:
+- Team
+
+#### Primary course (happy path):
+1. Execute save command.
+2. System saves new cache data with respective id.
+
+#### Saving error course (sad path):
+1. System delivers error.
+---
+
+## Flowchart
 
 ## Model Specs
 
-### Image Comment
+### Team
 
 | Property          | Type                    |
 |-------------------|-------------------------|
-| `id`              | `UUID`                  |
-| `message`         | `String`                  |
-| `created_at`      | `Date` (ISO8601 String) |
-| `author`             | `CommentAuthorObject`   |
+| `id`              | `String`                |
+| `name`            | `String`                |
+| `logoURL`         | `URL`                   |
 
-### Image Comment Author
-
-| Property          | Type                |
-|-------------------|---------------------|
-| `username`         | `String`              |
 
 ### Payload contract
 

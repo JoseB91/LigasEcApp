@@ -19,8 +19,4 @@ extension CoreDataLigasEcStore: PlayerStore {
         managedTeam?.players = ManagedPlayer.fetchPlayers(from: players, in: context)
         try context.save()
     }
-    
-    public func deletePlayers(with id: String) throws {
-        try ManagedTeam.deleteCache(with: id, in: context)
-    }
 }

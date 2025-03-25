@@ -53,10 +53,6 @@ extension ManagedTeam {
         return try context.fetch(request).first
     }
     
-    static func deleteCache(with id: String, in context: NSManagedObjectContext) throws {
-        try find(with: id, in: context).map(context.delete).map(context.save)
-    }
-
     var local: LocalTeam {
         return LocalTeam(id: id, name: name, logoURL: logoURL)
     }
