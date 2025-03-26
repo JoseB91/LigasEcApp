@@ -5,7 +5,6 @@
 //  Created by José Briones on 26/3/25.
 //
 
-// Add InMemoryTeamStoreTests
 // Add CoreDataImageTeamStoreTests
 // Add InMemoryImageTeamStoreTests
 
