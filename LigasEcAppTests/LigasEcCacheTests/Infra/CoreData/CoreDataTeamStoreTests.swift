@@ -5,9 +5,6 @@
 //  Created by José Briones on 26/3/25.
 //
 
-// Add CoreDataImageTeamStoreTests
-// Add InMemoryImageTeamStoreTests
-
 import XCTest
 @testable import LigasEcApp
 

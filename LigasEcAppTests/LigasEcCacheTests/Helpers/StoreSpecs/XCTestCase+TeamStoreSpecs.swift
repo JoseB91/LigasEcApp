@@ -10,20 +10,25 @@ import LigasEcApp
 
 extension TeamStoreSpecs where Self: XCTestCase {
     func assertThatRetrieveDeliversNoErrorOnEmptyCache(on sut: TeamStore, with id: String, file: StaticString = #filePath, line: UInt = #line) {
+        // Act & Assert
         expect(sut, with: id, toRetrieve: .success(.none), file: file, line: line)
     }
         
     func assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on sut: TeamStore, with id: String, file: StaticString = #file, line: UInt = #line) {
         
+        // Act
         insert(mockTeams().local, with: id, to: sut)
         
+        // Act & Assert
         expect(sut, with: id, toRetrieve: .success(mockTeams().local), file: file, line: line)
     }
     
     func assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on sut: TeamStore, with id: String, file: StaticString = #file, line: UInt = #line) {
         
+        // Act
         insert(mockTeams().local, with: id, to: sut)
 
+        // Act & Assert
         expect(sut, with: id, toRetrieveTwice: .success(mockTeams().local), file: file, line: line)
     }
 

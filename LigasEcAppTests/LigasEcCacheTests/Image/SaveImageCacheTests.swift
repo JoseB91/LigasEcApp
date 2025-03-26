@@ -25,7 +25,7 @@ class SaveImageCacheTests: XCTestCase {
         let data = anyData()
 
         // Act
-        try? sut.save(data, for: url, on: anyTable())
+        try? sut.save(data, for: url, on: mockLeagueTable())
         
         // Assert
         XCTAssertEqual(store.receivedMessages, [.insert(data: data, for: url)])
@@ -36,7 +36,7 @@ class SaveImageCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
 
         // Act & Assert
-        expect(sut, on: anyTable(), toCompleteWith: .success(()), when: {
+        expect(sut, on: mockLeagueTable(), toCompleteWith: .success(()), when: {
             store.completeInsertionSuccessfully()
         })
     }
@@ -46,7 +46,7 @@ class SaveImageCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
 
         // Act & Assert
-        expect(sut, on: anyTable(), toCompleteWith: failed(), when: {
+        expect(sut, on: mockLeagueTable(), toCompleteWith: failed(), when: {
             let insertionError = anyNSError()
             store.completeInsertion(with: insertionError)
         })

@@ -9,28 +9,51 @@ import XCTest
 @testable import LigasEcApp
 
 class CoreDataImageStoreTests: XCTestCase, ImageStoreSpecs {
-    
-    func test_retrieveImageData_deliversLastInsertedValue() throws {
+    func test_retrieveLeagueImageData_deliversLastInsertedValue() throws {
         try makeSUT { sut, imageDataURL in
-            self.assertThatRetrieveImageDataDeliversLastInsertedValueForURL(on: sut, imageDataURL: imageDataURL)
+            self.assertThatRetrieveLeagueImageDataDeliversLastInsertedValueForURL(on: sut, imageDataURL: imageDataURL)
         }
     }
     
-    func test_retrieveImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws {
+    func test_retrieveLeagueImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws {
         try makeSUT { sut, imageDataURL in
-            self.assertThatRetrieveImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut, imageDataURL: imageDataURL)
+            self.assertThatRetrieveLeagueImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut, imageDataURL: imageDataURL)
         }
     }
 
-    func test_retrieveImageData_deliversNotFoundWhenEmpty() throws {
+    func test_retrieveLeagueImageData_deliversNotFoundWhenEmpty() throws {
         try makeSUT { sut, imageDataURL in
-            self.assertThatRetrieveImageDataDeliversNotFoundOnEmptyCache(on: sut, imageDataURL: imageDataURL)
+            self.assertThatRetrieveLeagueImageDataDeliversNotFoundOnEmptyCache(on: sut, imageDataURL: imageDataURL)
         }
     }
 
-    func test_retrieveImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() throws {
+    func test_retrieveLeagueImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() throws {
         try makeSUT { sut, imageDataURL in
-            self.assertThatRetrieveImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut, imageDataURL: imageDataURL)
+            self.assertThatRetrieveLeagueImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut, imageDataURL: imageDataURL)
+        }
+    }
+    
+    func test_retrieveTeamImageData_deliversNotFoundWhenEmpty() throws {
+        try makeSUT { sut, imageDataURL in
+            self.assertThatRetrieveTeamImageDataDeliversLastInsertedValueForURL(on: sut, imageDataURL: imageDataURL)
+        }
+    }
+    
+    func test_retrieveTeamImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() throws {
+        try makeSUT { sut, imageDataURL in
+            self.assertThatRetrieveTeamImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut, imageDataURL: imageDataURL)
+        }
+    }
+    
+    func test_retrieveTeamImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws {
+        try makeSUT { sut, imageDataURL in
+            self.assertThatRetrieveTeamImageDataDeliversNotFoundOnEmptyCache(on: sut, imageDataURL: imageDataURL)
+        }
+    }
+    
+    func test_retrieveTeamImageData_deliversLastInsertedValue() throws {
+        try makeSUT { sut, imageDataURL in
+            self.assertThatRetrieveTeamImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut, imageDataURL: imageDataURL)
         }
     }
     
@@ -45,6 +68,7 @@ class CoreDataImageStoreTests: XCTestCase, ImageStoreSpecs {
         sut.perform {
             let imageDataURL = URL(string: "http://a-url.com")!
             insertLeague(with: imageDataURL, into: sut, file: file, line: line)
+            insertTeam(with: imageDataURL, into: sut, file: file, line: line)
             test(sut, imageDataURL)
             exp.fulfill()
         }
@@ -57,6 +81,15 @@ private func insertLeague(with url: URL, into sut: CoreDataLigasEcStore, file: S
     do {
         let league = LocalLeague(id: "id", stageId: "stageID", name: "LigaPro Serie A", logoURL: url)
         try sut.insert([league], timestamp: Date())
+    } catch {
+        XCTFail("Failed to insert league with URL \(url) - error: \(error)", file: file, line: line)
+    }
+}
+
+private func insertTeam(with url: URL, into sut: CoreDataLigasEcStore, file: StaticString = #filePath, line: UInt = #line) {
+    do {
+        let team = LocalTeam(id: "id", name: "Barcelona SC", logoURL: url)
+        try sut.insert([team], with: "id")
     } catch {
         XCTFail("Failed to insert league with URL \(url) - error: \(error)", file: file, line: line)
     }

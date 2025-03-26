@@ -24,7 +24,7 @@ class LoadImageCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
 
         // Act
-        _ = try? sut.loadImageData(from: anyURL(), on: anyTable())
+        _ = try? sut.loadImageData(from: anyURL(), on: mockLeagueTable())
 
         // Assert
         XCTAssertEqual(store.receivedMessages, [.retrieve(dataFor: anyURL())])
@@ -36,7 +36,7 @@ class LoadImageCacheTests: XCTestCase {
         let foundData = anyData()
 
         // Act & Assert
-        expect(sut, on: anyTable(), toCompleteWith: .success(foundData), when: {
+        expect(sut, on: mockLeagueTable(), toCompleteWith: .success(foundData), when: {
             store.completeRetrieval(with: foundData)
         })
     }
@@ -46,7 +46,7 @@ class LoadImageCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
 
         // Act & Assert
-        expect(sut, on: anyTable(), toCompleteWith: notFound(), when: {
+        expect(sut, on: mockLeagueTable(), toCompleteWith: notFound(), when: {
             store.completeRetrieval(with: .none)
         })
     }
@@ -56,7 +56,7 @@ class LoadImageCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
 
         // Act & Assert
-        expect(sut, on: anyTable(), toCompleteWith: failed(), when: {
+        expect(sut, on: mockLeagueTable(), toCompleteWith: failed(), when: {
             let retrievalError = anyNSError()
             store.completeRetrieval(with: retrievalError)
         })

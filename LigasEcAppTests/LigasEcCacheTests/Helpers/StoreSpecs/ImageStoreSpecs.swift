@@ -6,8 +6,14 @@
 //
 
 protocol ImageStoreSpecs {
-    func test_retrieveImageData_deliversNotFoundWhenEmpty() throws
-    func test_retrieveImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() throws
-    func test_retrieveImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws
-    func test_retrieveImageData_deliversLastInsertedValue() throws
+    func test_retrieveLeagueImageData_deliversNotFoundWhenEmpty() throws
+    func test_retrieveLeagueImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() throws
+    func test_retrieveLeagueImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws
+    func test_retrieveLeagueImageData_deliversLastInsertedValue() throws
+    
+    func test_retrieveTeamImageData_deliversNotFoundWhenEmpty() throws
+    func test_retrieveTeamImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() throws
+    func test_retrieveTeamImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws
+    func test_retrieveTeamImageData_deliversLastInsertedValue() throws
+
 }

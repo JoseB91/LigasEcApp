@@ -10,30 +10,54 @@ import XCTest
 
 class InMemoryImageStoreTests: XCTestCase, ImageStoreSpecs {
 
-    func test_retrieveImageData_deliversLastInsertedValue() throws {
+    func test_retrieveLeagueImageData_deliversLastInsertedValue() throws {
         let sut = makeSUT()
 
-        assertThatRetrieveImageDataDeliversLastInsertedValueForURL(on: sut)
+        assertThatRetrieveLeagueImageDataDeliversLastInsertedValueForURL(on: sut)
     }
     
-    func test_retrieveImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws {
+    func test_retrieveLeagueImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws {
         let sut = makeSUT()
 
-        assertThatRetrieveImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut)
+        assertThatRetrieveLeagueImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut)
     }
     
-    func test_retrieveImageData_deliversNotFoundWhenEmpty() throws {
+    func test_retrieveLeagueImageData_deliversNotFoundWhenEmpty() throws {
         let sut = makeSUT()
 
-        assertThatRetrieveImageDataDeliversNotFoundOnEmptyCache(on: sut)
+        assertThatRetrieveLeagueImageDataDeliversNotFoundOnEmptyCache(on: sut)
     }
 
-    func test_retrieveImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() throws {
+    func test_retrieveLeagueImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() throws {
         let sut = makeSUT()
 
-        assertThatRetrieveImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut)
+        assertThatRetrieveLeagueImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut)
     }
 
+    func test_retrieveTeamImageData_deliversLastInsertedValue() throws {
+        let sut = makeSUT()
+
+        assertThatRetrieveTeamImageDataDeliversLastInsertedValueForURL(on: sut)
+    }
+    
+    func test_retrieveTeamImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() throws {
+        let sut = makeSUT()
+
+        assertThatRetrieveTeamImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut)
+    }
+    
+    func test_retrieveTeamImageData_deliversNotFoundWhenEmpty() throws {
+        let sut = makeSUT()
+
+        assertThatRetrieveTeamImageDataDeliversNotFoundOnEmptyCache(on: sut)
+    }
+
+    func test_retrieveTeamImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() throws {
+        let sut = makeSUT()
+
+        assertThatRetrieveTeamImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut)
+    }
+    
     // - MARK: Helpers
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> InMemoryStore {
