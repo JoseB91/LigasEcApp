@@ -24,7 +24,7 @@ public final class CoreDataLigasEcStore {
         case background
     }
     
-    public init(storeURL: URL, contextQueue: ContextQueue = .main) throws {
+    public init(storeURL: URL, contextQueue: ContextQueue = .background) throws {
         guard let model = CoreDataLigasEcStore.model else {
             throw StoreError.modelNotFound
         }

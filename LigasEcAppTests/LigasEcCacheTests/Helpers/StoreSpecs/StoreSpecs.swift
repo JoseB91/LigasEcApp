@@ -15,3 +15,13 @@ protocol LeagueStoreSpecs {
     func test_delete_deliversNoErrorOnNonEmptyCache() throws
     func test_delete_emptiesPreviouslyInsertedCache() throws
 }
+
+protocol TeamStoreSpecs {
+    func test_retrieve_deliversNoErrorOnEmptyCache() throws
+    func test_retrieve_deliversFoundValuesOnNonEmptyCache() throws
+    func test_retrieve_hasNoSideEffectsOnNonEmptyCache() throws
+
+    func test_insert_deliversNoErrorOnEmptyCache() throws
+    func test_insert_deliversNoErrorOnNonEmptyCache() throws
+    func test_insert_overridesPreviouslyInsertedCacheValues() throws
+}

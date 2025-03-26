@@ -55,12 +55,3 @@ extension Array where Element == League {
                                  logoURL: $0.logoURL)}
     }
 }
-
-private extension Array where Element == LocalLeague {
-    func toModels() -> [League] {
-        return map { League(id: $0.id,
-                            stageId: $0.stageId,
-                            name: $0.name,
-                            logoURL: $0.logoURL)}
-    }
-}

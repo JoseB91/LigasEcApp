@@ -83,8 +83,7 @@ class Composer {
             return try CoreDataLigasEcStore(
                 storeURL: NSPersistentContainer
                     .defaultDirectoryURL()
-                    .appendingPathComponent("ligas-ec-store.sqlite"),
-                contextQueue: .background)
+                    .appendingPathComponent("ligas-ec-store.sqlite"))
         } catch {
             // Add logger
             return InMemoryStore()

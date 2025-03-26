@@ -4,8 +4,10 @@
 //
 //  Created by José Briones on 24/3/25.
 //
+
 import XCTest
 @testable import LigasEcApp
+
 class CoreDataLeagueStoreTests: XCTestCase, LeagueStoreSpecs {
     
     func test_insert_deliversNoErrorOnEmptyCache() throws {
