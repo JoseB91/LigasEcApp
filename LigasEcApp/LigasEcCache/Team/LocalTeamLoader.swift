@@ -50,6 +50,7 @@ private extension Array where Element == LocalTeam {
     func toModels() -> [Team] {
         return map { Team(id: $0.id,
                            name: $0.name,
-                          logoURL: $0.logoURL)}
+                          logoURL: $0.logoURL,
+                          dataSource: .FlashLive)} //TODO: Check this
     }
 }

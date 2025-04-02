@@ -10,7 +10,6 @@ import CoreData
 @objc(ManagedLeague)
 class ManagedLeague: NSManagedObject {
     @NSManaged var id: String
-    @NSManaged var stageId: String
     @NSManaged var name: String
     @NSManaged var data: Data?
     @NSManaged var logoURL: URL
@@ -37,7 +36,6 @@ extension ManagedLeague {
         let leagues = NSOrderedSet(array: localLeagues.map { local in
             let managed = ManagedLeague(context: context)
             managed.id = local.id
-            managed.stageId = local.stageId
             managed.name = local.name
             managed.logoURL = local.logoURL
             managed.data = context.userInfo[local.logoURL] as? Data
@@ -56,7 +54,7 @@ extension ManagedLeague {
     }
     
     var local: LocalLeague {
-        return LocalLeague(id: id, stageId: stageId, name: name, logoURL: logoURL)
+        return LocalLeague(id: id, name: name, logoURL: logoURL)
     }
     
     var localTeams: [LocalTeam] {

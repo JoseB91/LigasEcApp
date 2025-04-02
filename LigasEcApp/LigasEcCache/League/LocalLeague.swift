@@ -10,13 +10,11 @@ import LigasEcAPI
 
 public struct LocalLeague: Equatable {
     public let id: String
-    public let stageId: String
     public let name: String
     public let logoURL: URL
     
-    public init(id: String, stageId: String, name: String, logoURL: URL) {
+    public init(id: String, name: String, logoURL: URL) {
         self.id = id
-        self.stageId = stageId
         self.name = name
         self.logoURL = logoURL
     }

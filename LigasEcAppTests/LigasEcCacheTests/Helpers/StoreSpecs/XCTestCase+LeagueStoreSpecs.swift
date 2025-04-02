@@ -32,8 +32,7 @@ extension LeagueStoreSpecs where Self: XCTestCase {
         let timestamp = Date()
         insert((mockLeagues().local, timestamp), to: sut)
                 
-        insert(([LocalLeague(id: "id",
-                             stageId: "stageId",
+        insert(([LocalLeague(id: "id",                             
                              name: "LigaPro Serie B",
                              logoURL: anyURL())], Date()), to: sut)
    

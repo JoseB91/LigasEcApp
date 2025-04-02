@@ -50,7 +50,6 @@ extension LocalLeagueLoader {
 extension Array where Element == League {
     public func toLocal() -> [LocalLeague] {
         return map { LocalLeague(id: $0.id,
-                                 stageId: $0.stageId,
                                  name: $0.name,
                                  logoURL: $0.logoURL)}
     }

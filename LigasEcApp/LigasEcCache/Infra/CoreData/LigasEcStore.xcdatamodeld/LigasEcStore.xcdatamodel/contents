@@ -9,7 +9,6 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="logoURL" attributeType="URI"/>
         <attribute name="name" attributeType="String"/>
-        <attribute name="stageId" attributeType="String"/>
         <relationship name="cache" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="leagues" inverseEntity="ManagedCache"/>
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ManagedTeam" inverseName="league" inverseEntity="ManagedTeam"/>
     </entity>

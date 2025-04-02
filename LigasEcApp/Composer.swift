@@ -13,44 +13,53 @@ import SharedAPI
 import LigasEcAPI
 
 class Composer {
-    private let baseURL: URL
+    private let flashLiveEndpointConfiguration: EndpointConfiguration
+    private let transferMarketEndpointConfiguration: EndpointConfiguration
     private let httpClient: URLSessionHTTPClient
-    private let localLeagueLoader: LocalLeagueLoader
-    private let localImageLoader: LocalImageLoader
-    private let localTeamLoader: LocalTeamLoader
-    private let localPlayerLoader: LocalPlayerLoader
+    private let appLocalLoader: AppLocalLoader
 
     //let logger = Logger(subsystem: "com.joseB91.LatinCoaches", category: "main")
 
-    init(baseURL: URL,
+    init(flashLiveEndpointConfiguration: EndpointConfiguration,
+         transferMarketEndpointConfiguration: EndpointConfiguration,
          httpClient: URLSessionHTTPClient,
-         localLeagueLoader: LocalLeagueLoader,
-         localImageLoader: LocalImageLoader,
-         localTeamLoader: LocalTeamLoader,
-         localPlayerLoader: LocalPlayerLoader) {
-        self.baseURL = baseURL
+         appLocalLoader: AppLocalLoader) {
+        self.flashLiveEndpointConfiguration = flashLiveEndpointConfiguration
+        self.transferMarketEndpointConfiguration = transferMarketEndpointConfiguration
         self.httpClient = httpClient
-        self.localLeagueLoader = localLeagueLoader
-        self.localImageLoader = localImageLoader
-        self.localTeamLoader = localTeamLoader
-        self.localPlayerLoader = localPlayerLoader
+        self.appLocalLoader = appLocalLoader
     }
     
     static func makeComposer() -> Composer {
-        let baseURL = URL(string: "https://flashlive-sports.p.rapidapi.com/v1/")!
+        
+        let flashLiveEndpointConfiguration = EndpointConfiguration(
+            url: URL(string: "https://flashlive-sports.p.rapidapi.com/v1/")!,
+            host: "flashlive-sports.p.rapidapi.com"
+        )
+        
+        let transferMarketEndpointConfiguration = EndpointConfiguration(
+            url: URL(string:"https://transfermarket.p.rapidapi.com/")!,
+            host: "transfermarket.p.rapidapi.com"
+        )
+        
         let httpClient = makeHTTPClient()
+        
         let store = makeStore()
+        
         let localLeagueLoader = LocalLeagueLoader(store: store, currentDate: Date.init)
-        let localImageLoader = LocalImageLoader(store: store)
         let localTeamLoader = LocalTeamLoader(store: store)
         let localPlayerLoader = LocalPlayerLoader(store: store)
+        let localImageLoader = LocalImageLoader(store: store)
+
+        let appLocalLoader = AppLocalLoader(localLeagueLoader: localLeagueLoader,
+                                            localTeamLoader: localTeamLoader,
+                                            localPlayerLoader: localPlayerLoader,
+                                            localImageLoader: localImageLoader)
         
-        return Composer(baseURL: baseURL,
+        return Composer(flashLiveEndpointConfiguration: flashLiveEndpointConfiguration,
+                        transferMarketEndpointConfiguration: transferMarketEndpointConfiguration,
                         httpClient: httpClient,
-                        localLeagueLoader: localLeagueLoader,
-                        localImageLoader: localImageLoader,
-                        localTeamLoader: localTeamLoader,
-                        localPlayerLoader: localPlayerLoader)
+                        appLocalLoader: appLocalLoader)
     }
     
     private static func makeHTTPClient() -> URLSessionHTTPClient {
@@ -91,21 +100,21 @@ class Composer {
     }
     
     func composeLeagueViewModel() -> LeagueViewModel {
-        let leagueLoader: () async throws -> [League] = { [localLeagueLoader] in
+        let leagueLoader: () async throws -> [League] = { [appLocalLoader] in
             
             let hardcodedLeagues = [
                 League(id: "IaFDigtm",
-                       stageId: "OO37de6i",
                        name: "LigaPro Serie A",
-                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!),
-                League(id: "0O4IjDeg",
-                       stageId: "Au6JggjA",
+                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
+                       dataSource: .FlashLive),
+                League(id: "EC2L",
                        name: "LigaPro Serie B",
-                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!)
+                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!,
+                       dataSource: .TransferMarket)
             ]
-            
+                        
             Task {
-                localLeagueLoader.saveIgnoringResult(hardcodedLeagues)
+                appLocalLoader.localLeagueLoader.saveIgnoringResult(hardcodedLeagues)
             }
             
             return hardcodedLeagues
@@ -115,23 +124,34 @@ class Composer {
     }
     
     func composeTeamViewModel(for league: League) -> TeamViewModel {
-        let teamLoader: () async throws -> [Team] = { [httpClient, localTeamLoader] in
+        let teamLoader: () async throws -> [Team] = {
+            [flashLiveEndpointConfiguration, transferMarketEndpointConfiguration, httpClient, appLocalLoader] in
             
-            do {
-                return try localTeamLoader.load(with: league.id)
-            } catch {
-                let url = TeamEndpoint.get(seasonId: league.id,
-                                           standingType: "overall", // TODO: Manage constants
-                                           locale: "es_MX", // TODO: Get locale
-                                           tournamentStageId: league.stageId).url(baseURL: self.baseURL)
-                let (data, response) = try await httpClient.get(from: url)
-                
-                let teams = try TeamMapper.map(data, from: response)
-                
-                Task {
-                    localTeamLoader.saveIgnoringResult(teams, with: league.id)
+            if league.dataSource == .FlashLive {
+                do {
+                    return try appLocalLoader.localTeamLoader.load(with: league.id)
+                } catch {
+                    let url = TeamEndpoint.getFlashLive(seasonId: league.id,
+                                               standingType: "overall", // TODO: Manage constants
+                                               locale: "es_MX", // TODO: Get locale
+                                                        tournamentStageId: "OO37de6i").url(baseURL: flashLiveEndpointConfiguration.url)
+                    
+                    let (data, response) = try await httpClient.get(from: url, with: flashLiveEndpointConfiguration.host)
+                                        
+                    let teams = try TeamMapper.map(data, from: response, with: .FlashLive)
+                    
+                    Task {
+                        appLocalLoader.localTeamLoader.saveIgnoringResult(teams, with: league.id)
+                    }
+                    
+                    return teams
                 }
+            } else {
+                let url = TeamEndpoint.getTransferMarket(id: league.id,
+                                                         domain: "es").url(baseURL: transferMarketEndpointConfiguration.url)
                 
+                let (data, response) = try await httpClient.get(from: url, with: transferMarketEndpointConfiguration.host)
+                let teams = try TeamMapper.map(data, from: response, with: .TransferMarket)
                 return teams
             }
         }
@@ -139,22 +159,35 @@ class Composer {
     }
     
     func composePlayerViewModel(for team: Team) -> PlayerViewModel {
-        let playerLoader: () async throws -> [Player] = { [httpClient, localPlayerLoader] in
+        let playerLoader: () async throws -> [Player] = {
+            [flashLiveEndpointConfiguration, transferMarketEndpointConfiguration,httpClient, appLocalLoader] in
             
-            do {
-                return try localPlayerLoader.load(with: team.id)
-            } catch {
-                let url = PlayerEndpoint.get(sportId: 1,
-                                             locale: "es_MX",
-                                             teamId: team.id).url(baseURL: self.baseURL)
-                let (data, response) = try await httpClient.get(from: url)
-                
-                let players = try PlayerMapper.map(data, from: response)
-                
-                Task {
-                    localPlayerLoader.saveIgnoringResult(players, with: team.id)
+            if team.dataSource == .FlashLive {
+                do {
+                    return try appLocalLoader.localPlayerLoader.load(with: team.id)
+                } catch {
+                    let url = PlayerEndpoint.getFlashLive(sportId: 1,
+                                                          locale: "es_MX",
+                                                          teamId: team.id).url(baseURL: flashLiveEndpointConfiguration.url)
+                    
+                    let (data, response) = try await httpClient.get(from: url, with: flashLiveEndpointConfiguration.host)
+                    
+                    let players = try PlayerMapper.map(data, from: response, with: .FlashLive)
+                    
+                    Task {
+                        appLocalLoader.localPlayerLoader.saveIgnoringResult(players, with: team.id)
+                    }
+                    
+                    return players
                 }
+            } else {
+                let url = PlayerEndpoint.getTransferMarket(id: team.id,
+                                                           domain: "es").url(baseURL: transferMarketEndpointConfiguration.url)
                 
+                let (data, response) = try await httpClient.get(from: url, with: transferMarketEndpointConfiguration.host)
+                
+                let players = try PlayerMapper.map(data, from: response, with: .TransferMarket)
+
                 return players
             }
         }
@@ -162,17 +195,18 @@ class Composer {
     }
     
     func composeImageView(with url: URL, on table: Table) -> ImageView {
-        let imageLoader: () async throws -> Data = { [httpClient, localImageLoader] in
+
+        let imageLoader: () async throws -> Data = { [httpClient, appLocalLoader] in
             
             do {
-                return try localImageLoader.loadImageData(from: url, on: table)
+                return try appLocalLoader.localImageLoader.loadImageData(from: url, on: table)
             } catch {
                 let (data, response) = try await httpClient.get(from: url)
                 
                 let imageData = try ImageMapper.map(data, from: response)
                 
                 Task {
-                    localImageLoader.saveIgnoringResult(imageData, for: url, on: table)
+                    appLocalLoader.localImageLoader.saveIgnoringResult(imageData, for: url, on: table)
                 }
                 
                 return imageData
@@ -185,7 +219,7 @@ class Composer {
     
     func validateCache() {
         Task {
-            try? localLeagueLoader.validateCache()
+            try? appLocalLoader.localLeagueLoader.validateCache()
         }
     }
 }
@@ -212,4 +246,16 @@ private extension ImageCache {
     func saveIgnoringResult(_ data: Data, for url: URL, on table: Table) {
         try? save(data, for: url, on: table)
     }
+}
+
+struct EndpointConfiguration {
+    let url: URL
+    let host: String
+}
+
+struct AppLocalLoader {
+    let localLeagueLoader: LocalLeagueLoader
+    let localTeamLoader: LocalTeamLoader
+    let localPlayerLoader: LocalPlayerLoader
+    let localImageLoader: LocalImageLoader
 }

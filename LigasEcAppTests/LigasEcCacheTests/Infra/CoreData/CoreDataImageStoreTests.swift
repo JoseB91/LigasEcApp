@@ -79,7 +79,7 @@ class CoreDataImageStoreTests: XCTestCase, ImageStoreSpecs {
 
 private func insertLeague(with url: URL, into sut: CoreDataLigasEcStore, file: StaticString = #filePath, line: UInt = #line) {
     do {
-        let league = LocalLeague(id: "id", stageId: "stageID", name: "LigaPro Serie A", logoURL: url)
+        let league = LocalLeague(id: "id", name: "LigaPro Serie A", logoURL: url)
         try sut.insert([league], timestamp: Date())
     } catch {
         XCTFail("Failed to insert league with URL \(url) - error: \(error)", file: file, line: line)

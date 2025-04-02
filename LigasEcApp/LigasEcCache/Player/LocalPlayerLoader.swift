@@ -53,6 +53,7 @@ private extension Array where Element == LocalPlayer {
                            name: $0.name,
                             number: 0,
                             position: $0.position,
-                            photoURL: $0.photoURL)}
+                            photoURL: $0.photoURL,
+                            dataSource: .FlashLive)} // TODO: Check this
     }
 }
