@@ -29,9 +29,9 @@ extension LocalTeamLoader: TeamCache {
 extension LocalTeamLoader {
     private struct EmptyData: Error {}
     
-    public func load(with id: String) throws -> [Team] {
+    public func load(with id: String, dataSource: DataSource) throws -> [Team] {
         if let retrievedTeams = try store.retrieve(with: id), !retrievedTeams.isEmpty {
-            return retrievedTeams.toModels()
+            return retrievedTeams.toModels(with: dataSource)
         } else {
             throw EmptyData()
         }
@@ -41,16 +41,16 @@ extension LocalTeamLoader {
 extension Array where Element == Team {
     public func toLocal() -> [LocalTeam] {
         return map { LocalTeam(id: $0.id,
-                                name: $0.name,
+                               name: $0.name,
                                logoURL: $0.logoURL)}
     }
 }
 
 private extension Array where Element == LocalTeam {
-    func toModels() -> [Team] {
+    func toModels(with dataSource: DataSource) -> [Team] {
         return map { Team(id: $0.id,
-                           name: $0.name,
+                          name: $0.name,
                           logoURL: $0.logoURL,
-                          dataSource: .FlashLive)} //TODO: Check this
+                          dataSource: dataSource)}
     }
 }

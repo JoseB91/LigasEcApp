@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension CoreDataLigasEcStore: ImageStore { //TODO: Tests
+extension CoreDataLigasEcStore: ImageStore {
     
     public func insert(_ data: Data, for url: URL, on table: Table) throws {
         if table == .League {
@@ -23,7 +23,13 @@ extension CoreDataLigasEcStore: ImageStore { //TODO: Tests
         }  else {
             if let managedPlayer = try ManagedPlayer.getFirst(with: url, in: context) {
                 managedPlayer.data = data
-                try context.save()
+                do {
+                    print("Saving context, call stack: \(Thread.callStackSymbols)")
+                     try context.save()
+                 } catch let error as NSError {
+                     print("Failed to save context: \(error), \(error.userInfo)")
+                     throw error
+                 }
             }
         }
     }

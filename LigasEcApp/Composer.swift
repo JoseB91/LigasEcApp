@@ -129,7 +129,7 @@ class Composer {
             
             if league.dataSource == .FlashLive {
                 do {
-                    return try appLocalLoader.localTeamLoader.load(with: league.id)
+                    return try appLocalLoader.localTeamLoader.load(with: league.id, dataSource: .FlashLive)
                 } catch {
                     let url = TeamEndpoint.getFlashLive(seasonId: league.id,
                                                standingType: "overall", // TODO: Manage constants
@@ -147,12 +147,21 @@ class Composer {
                     return teams
                 }
             } else {
-                let url = TeamEndpoint.getTransferMarket(id: league.id,
-                                                         domain: "es").url(baseURL: transferMarketEndpointConfiguration.url)
-                
-                let (data, response) = try await httpClient.get(from: url, with: transferMarketEndpointConfiguration.host)
-                let teams = try TeamMapper.map(data, from: response, with: .TransferMarket)
-                return teams
+                do {
+                    return try appLocalLoader.localTeamLoader.load(with: league.id, dataSource: .TransferMarket)
+                } catch {
+                    let url = TeamEndpoint.getTransferMarket(id: league.id,
+                                                             domain: "es").url(baseURL: transferMarketEndpointConfiguration.url)
+                    
+                    let (data, response) = try await httpClient.get(from: url, with: transferMarketEndpointConfiguration.host)
+                    
+                    let teams = try TeamMapper.map(data, from: response, with: .TransferMarket)
+                    
+                    Task {
+                        appLocalLoader.localTeamLoader.saveIgnoringResult(teams, with: league.id)
+                    }
+                    return teams
+                }
             }
         }
         return TeamViewModel(teamLoader: teamLoader)
@@ -164,7 +173,7 @@ class Composer {
             
             if team.dataSource == .FlashLive {
                 do {
-                    return try appLocalLoader.localPlayerLoader.load(with: team.id)
+                    return try appLocalLoader.localPlayerLoader.load(with: team.id, dataSource: .FlashLive)
                 } catch {
                     let url = PlayerEndpoint.getFlashLive(sportId: 1,
                                                           locale: "es_MX",
@@ -175,20 +184,29 @@ class Composer {
                     let players = try PlayerMapper.map(data, from: response, with: .FlashLive)
                     
                     Task {
+  
                         appLocalLoader.localPlayerLoader.saveIgnoringResult(players, with: team.id)
                     }
                     
                     return players
                 }
             } else {
-                let url = PlayerEndpoint.getTransferMarket(id: team.id,
-                                                           domain: "es").url(baseURL: transferMarketEndpointConfiguration.url)
-                
-                let (data, response) = try await httpClient.get(from: url, with: transferMarketEndpointConfiguration.host)
-                
-                let players = try PlayerMapper.map(data, from: response, with: .TransferMarket)
-
-                return players
+                do {
+                    return try appLocalLoader.localPlayerLoader.load(with: team.id, dataSource: .TransferMarket)
+                } catch {
+                    let url = PlayerEndpoint.getTransferMarket(id: team.id,
+                                                               domain: "es").url(baseURL: transferMarketEndpointConfiguration.url)
+                    
+                    let (data, response) = try await httpClient.get(from: url, with: transferMarketEndpointConfiguration.host)
+                    
+                    let players = try PlayerMapper.map(data, from: response, with: .TransferMarket)
+                    
+                    Task {
+                        appLocalLoader.localPlayerLoader.saveIgnoringResult(players, with: team.id)
+                    }
+                    
+                    return players
+                }
             }
         }
         return PlayerViewModel(playerLoader: playerLoader)

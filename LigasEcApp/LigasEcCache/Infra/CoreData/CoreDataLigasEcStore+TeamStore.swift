@@ -8,7 +8,6 @@
 import CoreData
 
 extension CoreDataLigasEcStore: TeamStore {
-    //TODO: Tests
     
     public func retrieve(with id: String) throws -> [LocalTeam]? {
         try ManagedLeague.find(with: id, in: context).map { $0.localTeams }

@@ -29,9 +29,9 @@ extension LocalPlayerLoader: PlayerCache {
 extension LocalPlayerLoader {
     private struct EmptyData: Error {}
     
-    public func load(with id: String) throws -> [Player] {
+    public func load(with id: String, dataSource: DataSource) throws -> [Player] {
         if let retrievedPlayers = try store.retrieve(with: id), !retrievedPlayers.isEmpty {
-            return retrievedPlayers.toModels()
+            return retrievedPlayers.toModels(with: dataSource)
         } else {
             throw EmptyData()
         }
@@ -48,12 +48,12 @@ extension Array where Element == Player {
 }
 
 private extension Array where Element == LocalPlayer {
-    func toModels() -> [Player] {
+    func toModels(with dataSource: DataSource) -> [Player] {
         return map { Player(id: $0.id,
                            name: $0.name,
                             number: 0,
                             position: $0.position,
                             photoURL: $0.photoURL,
-                            dataSource: .FlashLive)} // TODO: Check this
+                            dataSource: dataSource)}
     }
 }
