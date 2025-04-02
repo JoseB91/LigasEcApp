@@ -47,8 +47,9 @@ final class MockPlayerViewModel {
         return [Player(id: "S0nWKdXm",
                        name: "Contreras José",
                        number: 1,
-                       position: "GOALKEEPER",
-                       photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!)]
+                       position: "Portero",
+                       photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
+                       dataSource: .FlashLive)]
     }
 }
 

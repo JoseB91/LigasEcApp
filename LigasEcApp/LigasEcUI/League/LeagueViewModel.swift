@@ -43,13 +43,13 @@ final class MockLeagueViewModel {
     static func mockLeagueLoader() async throws -> [League] {
         let hardcodedLeagues = [
             League(id: "IaFDigtm",
-                   stageId: "OO37de6i",
                    name: "LigaPro Serie A",
-                   logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!),
-            League(id: "0O4IjDeg",
-                   stageId: "Au6JggjA",
+                   logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
+                   dataSource: .FlashLive),
+            League(id: "EC2L",
                    name: "LigaPro Serie B",
-                   logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!)
+                   logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!,
+                   dataSource: .TransferMarket)
         ]
         
         return hardcodedLeagues

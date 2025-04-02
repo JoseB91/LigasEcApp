@@ -48,7 +48,8 @@ final class MockTeamViewModel {
     static func mockTeamLoader() async throws -> [Team] {
         return [Team(id: "pCMG6CNp",
                      name: "Barcelona SC",
-                     logoURL: URL(string: "https://www.flashscore.com/res/image/data/nit9vJwS-WErjuywa.png")!)]
+                     logoURL: URL(string: "https://www.flashscore.com/res/image/data/nit9vJwS-WErjuywa.png")!,
+                     dataSource: .FlashLive)]
     }
 }
 

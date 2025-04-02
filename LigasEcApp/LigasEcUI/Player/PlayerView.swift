@@ -19,14 +19,14 @@ struct PlayerView: View {
                 ProgressView()
                     .frame(maxWidth: .infinity, alignment: .center)
             } else {
-                
+
                 let groupedPlayers = Dictionary(grouping: playerViewModel.squad, by: { $0.position })
 
-                let positionOrder = ["GOALKEEPER", "DEFENDER", "MIDFIELDER", "FORWARD", "COACH"]
-                
+                let positionOrder = ["Portero", "Defensa", "Centrocampista", "Delantero", "Entrenador"]
+
                 ForEach(positionOrder, id: \.self) { position in
                     if let playersInPosition = groupedPlayers[position], !playersInPosition.isEmpty {
-                        Section(header: Text(position + "s")) {
+                        Section(header: Text(position != "Entrenador" ? position + "s" : "Entrenador")) {
                             ForEach(playersInPosition) { player in
                                 HStack {
                                     if let url = player.photoURL {
