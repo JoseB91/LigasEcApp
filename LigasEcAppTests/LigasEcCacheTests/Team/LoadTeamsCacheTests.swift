@@ -25,7 +25,7 @@ final class LoadTeamsCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
         
         // Act
-        _ = try? sut.load(with: id)
+        _ = try? sut.load(with: id, dataSource: .FlashLive)
         
         // Assert
         XCTAssertEqual(store.receivedMessages, [.retrieve(id)])
@@ -72,7 +72,7 @@ final class LoadTeamsCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
         store.completeRetrieval(with: anyNSError())
         
-        _ = try? sut.load(with: id)
+        _ = try? sut.load(with: id, dataSource: .FlashLive)
         
         XCTAssertEqual(store.receivedMessages, [.retrieve(id)])
     }
@@ -83,7 +83,7 @@ final class LoadTeamsCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
         store.completeRetrieval(with: localTeams)
         
-        _ = try? sut.load(with: id)
+        _ = try? sut.load(with: id, dataSource: .FlashLive)
         
         XCTAssertEqual(store.receivedMessages, [.retrieve(id)])
     }
@@ -101,7 +101,7 @@ final class LoadTeamsCacheTests: XCTestCase {
     private func expect(_ sut: LocalTeamLoader, with id: String, toCompleteWith expectedResult: Result<[Team], Error>, when action: () -> Void?, file: StaticString = #filePath, line: UInt = #line) {
         action()
         
-        let receivedResult = Result { try sut.load(with: id) }
+        let receivedResult = Result { try sut.load(with: id, dataSource: .FlashLive) }
         
         switch (receivedResult, expectedResult) {
         case let (.success(receivedImages), .success(expectedImages)):
