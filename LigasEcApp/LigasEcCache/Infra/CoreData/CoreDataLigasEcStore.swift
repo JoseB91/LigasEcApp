@@ -40,10 +40,6 @@ public final class CoreDataLigasEcStore {
             throw StoreError.failedToLoadPersistentContainer(error)
         }
     }
-            
-    public func perform(_ action: @escaping () -> Void) {
-        context.perform(action)
-    }
     
     private func cleanUpReferencesToPersistentStores() {
         context.performAndWait {

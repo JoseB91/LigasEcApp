@@ -16,7 +16,7 @@ public final class LocalImageLoader {
 }
 
 public protocol ImageCache {
-    func save(_ data: Data, for url: URL, on table: Table) throws
+    func save(_ data: Data, for url: URL, on table: Table) async throws
 }
 
 
@@ -25,9 +25,9 @@ extension LocalImageLoader: ImageCache {
         case failed
     }
     
-    public func save(_ data: Data, for url: URL, on table: Table) throws {
+    public func save(_ data: Data, for url: URL, on table: Table) async throws {
         do {
-            try store.insert(data, for: url, on: table)
+            try await store.insert(data, for: url, on: table)
         } catch {
             throw SaveError.failed
         }
@@ -41,7 +41,7 @@ public enum Table {
 }
 
 public protocol ImageLoader {
-    func loadImageData(from url: URL, on table: Table) throws -> Data
+    func loadImageData(from url: URL, on table: Table) async throws -> Data
 }
 
 extension LocalImageLoader: ImageLoader {
@@ -50,9 +50,9 @@ extension LocalImageLoader: ImageLoader {
         case notFound
     }
     
-    public func loadImageData(from url: URL, on table: Table) throws -> Data {
+    public func loadImageData(from url: URL, on table: Table) async throws -> Data {
             do {
-                if let imageData = try store.retrieve(dataFor: url, on: table) {
+                if let imageData = try await store.retrieve(dataFor: url, on: table) {
                     return imageData
                 }
             } catch {

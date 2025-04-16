@@ -216,14 +216,16 @@ class Composer {
         let imageLoader: () async throws -> Data = { [httpClient, appLocalLoader] in
             
             do {
-                return try appLocalLoader.localImageLoader.loadImageData(from: url, on: table)
+                return try await appLocalLoader.localImageLoader.loadImageData(from: url, on: table)
             } catch {
                 let (data, response) = try await httpClient.get(from: url)
                 
                 let imageData = try ImageMapper.map(data, from: response)
                 
-                Task {
-                    await appLocalLoader.localImageLoader.saveIgnoringResult(imageData, for: url, on: table)
+                do {
+                    try await appLocalLoader.localImageLoader.save(imageData, for: url, on: table)
+                } catch {
+                    print(error)
                 }
                 
                 return imageData
@@ -257,27 +259,6 @@ private extension PlayerCache {
     func saveIgnoringResult(_ players: [Player], with id: String) {
         try? save(players, with: id)
     }
-}
-
-private extension ImageCache {
-//    func saveIgnoringResult(_ data: Data, for url: URL, on table: Table) async {
-//        // This method dispatches to the context's queue and returns when complete
-//        return await withCheckedContinuation { continuation in
-//            context.perform {
-//                do {
-//                    try? save(data, for: url, on: table)
-//                } catch {
-//                    print("Failed to save: \(error)")
-//                }
-//                continuation.resume()
-//            }
-//        }
-//    }
-//    
-//    // And implement:
-//    func saveImageDataAsync(_ data: Data, for url: URL, on table: Table) async {
-//
-//    }
 }
 
 struct EndpointConfiguration {
