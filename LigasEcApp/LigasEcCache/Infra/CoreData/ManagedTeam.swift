@@ -19,9 +19,16 @@ class ManagedTeam: NSManagedObject {
 
 extension ManagedTeam {
     static func getImageData(with url: URL, in context: NSManagedObjectContext) throws -> Data? {
-        if let data = context.userInfo[url] as? Data { return data }
+        if let cachedData = URLImageCache.shared.getImageData(for: url) {
+            return cachedData
+        }
+
+        if let team = try getFirst(with: url, in: context), let imageData = team.data {
+            URLImageCache.shared.setImageData(imageData, for: url)
+            return imageData
+        }
         
-        return try getFirst(with: url, in: context)?.data
+        return nil
     }
     
     static func getFirst(with url: URL, in context: NSManagedObjectContext) throws -> ManagedTeam? {
@@ -38,10 +45,11 @@ extension ManagedTeam {
             managed.id = local.id
             managed.name = local.name
             managed.logoURL = local.logoURL
-            managed.data = context.userInfo[local.logoURL] as? Data
+            if let cachedData = URLImageCache.shared.getImageData(for: local.logoURL) {
+                managed.data = cachedData
+            }
             return managed
         })
-        context.userInfo.removeAllObjects()
         return teams
     }
     
@@ -59,11 +67,5 @@ extension ManagedTeam {
     
     var localPlayers: [LocalPlayer] {
         return players.compactMap { ($0 as? ManagedPlayer)?.local }
-    }
-    
-    override func prepareForDeletion() {
-        super.prepareForDeletion()
-
-        managedObjectContext?.userInfo[logoURL] = data
     }
 }

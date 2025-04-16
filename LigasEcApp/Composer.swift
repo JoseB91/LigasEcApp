@@ -129,7 +129,7 @@ class Composer {
             
             if league.dataSource == .FlashLive {
                 do {
-                    return try appLocalLoader.localTeamLoader.load(with: league.id, dataSource: .FlashLive)
+                    return try await appLocalLoader.localTeamLoader.load(with: league.id, dataSource: .FlashLive)
                 } catch {
                     let url = TeamEndpoint.getFlashLive(seasonId: league.id,
                                                standingType: "overall", // TODO: Manage constants
@@ -140,15 +140,17 @@ class Composer {
                                         
                     let teams = try TeamMapper.map(data, from: response, with: .FlashLive)
                     
-                    Task {
-                        appLocalLoader.localTeamLoader.saveIgnoringResult(teams, with: league.id)
+                    do {
+                        try await appLocalLoader.localTeamLoader.save(teams, with: league.id)
+                    } catch {
+                        print(error)
                     }
                     
                     return teams
                 }
             } else {
                 do {
-                    return try appLocalLoader.localTeamLoader.load(with: league.id, dataSource: .TransferMarket)
+                    return try await appLocalLoader.localTeamLoader.load(with: league.id, dataSource: .TransferMarket)
                 } catch {
                     let url = TeamEndpoint.getTransferMarket(id: league.id,
                                                              domain: "es").url(baseURL: transferMarketEndpointConfiguration.url)
@@ -157,9 +159,12 @@ class Composer {
                     
                     let teams = try TeamMapper.map(data, from: response, with: .TransferMarket)
                     
-                    Task {
-                        appLocalLoader.localTeamLoader.saveIgnoringResult(teams, with: league.id)
+                    do {
+                        try await appLocalLoader.localTeamLoader.save(teams, with: league.id)
+                    } catch {
+                        print(error)
                     }
+                    
                     return teams
                 }
             }
@@ -173,7 +178,7 @@ class Composer {
             
             if team.dataSource == .FlashLive {
                 do {
-                    return try appLocalLoader.localPlayerLoader.load(with: team.id, dataSource: .FlashLive)
+                    return try await appLocalLoader.localPlayerLoader.load(with: team.id, dataSource: .FlashLive)
                 } catch {
                     let url = PlayerEndpoint.getFlashLive(sportId: 1,
                                                           locale: "es_MX",
@@ -183,15 +188,17 @@ class Composer {
                     
                     let players = try PlayerMapper.map(data, from: response, with: .FlashLive)
                     
-                    Task {
-                        appLocalLoader.localPlayerLoader.saveIgnoringResult(players, with: team.id)
+                    do {
+                        try await appLocalLoader.localPlayerLoader.save(players, with: team.id)
+                    } catch {
+                        print(error)
                     }
                     
                     return players
                 }
             } else {
                 do {
-                    return try appLocalLoader.localPlayerLoader.load(with: team.id, dataSource: .TransferMarket)
+                    return try await appLocalLoader.localPlayerLoader.load(with: team.id, dataSource: .TransferMarket)
                 } catch {
                     let url = PlayerEndpoint.getTransferMarket(id: team.id,
                                                                domain: "es").url(baseURL: transferMarketEndpointConfiguration.url)
@@ -200,8 +207,10 @@ class Composer {
                     
                     let players = try PlayerMapper.map(data, from: response, with: .TransferMarket)
                     
-                    Task {
-                        appLocalLoader.localPlayerLoader.saveIgnoringResult(players, with: team.id)
+                    do {
+                        try await appLocalLoader.localPlayerLoader.save(players, with: team.id)
+                    } catch {
+                        print(error)
                     }
                     
                     return players
@@ -246,18 +255,6 @@ class Composer {
 private extension LeagueCache {
     func saveIgnoringResult(_ leagues: [League]) {
         try? save(leagues)
-    }
-}
-
-private extension TeamCache {
-    func saveIgnoringResult(_ teams: [Team], with id: String) {
-        try? save(teams, with: id)
-    }
-}
-
-private extension PlayerCache {
-    func saveIgnoringResult(_ players: [Player], with id: String) {
-        try? save(players, with: id)
     }
 }
 

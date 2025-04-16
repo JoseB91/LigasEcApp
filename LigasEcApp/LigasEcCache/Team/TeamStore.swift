@@ -9,8 +9,8 @@ import Foundation
 import LigasEcAPI
     
 public protocol TeamStore {
-    func insert(_ teams: [LocalTeam], with id: String) throws
-    func retrieve(with id: String) throws -> [LocalTeam]?
+    func insert(_ teams: [LocalTeam], with id: String) async throws
+    func retrieve(with id: String) async throws -> [LocalTeam]?
 }
 
 

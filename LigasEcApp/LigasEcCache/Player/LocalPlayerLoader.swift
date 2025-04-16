@@ -17,20 +17,20 @@ public final class LocalPlayerLoader {
 }
 
 public protocol PlayerCache {
-    func save(_ players: [Player], with id: String) throws
+    func save(_ players: [Player], with id: String) async throws
 }
 
 extension LocalPlayerLoader: PlayerCache {
-    public func save(_ players: [Player], with id: String) throws {
-        try store.insert(players.toLocal(), with: id)
+    public func save(_ players: [Player], with id: String) async throws {
+        try await store.insert(players.toLocal(), with: id)
     }
 }
 
 extension LocalPlayerLoader {
     private struct EmptyData: Error {}
     
-    public func load(with id: String, dataSource: DataSource) throws -> [Player] {
-        if let retrievedPlayers = try store.retrieve(with: id), !retrievedPlayers.isEmpty {
+    public func load(with id: String, dataSource: DataSource) async throws -> [Player] {
+        if let retrievedPlayers = try await store.retrieve(with: id), !retrievedPlayers.isEmpty {
             return retrievedPlayers.toModels(with: dataSource)
         } else {
             throw EmptyData()

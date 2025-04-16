@@ -24,7 +24,6 @@ extension ManagedPlayer {
         }
         
         if let player = try getFirst(with: url, in: context), let imageData = player.data {
-            // Store in cache for future use
             URLImageCache.shared.setImageData(imageData, for: url)
             return imageData
         }
@@ -47,7 +46,6 @@ extension ManagedPlayer {
             managed.name = local.name
             managed.position = local.position
             managed.photoURL = local.photoURL
-            // Check if we have image data in our cache
             if let photoURL = local.photoURL,
                 let cachedData = URLImageCache.shared.getImageData(for: photoURL) {
                 managed.data = cachedData
@@ -61,6 +59,7 @@ extension ManagedPlayer {
         return LocalPlayer(id: id, name: name, position: position, photoURL: photoURL)
     }
     
+    //TODO: Delete this if not needed
     func cacheImageDataBeforeDeletion() {
         if let imageData = data, let photoURL {
             URLImageCache.shared.setImageData(imageData, for: photoURL)

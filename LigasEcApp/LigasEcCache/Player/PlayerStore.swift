@@ -8,7 +8,7 @@
 import Foundation
     
 public protocol PlayerStore {
-    func insert(_ players: [LocalPlayer], with id: String) throws
-    func retrieve(with id: String) throws -> [LocalPlayer]?
+    func insert(_ players: [LocalPlayer], with id: String) async throws
+    func retrieve(with id: String) async throws -> [LocalPlayer]?
 }
 

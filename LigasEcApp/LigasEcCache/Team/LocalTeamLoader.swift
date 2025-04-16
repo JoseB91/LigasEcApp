@@ -17,20 +17,20 @@ public final class LocalTeamLoader {
 }
 
 public protocol TeamCache {
-    func save(_ teams: [Team], with id: String) throws
+    func save(_ teams: [Team], with id: String) async throws
 }
 
 extension LocalTeamLoader: TeamCache {
-    public func save(_ teams: [Team], with id: String) throws {
-        try store.insert(teams.toLocal(), with: id)
+    public func save(_ teams: [Team], with id: String) async throws {
+        try await store.insert(teams.toLocal(), with: id)
     }
 }
 
 extension LocalTeamLoader {
     private struct EmptyData: Error {}
     
-    public func load(with id: String, dataSource: DataSource) throws -> [Team] {
-        if let retrievedTeams = try store.retrieve(with: id), !retrievedTeams.isEmpty {
+    public func load(with id: String, dataSource: DataSource) async throws -> [Team] {
+        if let retrievedTeams = try await store.retrieve(with: id), !retrievedTeams.isEmpty {
             return retrievedTeams.toModels(with: dataSource)
         } else {
             throw EmptyData()

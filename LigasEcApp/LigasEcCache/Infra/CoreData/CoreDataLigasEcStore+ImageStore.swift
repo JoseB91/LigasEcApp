@@ -5,8 +5,8 @@
 //  Created by José Briones on 12/3/25.
 //
 
-import Foundation
-//TODO: Apply this for Team and Leagues
+import CoreData
+
 extension CoreDataLigasEcStore: ImageStore {
     
     public func insert(_ data: Data, for url: URL, on table: Table) async throws {
