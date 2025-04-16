@@ -38,7 +38,7 @@ struct TeamView: View {
         .listRowSpacing(12)
         .listStyle(.insetGrouped)
         .navigationTitle(teamViewModel.title)
-        .toolbarTitleDisplayMode(.inline)
+        .toolbarTitleDisplayMode(.large)
         .refreshable {
             await teamViewModel.loadTeams()
         }

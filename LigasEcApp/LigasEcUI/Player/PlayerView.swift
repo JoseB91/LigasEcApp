@@ -51,7 +51,7 @@ struct PlayerView: View {
         .listStyle(.insetGrouped)
         .listRowSpacing(12)
         .navigationTitle(playerViewModel.title)
-        .toolbarTitleDisplayMode(.inline)
+        .toolbarTitleDisplayMode(.large)
         .refreshable {
             await playerViewModel.loadSquad()
         }

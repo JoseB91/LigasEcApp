@@ -16,44 +16,46 @@ struct LeagueView: View {
     let imageView: (URL, Table) -> ImageView
         
     var body: some View {
-        List {
-            if leagueViewModel.isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity, alignment: .center)
-            } else {
-                ForEach(leagueViewModel.leagues) { league in
-                    Button {
-                        navigationPath.append(league)
-                    } label: {
-                        HStack {
-                            imageView(league.logoURL, Table.League)
-                                .frame(width: 96, height: 48)
-                            Text(league.name)
-                                .font(.title2)
+        VStack{
+            Spacer()
+            List {
+                if leagueViewModel.isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                } else {
+                    ForEach(leagueViewModel.leagues) { league in
+                        Button {
+                            navigationPath.append(league)
+                        } label: {
+                            HStack {
+                                imageView(league.logoURL, Table.League)
+                                    .frame(width: 96, height: 48)
+                                Text(league.name)
+                                    .font(.title)
+                                    .foregroundColor(.primary)
+                            }
                         }
-                    }.tint(.black)
+                        .tint(.black)
+                        .frame(height: 80)
+                    }
                 }
             }
-        }
-        .listRowSeparator(.hidden)
-        .listRowSpacing(12)
-        .listStyle(.insetGrouped)
-        .navigationTitle(leagueViewModel.title)
-        .toolbarTitleDisplayMode(.inline)
-        .refreshable {
-            await leagueViewModel.loadLeagues()
-        }
-        .task {
-            await leagueViewModel.loadLeagues()
-        }
-        .alert(item: $leagueViewModel.errorMessage) { error in // TODO: Change to use ContentUnavailable~
-            Alert(
-                title: Text("Error"),
-                message: Text(error.message),
-                dismissButton: .default(Text("OK"))
-            )
-        }
+            .navigationTitle(leagueViewModel.title)
+            .toolbarTitleDisplayMode(.large)
+            .listRowSeparator(.hidden)
+            .listRowSpacing(24)
+            .listStyle(.insetGrouped)
+            .task {
+                await leagueViewModel.loadLeagues()
+            }
+            .frame(height: CGFloat(leagueViewModel.leagues.count * 150))
+            .scrollContentBackground(.hidden)
+            .scrollDisabled(true)
+            
+            Spacer()
+        }.background(Color(UIColor.systemGroupedBackground))
     }
+
 }
 
 #Preview {

@@ -7,13 +7,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ecuadorian Football Tournaments"
+            "value" : "LigasEc"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Torneos Ecuatorianos de Fútbol"
+            "value" : "LigasEc"
           }
         }
       }
@@ -23,7 +23,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Squad"
           }
         },
