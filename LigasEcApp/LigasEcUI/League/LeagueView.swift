@@ -16,8 +16,8 @@ struct LeagueView: View {
     let imageView: (URL, Table) -> ImageView
         
     var body: some View {
-        VStack{
-            Spacer()
+//        VStack{
+//            Spacer()
             List {
                 if leagueViewModel.isLoading {
                     ProgressView()
@@ -48,12 +48,12 @@ struct LeagueView: View {
             .task {
                 await leagueViewModel.loadLeagues()
             }
-            .frame(height: CGFloat(leagueViewModel.leagues.count * 150))
-            .scrollContentBackground(.hidden)
+//            .frame(height: CGFloat(leagueViewModel.leagues.count * 150))
+//            .scrollContentBackground(.hidden)
             .scrollDisabled(true)
             
-            Spacer()
-        }.background(Color(UIColor.systemGroupedBackground))
+//            Spacer()
+//        }.background(Color(UIColor.systemGroupedBackground))
     }
 
 }

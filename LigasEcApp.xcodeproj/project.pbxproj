@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B049A3832DB0237300FA172C /* URLImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049A3822DB0237300FA172C /* URLImageCache.swift */; };
 		B053618A2D821B3300BE41F0 /* CoreDataLigasEcStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B053615F2D821B3300BE41F0 /* CoreDataLigasEcStore.swift */; };
 		B053618B2D821B3300BE41F0 /* CoreDataLigasEcStore+ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361602D821B3300BE41F0 /* CoreDataLigasEcStore+ImageStore.swift */; };
 		B053618C2D821B3300BE41F0 /* CoreDataLigasEcStore+TeamStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361612D821B3300BE41F0 /* CoreDataLigasEcStore+TeamStore.swift */; };
@@ -77,6 +78,7 @@
 /* Begin PBXFileReference section */
 		B03E6F8D2D6CE44F00DE1485 /* LigasEcApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LigasEcApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B03E6F9D2D6CE45000DE1485 /* LigasEcAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LigasEcAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B049A3822DB0237300FA172C /* URLImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageCache.swift; sourceTree = "<group>"; };
 		B053615F2D821B3300BE41F0 /* CoreDataLigasEcStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataLigasEcStore.swift; sourceTree = "<group>"; };
 		B05361602D821B3300BE41F0 /* CoreDataLigasEcStore+ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataLigasEcStore+ImageStore.swift"; sourceTree = "<group>"; };
 		B05361612D821B3300BE41F0 /* CoreDataLigasEcStore+TeamStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataLigasEcStore+TeamStore.swift"; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				B05361642D821B3300BE41F0 /* ManagedTeam.swift */,
 				B053621D2D8232CA00BE41F0 /* ManagedLeague.swift */,
 				B05362262D82AB3B00BE41F0 /* ManagedPlayer.swift */,
+				B049A3822DB0237300FA172C /* URLImageCache.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				B053618C2D821B3300BE41F0 /* CoreDataLigasEcStore+TeamStore.swift in Sources */,
 				B053618D2D821B3300BE41F0 /* LigasEcStore.xcdatamodeld in Sources */,
 				B053618E2D821B3300BE41F0 /* ManagedCache.swift in Sources */,
+				B049A3832DB0237300FA172C /* URLImageCache.swift in Sources */,
 				B053618F2D821B3300BE41F0 /* ManagedTeam.swift in Sources */,
 				B05361942D821B3300BE41F0 /* CachePolicy.swift in Sources */,
 				B053621E2D8232CA00BE41F0 /* ManagedLeague.swift in Sources */,

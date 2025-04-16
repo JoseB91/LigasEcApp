@@ -184,7 +184,6 @@ class Composer {
                     let players = try PlayerMapper.map(data, from: response, with: .FlashLive)
                     
                     Task {
-  
                         appLocalLoader.localPlayerLoader.saveIgnoringResult(players, with: team.id)
                     }
                     
@@ -224,7 +223,7 @@ class Composer {
                 let imageData = try ImageMapper.map(data, from: response)
                 
                 Task {
-                    appLocalLoader.localImageLoader.saveIgnoringResult(imageData, for: url, on: table)
+                    await appLocalLoader.localImageLoader.saveIgnoringResult(imageData, for: url, on: table)
                 }
                 
                 return imageData
@@ -261,9 +260,24 @@ private extension PlayerCache {
 }
 
 private extension ImageCache {
-    func saveIgnoringResult(_ data: Data, for url: URL, on table: Table) {
-        try? save(data, for: url, on: table)
-    }
+//    func saveIgnoringResult(_ data: Data, for url: URL, on table: Table) async {
+//        // This method dispatches to the context's queue and returns when complete
+//        return await withCheckedContinuation { continuation in
+//            context.perform {
+//                do {
+//                    try? save(data, for: url, on: table)
+//                } catch {
+//                    print("Failed to save: \(error)")
+//                }
+//                continuation.resume()
+//            }
+//        }
+//    }
+//    
+//    // And implement:
+//    func saveImageDataAsync(_ data: Data, for url: URL, on table: Table) async {
+//
+//    }
 }
 
 struct EndpointConfiguration {

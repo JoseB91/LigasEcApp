@@ -24,7 +24,7 @@ extension CoreDataLigasEcStore: ImageStore {
             if let managedPlayer = try ManagedPlayer.getFirst(with: url, in: context) {
                 managedPlayer.data = data
                 do {
-                    print("Saving context, call stack: \(Thread.callStackSymbols)")
+                   // print("Saving context, call stack: \(Thread.callStackSymbols)")
                      try context.save()
                  } catch let error as NSError {
                      print("Failed to save context: \(error), \(error.userInfo)")
@@ -33,7 +33,7 @@ extension CoreDataLigasEcStore: ImageStore {
             }
         }
     }
-    
+
     public func retrieve(dataFor url: URL, on table: Table) throws -> Data?  {
         if table == .League {
             try ManagedLeague.getImageData(with: url, in: context)

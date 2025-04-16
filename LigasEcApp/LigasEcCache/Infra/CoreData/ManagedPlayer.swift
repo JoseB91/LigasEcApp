@@ -19,9 +19,17 @@ class ManagedPlayer: NSManagedObject {
 
 extension ManagedPlayer {
     static func getImageData(with url: URL, in context: NSManagedObjectContext) throws -> Data? {
-        if let data = context.userInfo[url] as? Data { return data }
+        if let cachedData = URLImageCache.shared.getImageData(for: url) {
+            return cachedData
+        }
         
-        return try getFirst(with: url, in: context)?.data
+        if let player = try getFirst(with: url, in: context), let imageData = player.data {
+            // Store in cache for future use
+            URLImageCache.shared.setImageData(imageData, for: url)
+            return imageData
+        }
+        
+        return nil
     }
     
     static func getFirst(with url: URL, in context: NSManagedObjectContext) throws -> ManagedPlayer? {
@@ -33,28 +41,29 @@ extension ManagedPlayer {
     }
     
     static func fetchPlayers(from localPlayers: [LocalPlayer], in context: NSManagedObjectContext) -> NSOrderedSet {
-        let teams = NSOrderedSet(array: localPlayers.map { local in
+        let players = NSOrderedSet(array: localPlayers.map { local in
             let managed = ManagedPlayer(context: context)
             managed.id = local.id
             managed.name = local.name
             managed.position = local.position
             managed.photoURL = local.photoURL
-            if let url = local.photoURL {
-                managed.data = context.userInfo[url] as? Data
+            // Check if we have image data in our cache
+            if let photoURL = local.photoURL,
+                let cachedData = URLImageCache.shared.getImageData(for: photoURL) {
+                managed.data = cachedData
             }
             return managed
         })
-        context.userInfo.removeAllObjects()
-        return teams
+        return players
     }
-
+    
     var local: LocalPlayer {
         return LocalPlayer(id: id, name: name, position: position, photoURL: photoURL)
     }
     
-    override func prepareForDeletion() {
-        super.prepareForDeletion()
-
-        managedObjectContext?.userInfo[photoURL ?? ""] = data
+    func cacheImageDataBeforeDeletion() {
+        if let imageData = data, let photoURL {
+            URLImageCache.shared.setImageData(imageData, for: photoURL)
+        }
     }
 }
