@@ -19,15 +19,15 @@ public final class LocalLeagueLoader {
 }
 
 public protocol LeagueCache {
-    func save(_ teams: [League]) throws
+    func save(_ teams: [League]) async throws
 }
 
 extension LocalLeagueLoader: LeagueCache {
-    public func save(_ leagues: [League]) throws {
+    public func save(_ leagues: [League]) async throws {
         do {
-            try store.insert(leagues.toLocal(), timestamp: currentDate())
+            try await store.insert(leagues.toLocal(), timestamp: currentDate())
         } catch {
-            try store.deleteCache()
+            try await store.deleteCache()
         }
     }
 }
@@ -35,14 +35,14 @@ extension LocalLeagueLoader: LeagueCache {
 extension LocalLeagueLoader {
     private struct InvalidCache: Error {}
     
-    public func validateCache() throws {
+    public func validateCache() async throws {
         do {
-            if let cache = try store.retrieve(), !CachePolicy.validate(cache.timestamp,
+            if let cache = try await store.retrieve(), !CachePolicy.validate(cache.timestamp,
                                                                               against: currentDate()) {
                 throw InvalidCache()
             }
         } catch {
-            try store.deleteCache()
+            try await store.deleteCache()
         }
     }
 }

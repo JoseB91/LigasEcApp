@@ -33,14 +33,32 @@ struct LigasEcApp: App {
                         TeamView(teamViewModel: composer.composeTeamViewModel(for: league),
                                  navigationPath: $navigationPath,
                                  imageView: composer.composeImageView)
+                        .navigationBarBackButtonHidden(true)
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                Button {
+                                    navigationPath.removeLast()
+                                } label: {
+                                    HStack(spacing: 5) {
+                                        Image(systemName: "chevron.left")
+                                        Text("LigasEc")
+                                            .fontWeight(.regular)
+                                    }
+                                }
+                            }
+                        }
                     }
                     .navigationDestination(for: Team.self) { team in
                         PlayerView(playerViewModel: composer.composePlayerViewModel(for: team),
                                    imageView: composer.composeImageView)
                     }
             }
-            .onAppear {
-                composer.validateCache()
+            .task {
+                do {
+                    try await composer.validateCache()
+                } catch {
+                    print(error)
+                }
             }
         }
     }

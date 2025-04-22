@@ -113,8 +113,10 @@ class Composer {
                        dataSource: .TransferMarket)
             ]
                         
-            Task {
-                appLocalLoader.localLeagueLoader.saveIgnoringResult(hardcodedLeagues)
+            do {
+                try await appLocalLoader.localLeagueLoader.save(hardcodedLeagues)
+            } catch {
+                print(error)
             }
             
             return hardcodedLeagues
@@ -245,16 +247,8 @@ class Composer {
         return ImageView(imageViewModel: imageViewModel)
     }
     
-    func validateCache() {
-        Task {
-            try? appLocalLoader.localLeagueLoader.validateCache()
-        }
-    }
-}
-
-private extension LeagueCache {
-    func saveIgnoringResult(_ leagues: [League]) {
-        try? save(leagues)
+    func validateCache() async throws {
+        try await appLocalLoader.localLeagueLoader.validateCache()
     }
 }
 

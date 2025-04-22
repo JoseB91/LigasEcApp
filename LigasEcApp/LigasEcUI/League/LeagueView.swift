@@ -16,8 +16,8 @@ struct LeagueView: View {
     let imageView: (URL, Table) -> ImageView
         
     var body: some View {
-//        VStack{
-//            Spacer()
+        VStack{
+            Spacer()
             List {
                 if leagueViewModel.isLoading {
                     ProgressView()
@@ -40,22 +40,38 @@ struct LeagueView: View {
                     }
                 }
             }
-            .navigationTitle(leagueViewModel.title)
-            .toolbarTitleDisplayMode(.large)
+            //.navigationTitle(leagueViewModel.title)
+            //.toolbarTitleDisplayMode(.large)
+//            .toolbar {
+//                ToolbarItem(placement: .principal) {
+//                    Text(leagueViewModel.title)
+//                        .font(.system(size: 36, weight: .bold))
+//                }
+//            }
+            .navigationBarTitleDisplayMode(.inline) // We'll use inline mode
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    VStack {
+                        Text(leagueViewModel.title)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                    }
+                }
+            }
+            // To simulate the large title behavior with scrolling
+            .padding(.top)
             .listRowSeparator(.hidden)
             .listRowSpacing(24)
             .listStyle(.insetGrouped)
             .task {
                 await leagueViewModel.loadLeagues()
             }
-//            .frame(height: CGFloat(leagueViewModel.leagues.count * 150))
+            .frame(height: CGFloat(leagueViewModel.leagues.count * 150))
 //            .scrollContentBackground(.hidden)
             .scrollDisabled(true)
-            
-//            Spacer()
-//        }.background(Color(UIColor.systemGroupedBackground))
+            Spacer()
+        }.background(Color(UIColor.systemGroupedBackground))
     }
-
 }
 
 #Preview {

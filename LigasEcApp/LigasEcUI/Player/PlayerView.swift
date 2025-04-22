@@ -9,6 +9,7 @@ import SwiftUI
 import LigasEcAPI
 import SharedAPI
 
+//TODO: Change UI and add number
 struct PlayerView: View {
     @ObservedObject var playerViewModel: PlayerViewModel
     let imageView: (URL, Table) -> ImageView
@@ -23,15 +24,20 @@ struct PlayerView: View {
                 let groupedPlayers = Dictionary(grouping: playerViewModel.squad, by: { $0.position })
 
                 let positionOrder = ["Portero", "Defensa", "Centrocampista", "Delantero", "Entrenador"]
-
+                
                 ForEach(positionOrder, id: \.self) { position in
-                    if let playersInPosition = groupedPlayers[position], !playersInPosition.isEmpty {
-                        Section(header: Text(position != "Entrenador" ? position + "s" : "Entrenador")) {
-                            ForEach(playersInPosition) { player in
+                    if let positionGroup = groupedPlayers[position], !positionGroup.isEmpty {
+                        Section(header: Text(position != "Entrenador" ?
+                                             playerViewModel.getLocalizedPosition(for: position) + "s" :
+                                                playerViewModel.coach)) {
+                            ForEach(positionGroup) { player in
                                 HStack {
                                     if let url = player.photoURL {
                                         imageView(url, Table.Player)
                                             .frame(width: 96, height: 48)
+                                            .clipShape(Circle())
+                                            .overlay(Circle().stroke(Color.white, lineWidth: 1)) // Opcional, para agregar un borde blanco
+                                            .shadow(radius: 10) // Opcional, agrega una sombra
                                     } else {
                                         Image(systemName: "person.circle")
                                             .resizable()
@@ -40,6 +46,7 @@ struct PlayerView: View {
                                     }
                                     Text(player.name)
                                         .font(.title2)
+                                        .foregroundColor(.primary)
                                 }
                             }
                         }

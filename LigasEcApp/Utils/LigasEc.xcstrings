@@ -1,6 +1,74 @@
 {
   "sourceLanguage" : "es-419",
   "strings" : {
+    "COACH" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Coach"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrenador"
+          }
+        }
+      }
+    },
+    "DEFENDER" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Defender"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Defensa"
+          }
+        }
+      }
+    },
+    "FORWARD" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forward"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delantero"
+          }
+        }
+      }
+    },
+    "GOALKEEPER" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goalkeeper"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portero"
+          }
+        }
+      }
+    },
     "LEAGUE_VIEW_TITLE" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -14,6 +82,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LigasEc"
+          }
+        }
+      }
+    },
+    "MIDFIELDER" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midfielder"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mediocampista"
           }
         }
       }

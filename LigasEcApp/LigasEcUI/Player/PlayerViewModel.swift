@@ -22,6 +22,37 @@ final class PlayerViewModel: ObservableObject {
                bundle: Bundle(for: Self.self))
     }
     
+    var coach: String {
+        String(localized: "COACH",
+               table: "LigasEc",
+               bundle: Bundle(for: Self.self))
+    }
+    
+    var goalkeeper: String {
+        String(localized: "GOALKEEPER",
+               table: "LigasEc",
+               bundle: Bundle(for: Self.self))
+    }
+
+    var defender: String {
+        String(localized: "DEFENDER",
+               table: "LigasEc",
+               bundle: Bundle(for: Self.self))
+    }
+
+    var midfielder: String {
+        String(localized: "MIDFIELDER",
+               table: "LigasEc",
+               bundle: Bundle(for: Self.self))
+    }
+
+    var forward: String {
+        String(localized: "FORWARD",
+               table: "LigasEc",
+               bundle: Bundle(for: Self.self))
+    }
+
+    
     init(playerLoader: @escaping () async throws -> [Player]) {
         self.playerLoader = playerLoader
     }
@@ -39,6 +70,23 @@ final class PlayerViewModel: ObservableObject {
             }
         }
         isLoading = false
+    }
+    
+    func getLocalizedPosition(for position: String) -> String {
+        switch position {
+        case "Portero":
+            return goalkeeper
+        case "Defensa":
+            return defender
+        case "Centrocampista":
+            return midfielder
+        case "Delantero":
+            return forward
+        case "Entrenador":
+            return coach
+        default:
+            return ""
+        }
     }
 }
 

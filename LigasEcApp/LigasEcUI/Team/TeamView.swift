@@ -29,6 +29,7 @@ struct TeamView: View {
                                 .frame(width: 96, height: 48)
                             Text(team.name)
                                 .font(.title2)
+                                .foregroundColor(.primary)
                         }
                     }.tint(.black)
                 }

@@ -58,11 +58,4 @@ extension ManagedPlayer {
     var local: LocalPlayer {
         return LocalPlayer(id: id, name: name, position: position, photoURL: photoURL)
     }
-    
-    //TODO: Delete this if not needed
-    func cacheImageDataBeforeDeletion() {
-        if let imageData = data, let photoURL {
-            URLImageCache.shared.setImageData(imageData, for: photoURL)
-        }
-    }
 }
