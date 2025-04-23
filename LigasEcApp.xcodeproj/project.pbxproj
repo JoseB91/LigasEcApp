@@ -21,7 +21,6 @@
 		B05361A02D821B3300BE41F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B053617C2D821B3300BE41F0 /* Preview Assets.xcassets */; };
 		B05361A12D821B3300BE41F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B053617E2D821B3300BE41F0 /* Assets.xcassets */; };
 		B05361A22D821B3300BE41F0 /* LigasEc.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B053617F2D821B3300BE41F0 /* LigasEc.xcstrings */; };
-		B05361A32D821B3300BE41F0 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B05361822D821B3300BE41F0 /* Config.xcconfig */; };
 		B05361EB2D821B8500BE41F0 /* ValidateCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361D72D821B8500BE41F0 /* ValidateCacheTests.swift */; };
 		B05361EC2D821B8500BE41F0 /* LocalizationTests+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361D92D821B8500BE41F0 /* LocalizationTests+Helpers.swift */; };
 		B05361ED2D821B8500BE41F0 /* LeagueLocalizedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361DB2D821B8500BE41F0 /* LeagueLocalizedTests.swift */; };
@@ -427,7 +426,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					B03E6F8C2D6CE44F00DE1485 = {
 						CreatedOnToolsVersion = 16.2;
@@ -491,7 +490,6 @@
 				B05361A02D821B3300BE41F0 /* Preview Assets.xcassets in Resources */,
 				B05361A12D821B3300BE41F0 /* Assets.xcassets in Resources */,
 				B05361A22D821B3300BE41F0 /* LigasEc.xcstrings in Resources */,
-				B05361A32D821B3300BE41F0 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,6 +552,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -584,6 +583,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9V3336X7NB;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -619,6 +619,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -649,6 +650,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9V3336X7NB;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -680,7 +682,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LigasEcApp/Utils/Preview Content\"";
-				DEVELOPMENT_TEAM = 9V3336X7NB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LigasEcApp/Info.plist;
@@ -716,7 +717,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LigasEcApp/Utils/Preview Content\"";
-				DEVELOPMENT_TEAM = 9V3336X7NB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LigasEcApp/Info.plist;
@@ -749,7 +749,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9V3336X7NB;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;
@@ -768,7 +767,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9V3336X7NB;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;

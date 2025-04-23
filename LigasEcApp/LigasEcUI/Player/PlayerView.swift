@@ -9,7 +9,6 @@ import SwiftUI
 import LigasEcAPI
 import SharedAPI
 
-//TODO: Change UI and add number
 struct PlayerView: View {
     @ObservedObject var playerViewModel: PlayerViewModel
     let imageView: (URL, Table) -> ImageView
@@ -37,8 +36,7 @@ struct PlayerView: View {
                                         imageView(url, Table.Player)
                                             .frame(width: 96, height: 48)
                                             .clipShape(Circle())
-                                            .overlay(Circle().stroke(Color.white, lineWidth: 1)) 
-                                            .shadow(radius: 10)
+                                            .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))
                                     } else {
                                         Image(systemName: "person.circle")
                                             .resizable()
@@ -48,6 +46,24 @@ struct PlayerView: View {
                                     Text(player.name)
                                         .font(.title2)
                                         .foregroundColor(.primary)
+                                        .frame(width: 150, alignment: .leading)
+//                                    if let flagId = player.flagId {
+//                                        Image("country_flag_\(flagId)")
+//                                            .resizable()
+//                                            .scaledtoFit()
+//                                            .frame(width: 24, height: 16)
+//                                    }
+                                    if position != "Entrenador" {
+                                        Spacer()
+                                        ZStack{
+                                            Image("tshirt")
+                                                .renderingMode(.template)
+                                                .foregroundStyle(Color.primary)
+                                            Text("\(String(player.number))")
+                                                .font(.caption)
+                                                .foregroundColor(.primary)
+                                        }
+                                    }
                                 }
                                 .listRowSeparator(.hidden)
                             }

@@ -35,7 +35,6 @@ struct TeamView: View {
                 }
             }
         }
-        .listRowSeparator(.hidden)
         .listRowSpacing(12)
         .listStyle(.insetGrouped)
         .navigationTitle(teamViewModel.title)

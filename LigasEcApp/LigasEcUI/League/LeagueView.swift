@@ -22,7 +22,7 @@ struct LeagueView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: geometry.size.width)
-                    .frame(height: geometry.size.height * 0.66)
+                    .frame(height: geometry.size.height * 0.70)
                     .edgesIgnoringSafeArea(.top)
                 
                 VStack {
@@ -34,8 +34,7 @@ struct LeagueView: View {
                             ProgressView()
                                 .frame(maxWidth: .infinity, alignment: .center)
                         } else {
-                            VStack(spacing: 16) {
-                                ForEach(leagueViewModel.leagues) { league in
+                            List(leagueViewModel.leagues) { league in
                                     Button {
                                         navigationPath.append(league)
                                     } label: {
@@ -47,22 +46,19 @@ struct LeagueView: View {
                                                 .foregroundColor(.primary)
                                             Spacer()
                                         }
-                                        .padding(.vertical, 24)
+                                        .padding(.vertical, 12)
                                     }
-                                    .padding(.horizontal, 16)
-                                    .background(Color(.secondarySystemBackground))
                                     .cornerRadius(10)
                                 }
-                            }
-                            .padding(.horizontal, 16)
                         }
                     }
+                    .listRowSpacing(36)
                     .frame(height: geometry.size.height * 0.40)
                     .task {
                         await leagueViewModel.loadLeagues()
                     }
                 }
-            }.background(Color(UIColor.systemGroupedBackground))
+            }
         }
     }
 }

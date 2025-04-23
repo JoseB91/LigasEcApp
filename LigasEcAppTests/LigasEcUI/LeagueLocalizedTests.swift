@@ -26,6 +26,31 @@ final class LeagueLocalizedTests: XCTestCase {
         XCTAssertEqual(playerViewModel.title, localized("PLAYER_VIEW_TITLE"))
     }
     
+    func test_playerGoalkeeper_isLocalized() {
+        let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
+        XCTAssertEqual(playerViewModel.goalkeeper, localized("GOALKEEPER"))
+    }
+    
+    func test_playerDefender_isLocalized() {
+        let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
+        XCTAssertEqual(playerViewModel.defender, localized("DEFENDER"))
+    }
+    
+    func test_playerMidfielder_isLocalized() {
+        let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
+        XCTAssertEqual(playerViewModel.midfielder, localized("MIDFIELDER"))
+    }
+    
+    func test_playerForward_isLocalized() {
+        let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
+        XCTAssertEqual(playerViewModel.forward, localized("FORWARD"))
+    }
+    
+    func test_playerCoach_isLocalized() {
+        let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
+        XCTAssertEqual(playerViewModel.coach, localized("COACH"))
+    }
+    
     //TODO: Add localized for groups of players
     
     func test_localizedStrings_haveKeysAndValuesForAllSupportedLocalizations() {
