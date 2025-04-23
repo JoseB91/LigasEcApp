@@ -19,6 +19,7 @@ struct PlayerView: View {
             if playerViewModel.isLoading {
                 ProgressView()
                     .frame(maxWidth: .infinity, alignment: .center)
+                    .listRowSeparator(.hidden)
             } else {
 
                 let groupedPlayers = Dictionary(grouping: playerViewModel.squad, by: { $0.position })
@@ -36,8 +37,8 @@ struct PlayerView: View {
                                         imageView(url, Table.Player)
                                             .frame(width: 96, height: 48)
                                             .clipShape(Circle())
-                                            .overlay(Circle().stroke(Color.white, lineWidth: 1)) // Opcional, para agregar un borde blanco
-                                            .shadow(radius: 10) // Opcional, agrega una sombra
+                                            .overlay(Circle().stroke(Color.white, lineWidth: 1)) 
+                                            .shadow(radius: 10)
                                     } else {
                                         Image(systemName: "person.circle")
                                             .resizable()
@@ -48,15 +49,15 @@ struct PlayerView: View {
                                         .font(.title2)
                                         .foregroundColor(.primary)
                                 }
+                                .listRowSeparator(.hidden)
                             }
                         }
                     }
                 }
             }
         }
-        .listRowSeparator(.hidden)
-        .listStyle(.insetGrouped)
-        .listRowSpacing(12)
+        .listStyle(.plain)
+        .listRowSpacing(0)
         .navigationTitle(playerViewModel.title)
         .toolbarTitleDisplayMode(.large)
         .refreshable {

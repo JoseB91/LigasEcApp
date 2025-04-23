@@ -41,25 +41,7 @@ struct LeagueView: View {
                 }
             }
             //.navigationTitle(leagueViewModel.title)
-            //.toolbarTitleDisplayMode(.large)
-//            .toolbar {
-//                ToolbarItem(placement: .principal) {
-//                    Text(leagueViewModel.title)
-//                        .font(.system(size: 36, weight: .bold))
-//                }
-//            }
-            .navigationBarTitleDisplayMode(.inline) // We'll use inline mode
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    VStack {
-                        Text(leagueViewModel.title)
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                    }
-                }
-            }
-            // To simulate the large title behavior with scrolling
-            .padding(.top)
+            //.toolbarTitleDisplayMode(.inline)
             .listRowSeparator(.hidden)
             .listRowSpacing(24)
             .listStyle(.insetGrouped)
@@ -67,10 +49,15 @@ struct LeagueView: View {
                 await leagueViewModel.loadLeagues()
             }
             .frame(height: CGFloat(leagueViewModel.leagues.count * 150))
-//            .scrollContentBackground(.hidden)
             .scrollDisabled(true)
             Spacer()
-        }.background(Color(UIColor.systemGroupedBackground))
+        }.background(
+            Image("ligasEc")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        )
+        //.background(Color(UIColor.systemGroupedBackground))
+        
     }
 }
 
