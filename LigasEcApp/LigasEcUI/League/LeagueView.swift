@@ -16,48 +16,54 @@ struct LeagueView: View {
     let imageView: (URL, Table) -> ImageView
         
     var body: some View {
-        VStack{
-            Spacer()
-            List {
-                if leagueViewModel.isLoading {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                } else {
-                    ForEach(leagueViewModel.leagues) { league in
-                        Button {
-                            navigationPath.append(league)
-                        } label: {
-                            HStack {
-                                imageView(league.logoURL, Table.League)
-                                    .frame(width: 96, height: 48)
-                                Text(league.name)
-                                    .font(.title)
-                                    .foregroundColor(.primary)
+        GeometryReader { geometry in
+            ZStack(alignment: .top) {
+                Image("ligasEc")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: geometry.size.width)
+                    .frame(height: geometry.size.height * 0.66)
+                    .edgesIgnoringSafeArea(.top)
+                
+                VStack {
+                    Spacer()
+                        .frame(height: geometry.size.height * 0.60)
+                    
+                    VStack {
+                        if leagueViewModel.isLoading {
+                            ProgressView()
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        } else {
+                            VStack(spacing: 16) {
+                                ForEach(leagueViewModel.leagues) { league in
+                                    Button {
+                                        navigationPath.append(league)
+                                    } label: {
+                                        HStack {
+                                            imageView(league.logoURL, Table.League)
+                                                .frame(width: 96, height: 48)
+                                            Text(league.name)
+                                                .font(.title)
+                                                .foregroundColor(.primary)
+                                            Spacer()
+                                        }
+                                        .padding(.vertical, 24)
+                                    }
+                                    .padding(.horizontal, 16)
+                                    .background(Color(.secondarySystemBackground))
+                                    .cornerRadius(10)
+                                }
                             }
+                            .padding(.horizontal, 16)
                         }
-                        .tint(.black)
-                        .frame(height: 80)
+                    }
+                    .frame(height: geometry.size.height * 0.40)
+                    .task {
+                        await leagueViewModel.loadLeagues()
                     }
                 }
-            }
-            //.navigationTitle(leagueViewModel.title)
-            //.toolbarTitleDisplayMode(.inline)
-            .listRowSeparator(.hidden)
-            .listRowSpacing(24)
-            .listStyle(.insetGrouped)
-            .task {
-                await leagueViewModel.loadLeagues()
-            }
-            .frame(height: CGFloat(leagueViewModel.leagues.count * 150))
-            .scrollDisabled(true)
-            Spacer()
-        }.background(
-            Image("ligasEc")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-        )
-        //.background(Color(UIColor.systemGroupedBackground))
-        
+            }.background(Color(UIColor.systemGroupedBackground))
+        }
     }
 }
 

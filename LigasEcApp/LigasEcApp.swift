@@ -66,4 +66,3 @@ struct LigasEcApp: App {
 }
 
 //TODO: Add Acceptance and UIIntegration tests
-
