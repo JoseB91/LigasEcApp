@@ -82,6 +82,27 @@ final class PlayerViewModel: ObservableObject {
             return ""
         }
     }
+    
+    func getCountryId(for country: String) -> Int {
+        switch country {
+        case "Argentina":
+            return 22
+        case "Brasil":
+            return 39
+        case "Colombia":
+            return 53
+        case "Ecuador":
+            return 68
+        case "Nigeria":
+            return 143
+        case "Paraguay":
+            return 151
+        case "Uruguay":
+            return 201
+        default:
+            return 0
+        }
+    }
 }
 
 final class MockPlayerViewModel {

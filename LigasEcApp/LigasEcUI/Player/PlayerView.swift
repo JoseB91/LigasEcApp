@@ -49,9 +49,14 @@ struct PlayerView: View {
                                         .foregroundColor(.primary)
                                         .frame(width: 150, alignment: .leading)
                                     if let flagId = player.flagId {
-                                    Image("country_flag_\(flagId)")
-                                    .resizable()
-                                        .frame(width: 24, height: 16)
+                                        Image("country_flag_\(flagId)")
+                                            .resizable()
+                                            .frame(width: 24, height: 16)
+                                    } else if let nationality = player.nationality {
+                                        let flagId = playerViewModel.getCountryId(for: nationality)
+                                        Image("country_flag_\(flagId)")
+                                            .resizable()
+                                            .frame(width: 24, height: 16)
                                     }
                                     if position != "Entrenador" {
                                         Spacer()
