@@ -10,21 +10,6 @@ import SwiftUI
 @testable import LigasEcApp
 
 final class LeagueLocalizedTests: XCTestCase {
-
-    func test_leagueTitle_isLocalized() {
-        let leagueViewModel = LeagueViewModel(leagueLoader: MockLeagueViewModel.mockLeagueLoader)
-        XCTAssertEqual(leagueViewModel.title, localized("LEAGUE_VIEW_TITLE"))
-    }
-    
-    func test_teamTitle_isLocalized() {
-        let teamViewModel = TeamViewModel(teamLoader: MockTeamViewModel.mockTeamLoader)
-        XCTAssertEqual(teamViewModel.title, localized("TEAM_VIEW_TITLE"))
-    }
-    
-    func test_playerTitle_isLocalized() {
-        let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
-        XCTAssertEqual(playerViewModel.title, localized("PLAYER_VIEW_TITLE"))
-    }
     
     func test_playerGoalkeeper_isLocalized() {
         let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)

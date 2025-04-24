@@ -16,13 +16,7 @@ final class TeamViewModel: ObservableObject {
     @Published var errorMessage: ErrorModel? = nil
 
     private let teamLoader: () async throws -> [Team]
-    
-    var title: String {
-        String(localized: "TEAM_VIEW_TITLE",
-               table: "LigasEc",
-               bundle: Bundle(for: Self.self))
-    }
-    
+        
     init(teamLoader: @escaping () async throws -> [Team]) {
         self.teamLoader = teamLoader
     }

@@ -12,7 +12,8 @@ import SharedAPI
 struct PlayerView: View {
     @ObservedObject var playerViewModel: PlayerViewModel
     let imageView: (URL, Table) -> ImageView
-
+    let title: String
+    
     var body: some View {
         List {
             if playerViewModel.isLoading {
@@ -20,9 +21,9 @@ struct PlayerView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .listRowSeparator(.hidden)
             } else {
-
+                
                 let groupedPlayers = Dictionary(grouping: playerViewModel.squad, by: { $0.position })
-
+                
                 let positionOrder = ["Portero", "Defensa", "Centrocampista", "Delantero", "Entrenador"]
                 
                 ForEach(positionOrder, id: \.self) { position in
@@ -44,24 +45,25 @@ struct PlayerView: View {
                                             .frame(width: 96, height: 48)
                                     }
                                     Text(player.name)
-                                        .font(.title2)
+                                        .font(.body)
                                         .foregroundColor(.primary)
                                         .frame(width: 150, alignment: .leading)
-//                                    if let flagId = player.flagId {
-//                                        Image("country_flag_\(flagId)")
-//                                            .resizable()
-//                                            .scaledtoFit()
-//                                            .frame(width: 24, height: 16)
-//                                    }
+                                    if let flagId = player.flagId {
+                                    Image("country_flag_\(flagId)")
+                                    .resizable()
+                                        .frame(width: 24, height: 16)
+                                    }
                                     if position != "Entrenador" {
                                         Spacer()
                                         ZStack{
                                             Image("tshirt")
                                                 .renderingMode(.template)
                                                 .foregroundStyle(Color.primary)
-                                            Text("\(String(player.number))")
-                                                .font(.caption)
-                                                .foregroundColor(.primary)
+                                            if let number = player.number {
+                                                Text("\(String(number))")
+                                                    .font(.caption)
+                                                    .foregroundColor(.primary)
+                                            }
                                         }
                                     }
                                 }
@@ -74,7 +76,7 @@ struct PlayerView: View {
         }
         .listStyle(.plain)
         .listRowSpacing(0)
-        .navigationTitle(playerViewModel.title)
+        .navigationTitle(title)
         .toolbarTitleDisplayMode(.large)
         .refreshable {
             await playerViewModel.loadSquad()
@@ -91,10 +93,12 @@ struct PlayerView: View {
         }
     }
 }
-    
+
 
 #Preview {
     let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
     
-    PlayerView(playerViewModel: playerViewModel, imageView: MockImageView.mockImageView)
+    PlayerView(playerViewModel: playerViewModel,
+               imageView: MockImageView.mockImageView,
+               title: "Barcelona SC")
 }

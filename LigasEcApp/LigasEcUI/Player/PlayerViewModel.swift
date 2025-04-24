@@ -16,12 +16,6 @@ final class PlayerViewModel: ObservableObject {
 
     private let playerLoader: () async throws -> [Player]
     
-    var title: String {
-        String(localized: "PLAYER_VIEW_TITLE",
-               table: "LigasEc",
-               bundle: Bundle(for: Self.self))
-    }
-    
     var coach: String {
         String(localized: "COACH",
                table: "LigasEc",
@@ -91,6 +85,7 @@ final class PlayerViewModel: ObservableObject {
 }
 
 final class MockPlayerViewModel {
+
     static func mockPlayerLoader() async throws -> [Player] {
         return [Player(id: "S0nWKdXm",
                        name: "Contreras José",

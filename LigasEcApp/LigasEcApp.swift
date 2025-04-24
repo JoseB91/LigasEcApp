@@ -32,7 +32,8 @@ struct LigasEcApp: App {
                     .navigationDestination(for: League.self) { league in
                         TeamView(teamViewModel: composer.composeTeamViewModel(for: league),
                                  navigationPath: $navigationPath,
-                                 imageView: composer.composeImageView)
+                                 imageView: composer.composeImageView,
+                                 title: league.name)
                         .navigationBarBackButtonHidden(true)
                         .toolbar {
                             ToolbarItem(placement: .navigationBarLeading) {
@@ -50,7 +51,8 @@ struct LigasEcApp: App {
                     }
                     .navigationDestination(for: Team.self) { team in
                         PlayerView(playerViewModel: composer.composePlayerViewModel(for: team),
-                                   imageView: composer.composeImageView)
+                                   imageView: composer.composeImageView,
+                                   title: team.name)
                     }
             }
             .task {

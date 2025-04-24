@@ -13,6 +13,7 @@ struct TeamView: View {
     @ObservedObject var teamViewModel: TeamViewModel
     @Binding var navigationPath: NavigationPath
     let imageView: (URL, Table) -> ImageView
+    let title: String
     
     var body: some View {
         List {
@@ -37,7 +38,7 @@ struct TeamView: View {
         }
         .listRowSpacing(12)
         .listStyle(.insetGrouped)
-        .navigationTitle(teamViewModel.title)
+        .navigationTitle(title)
         .toolbarTitleDisplayMode(.large)
         .refreshable {
             await teamViewModel.loadTeams()
@@ -61,7 +62,8 @@ struct TeamView: View {
 
     TeamView(teamViewModel: teamViewModel,
              navigationPath: .constant(NavigationPath()),
-             imageView: MockImageView.mockImageView)
+             imageView: MockImageView.mockImageView,
+             title: "LigaPro Serie A")
 }
 
 
