@@ -18,34 +18,34 @@ final class SaveLeaguesCacheTests: XCTestCase {
         XCTAssertEqual(store.receivedMessages, [])
     }
     
-    func test_save_succeedsOnSuccessfulCacheInsertion() {
+    func test_save_succeedsOnSuccessfulCacheInsertion() async {
         // Arrange
         let (sut, store) = makeSUT()
         
         // Act & Assert
-        expect(sut, toCompleteWithError: nil, when: {
+        await expect(sut, toCompleteWithError: nil, when: {
             store.completeInsertionSuccessfully()
         })
     }
     
-    func test_save_deletesCacheOnInsertionError() {
+    func test_save_deletesCacheOnInsertionError() async {
         // Arrange
         let (sut, store) = makeSUT()
         let insertionError = anyNSError()
         
         // Act & Assert
-        expect(sut, toCompleteWithError: insertionError, when: {
+        await expect(sut, toCompleteWithError: insertionError, when: {
             store.completeInsertion(with: insertionError)
             store.completeDeletionSuccessfully()
         })
     }
     
-    func test_save_failsOnInsertionErrorAndDeletionError() {
+    func test_save_failsOnInsertionErrorAndDeletionError() async {
         // Arrange
         let (sut, store) = makeSUT()
         
         // Act & Assert
-        expect(sut, toCompleteWithError: anyNSError(), when: {
+        await expect(sut, toCompleteWithError: anyNSError(), when: {
             store.completeInsertion(with: anyNSError())
             store.completeDeletion(with: anyNSError())
         })
@@ -61,10 +61,12 @@ final class SaveLeaguesCacheTests: XCTestCase {
         return (sut, store)
     }
 
-    private func expect(_ sut: LocalLeagueLoader, toCompleteWithError expectedError: NSError?, when action: () -> Void?, file: StaticString = #filePath, line: UInt = #line) {
+    private func expect(_ sut: LocalLeagueLoader, toCompleteWithError expectedError: NSError?, when action: () async -> Void?, file: StaticString = #filePath, line: UInt = #line) async {
         do {
             // Act
-            try sut.save(mockLeagues().models)
+            try await sut.save(mockLeagues().models)
+            
+            await action()            
         } catch {
             // Assert
             XCTAssertEqual(error as NSError?, expectedError, file: file, line: line)

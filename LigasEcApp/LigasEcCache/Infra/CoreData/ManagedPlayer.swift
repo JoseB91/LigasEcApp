@@ -11,10 +11,39 @@ import CoreData
 class ManagedPlayer: NSManagedObject {
     @NSManaged var id: String
     @NSManaged var name: String
+    @NSManaged var number: NSNumber?
     @NSManaged var position: String
+    @NSManaged var flagId: NSNumber?
+    @NSManaged var nationality: String?
     @NSManaged var data: Data?
     @NSManaged var photoURL: URL?
     @NSManaged var team: ManagedTeam
+    
+    var flagIdRaw: Int? {
+        get {
+            return flagId?.intValue
+        }
+        set {
+            if let newValue = newValue {
+                flagId = NSNumber(value: newValue)
+            } else {
+                flagId = nil
+            }
+        }
+    }
+    
+    var numberRaw: Int? {
+        get {
+            return number?.intValue
+        }
+        set {
+            if let newValue = newValue {
+                number = NSNumber(value: newValue)
+            } else {
+                number = nil
+            }
+        }
+    }
 }
 
 extension ManagedPlayer {
@@ -44,7 +73,10 @@ extension ManagedPlayer {
             let managed = ManagedPlayer(context: context)
             managed.id = local.id
             managed.name = local.name
+            managed.numberRaw = local.number
             managed.position = local.position
+            managed.flagIdRaw = local.flagId
+            managed.nationality = local.nationality
             managed.photoURL = local.photoURL
             if let photoURL = local.photoURL,
                 let cachedData = URLImageCache.shared.getImageData(for: photoURL) {
@@ -56,6 +88,12 @@ extension ManagedPlayer {
     }
     
     var local: LocalPlayer {
-        return LocalPlayer(id: id, name: name, position: position, photoURL: photoURL)
+        return LocalPlayer(id: id,
+                           name: name,
+                           number: numberRaw,
+                           position: position,
+                           flagId: flagIdRaw,
+                           nationality: nationality,
+                           photoURL: photoURL)
     }
 }

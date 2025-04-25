@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24C101" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24C101" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="ManagedCache" representedClassName="ManagedCache" syncable="YES">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="leagues" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ManagedLeague" inverseName="cache" inverseEntity="ManagedLeague"/>
@@ -14,8 +14,11 @@
     </entity>
     <entity name="ManagedPlayer" representedClassName="ManagedPlayer" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary"/>
+        <attribute name="flagId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
+        <attribute name="nationality" optional="YES" attributeType="String"/>
+        <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="photoURL" optional="YES" attributeType="URI"/>
         <attribute name="position" optional="YES" attributeType="String"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedTeam" inverseName="players" inverseEntity="ManagedTeam"/>

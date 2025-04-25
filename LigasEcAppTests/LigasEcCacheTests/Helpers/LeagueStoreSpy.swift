@@ -22,7 +22,7 @@ public class LeagueStoreSpy: LeagueStore {
     private var retrievalResult: Result<CachedLeagues?, Error>?
 
     // MARK: Delete
-    public func deleteCache() throws {
+    public func deleteCache() async throws {
         receivedMessages.append(.delete)
         try deletionResult?.get()
     }
@@ -36,11 +36,21 @@ public class LeagueStoreSpy: LeagueStore {
     }
 
     // MARK: Insert
-    public func insert(_ leagues: [LocalLeague], timestamp: Date) throws {
+    public func insert(_ leagues: [LocalLeague], timestamp: Date) async throws {
         receivedMessages.append(.insert(leagues, timestamp))
         try insertionResult?.get()
+//        let completion = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+//            insertionCompletions.append { error in
+//                if let error = error {
+//                    continuation.resume(throwing: error)
+//                } else {
+//                    continuation.resume()
+//                }
+//            }
+//        }
+//        return completion
     }
-
+    
     func completeInsertion(with error: Error) {
         insertionResult = .failure(error)
     }
@@ -50,7 +60,7 @@ public class LeagueStoreSpy: LeagueStore {
     }
 
     // MARK: Retrieve
-    public func retrieve() throws -> CachedLeagues? {
+    public func retrieve() async throws -> CachedLeagues? {
         receivedMessages.append(.retrieve)
         return try retrievalResult?.get()
     }

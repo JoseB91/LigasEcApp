@@ -41,8 +41,11 @@ extension LocalPlayerLoader {
 extension Array where Element == Player {
     public func toLocal() -> [LocalPlayer] {
         return map { LocalPlayer(id: $0.id,
-                                name: $0.name,
+                                 name: $0.name,
+                                 number: $0.number,
                                  position: $0.position,
+                                 flagId: $0.flagId,
+                                 nationality: $0.nationality,
                                  photoURL: $0.photoURL)}
     }
 }
@@ -50,9 +53,11 @@ extension Array where Element == Player {
 private extension Array where Element == LocalPlayer {
     func toModels(with dataSource: DataSource) -> [Player] {
         return map { Player(id: $0.id,
-                           name: $0.name,
-                            number: 0,
+                            name: $0.name,
+                            number: $0.number,
                             position: $0.position,
+                            flagId: $0.flagId,
+                            nationality: $0.nationality,
                             photoURL: $0.photoURL,
                             dataSource: dataSource)}
     }
