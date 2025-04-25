@@ -20,7 +20,7 @@ public class TeamStoreSpy: TeamStore {
     private var retrievalResult: Result<[LocalTeam]?, Error>?
 
     // MARK: Insert
-    public func insert(_ teams: [LocalTeam], with id: String) throws {
+    public func insert(_ teams: [LocalTeam], with id: String) async throws {
         receivedMessages.append(.insert(teams, id))
         try insertionResult?.get()
     }
@@ -34,7 +34,7 @@ public class TeamStoreSpy: TeamStore {
     }
     
     // MARK: Retrieve
-    public func retrieve(with id: String) throws -> [LocalTeam]? {
+    public func retrieve(with id: String) async throws -> [LocalTeam]? {
         receivedMessages.append(.retrieve(id))
         return try retrievalResult?.get()
     }

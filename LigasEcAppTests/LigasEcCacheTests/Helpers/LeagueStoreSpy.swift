@@ -39,16 +39,6 @@ public class LeagueStoreSpy: LeagueStore {
     public func insert(_ leagues: [LocalLeague], timestamp: Date) async throws {
         receivedMessages.append(.insert(leagues, timestamp))
         try insertionResult?.get()
-//        let completion = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-//            insertionCompletions.append { error in
-//                if let error = error {
-//                    continuation.resume(throwing: error)
-//                } else {
-//                    continuation.resume()
-//                }
-//            }
-//        }
-//        return completion
     }
     
     func completeInsertion(with error: Error) {
