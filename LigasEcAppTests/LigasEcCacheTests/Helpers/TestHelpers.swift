@@ -63,6 +63,22 @@ func mockTeam() -> Team {
                 dataSource: .FlashLive)
 }
 
+func mockPlayers() -> (models: [Player], local: [LocalPlayer]) {
+    let models = [mockPlayer(), mockPlayer()]
+    let local = models.toLocal()
+    return (models, local)
+}
+
+func mockPlayer() -> Player {
+    return Player(id: "S0nWKdXm",
+                  name: "Contreras Jose",
+                  number: 1,
+                  position: "Portero",
+                  flagId: 205,
+                  photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
+                  dataSource: .FlashLive)
+}
+
 extension Date {
     func adding(seconds: TimeInterval) -> Date {
         return self + seconds

@@ -1,15 +1,15 @@
 //
-//  LoadTeamsCacheTests.swift
+//  LoadPlayersCacheTests.swift
 //  LigasEcAppTests
 //
-//  Created by José Briones on 10/3/25.
+//  Created by José Briones on 25/4/25.
 //
 
 import XCTest
 import LigasEcAPI
 @testable import LigasEcApp
 
-final class LoadTeamsCacheTests: XCTestCase {
+final class LoadPlayersCacheTests: XCTestCase {
 
     func test_init_doesNotMessageStoreUponCreation() {
         // Arrange
@@ -31,15 +31,15 @@ final class LoadTeamsCacheTests: XCTestCase {
         XCTAssertEqual(store.receivedMessages, [.retrieve(id)])
     }
     
-    func test_load_deliversCachedTeams() async {
+    func test_load_deliversCachedPlayers() async {
         // Arrange
         let id = "id"
-        let teams = mockTeams()
+        let players = mockPlayers()
         let (sut, store) = makeSUT()
         
         // Act & Assert
-        await expect(sut, with: id, toCompleteWith: .success(teams.models), when: {
-            store.completeRetrieval(with: teams.local)
+        await expect(sut, with: id, toCompleteWith: .success(players.models), when: {
+            store.completeRetrieval(with: players.local)
         })
     }
     
@@ -79,9 +79,9 @@ final class LoadTeamsCacheTests: XCTestCase {
     
     func test_load_hasNoSideEffectsOnSuccessfullRetrieval() async {
         let id = "id"
-        let localTeams = mockTeams().local
+        let localPlayers = mockPlayers().local
         let (sut, store) = makeSUT()
-        store.completeRetrieval(with: localTeams)
+        store.completeRetrieval(with: localPlayers)
         
         _ = try? await sut.load(with: id, dataSource: .FlashLive)
         
@@ -90,29 +90,29 @@ final class LoadTeamsCacheTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalTeamLoader, store: TeamStoreSpy) {
-        let store = TeamStoreSpy()
-        let sut = LocalTeamLoader(store: store)
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalPlayerLoader, store: PlayerStoreSpy) {
+        let store = PlayerStoreSpy()
+        let sut = LocalPlayerLoader(store: store)
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, store)
     }
     
-    private func expect(_ sut: LocalTeamLoader, with id: String, toCompleteWith expectedResult: Result<[Team], Error>, when action: () async -> Void?, file: StaticString = #filePath, line: UInt = #line) async {
+    private func expect(_ sut: LocalPlayerLoader, with id: String, toCompleteWith expectedResult: Result<[Player], Error>, when action: () async -> Void?, file: StaticString = #filePath, line: UInt = #line) async {
         await action()
         
-        let receivedResult: Result<[Team], Error>
+        let receivedResult: Result<[Player], Error>
         
         do {
-            let receivedTeams = try await sut.load(with: id, dataSource: .FlashLive)
-            receivedResult = .success(receivedTeams)
+            let receivedPlayers = try await sut.load(with: id, dataSource: .FlashLive)
+            receivedResult = .success(receivedPlayers)
         } catch {
             receivedResult = .failure(error)
         }
         
         switch (receivedResult, expectedResult) {
-        case let (.success(receivedTeams), .success(expectedTeams)):
-            XCTAssertEqual(receivedTeams, expectedTeams, file: file, line: line)
+        case let (.success(receivedPlayers), .success(expectedPlayers)):
+            XCTAssertEqual(receivedPlayers, expectedPlayers, file: file, line: line)
             
         case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
             XCTAssertEqual(receivedError, expectedError, file: file, line: line)
