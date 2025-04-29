@@ -1,14 +1,14 @@
 //
-//  InMemoryTeamStoreTests.swift
+//  InMemoryPlayerStoreTests.swift
 //  LigasEcAppTests
 //
-//  Created by José Briones on 26/3/25.
+//  Created by José Briones on 28/4/25.
 //
 
 import XCTest
 @testable import LigasEcApp
 
-class InMemoryTeamStoreTests: XCTestCase, TeamStoreSpecs {
+class InMemoryPlayerStoreTests: XCTestCase, PlayerStoreSpecs {
     
     func test_retrieve_deliversNoErrorOnEmptyCache() async throws {
         let sut = makeSUT()
