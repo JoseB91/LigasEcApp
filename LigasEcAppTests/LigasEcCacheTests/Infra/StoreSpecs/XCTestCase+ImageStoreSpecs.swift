@@ -130,6 +130,66 @@ extension ImageStoreSpecs where Self: XCTestCase {
         // Assert
         await expect(sut, table: mockTeamTable(), toCompleteRetrievalWith: found(lastStoredData), for: imageDataURL, file: file, line: line)
     }
+    
+    func assertThatRetrievePlayerImageDataDeliversNotFoundOnEmptyCache(
+        on sut: ImageStore,
+        imageDataURL: URL = anyURL(),
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        // Act &  Assert
+        await expect(sut, table: mockPlayerTable(), toCompleteRetrievalWith: notFound(), for: imageDataURL, file: file, line: line)
+    }
+
+    func assertThatRetrievePlayerImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(
+        on sut: ImageStore,
+        imageDataURL: URL = anyURL(),
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        // Arrange
+        let nonMatchingURL = URL(string: "http://a-non-matching-url.com")!
+
+        // Act
+        await insert(anyData(), table: mockPlayerTable(), for: imageDataURL, into: sut, file: file, line: line)
+
+        // Act &  Assert
+        await expect(sut, table: mockPlayerTable(), toCompleteRetrievalWith: notFound(), for: nonMatchingURL, file: file, line: line)
+    }
+
+    func assertThatRetrievePlayerImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(
+        on sut: ImageStore,
+        imageDataURL: URL = anyURL(),
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        // Arrange
+        let storedData = anyData()
+
+        // Act
+        await insert(storedData, table: mockPlayerTable(), for: imageDataURL, into: sut, file: file, line: line)
+
+        // Act &  Assert
+        await expect(sut, table: mockPlayerTable(), toCompleteRetrievalWith: found(storedData), for: imageDataURL, file: file, line: line)
+    }
+
+    func assertThatRetrievePlayerImageDataDeliversLastInsertedValueForURL(
+        on sut: ImageStore,
+        imageDataURL: URL = anyURL(),
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        // Arrange
+        let firstStoredData = Data("first".utf8)
+        let lastStoredData = Data("last".utf8)
+
+        // Act
+        await insert(firstStoredData, table: mockPlayerTable(), for: imageDataURL, into: sut, file: file, line: line)
+        await insert(lastStoredData, table: mockPlayerTable(), for: imageDataURL, into: sut, file: file, line: line)
+
+        // Assert
+        await expect(sut, table: mockPlayerTable(), toCompleteRetrievalWith: found(lastStoredData), for: imageDataURL, file: file, line: line)
+    }
 }
 
 extension ImageStoreSpecs where Self: XCTestCase {
@@ -173,5 +233,4 @@ extension ImageStoreSpecs where Self: XCTestCase {
             XCTFail("Failed to insert image data: \(data) - error: \(error)", file: file, line: line)
         }
     }
-
 }

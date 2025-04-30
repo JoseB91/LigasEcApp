@@ -1,21 +1,20 @@
 //
-//  CoreDataTeamStoreTests.swift
+//  CoreDataPlayerStoreTests.swift
 //  LigasEcAppTests
 //
-//  Created by José Briones on 26/3/25.
+//  Created by José Briones on 29/4/25.
 //
 
 import XCTest
 @testable import LigasEcApp
 
-class CoreDataTeamStoreTests: XCTestCase, TeamStoreSpecs {
+class CoreDataPlayerStoreTests: XCTestCase, PlayerStoreSpecs {
     func test_retrieve_deliversNoErrorOnEmptyCache() async throws {
         try await makeSUT { sut in
             await self.assertThatRetrieveDeliversNoErrorOnEmptyCache(on: sut, with: "id")
         }
     }
         
-    //TODO: Analyze this
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() async throws {
 //        try await makeSUT { sut in
 //            await self.assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut, with: "id")

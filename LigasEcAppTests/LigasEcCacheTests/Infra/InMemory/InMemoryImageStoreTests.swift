@@ -50,6 +50,26 @@ class InMemoryImageStoreTests: XCTestCase, ImageStoreSpecs {
         await assertThatRetrieveTeamImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut)
     }
     
+    func test_retrievePlayerImageData_deliversLastInsertedValue() async throws {
+        let sut = makeSUT()
+        await assertThatRetrievePlayerImageDataDeliversLastInsertedValueForURL(on: sut)
+    }
+
+    func test_retrievePlayerImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() async throws {
+        let sut = makeSUT()
+        await assertThatRetrievePlayerImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut)
+    }
+
+    func test_retrievePlayerImageData_deliversNotFoundWhenEmpty() async throws {
+        let sut = makeSUT()
+        await assertThatRetrievePlayerImageDataDeliversNotFoundOnEmptyCache(on: sut)
+    }
+
+    func test_retrievePlayerImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() async throws {
+        let sut = makeSUT()
+        await assertThatRetrievePlayerImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut)
+    }
+        
     // - MARK: Helpers
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> InMemoryStore {
