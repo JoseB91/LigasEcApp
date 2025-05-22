@@ -17,12 +17,12 @@ class InMemoryTeamStoreTests: XCTestCase, TeamStoreSpecs {
 
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() async throws {
         let sut = makeSUT()
-        await assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut, with: "id")
+        await assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut, and: sut, with: "id")
     }
 
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() async throws {
         let sut = makeSUT()
-        await assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on: sut, with: "id")
+        await assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on: sut, and: sut, with: "id")
     }
         
     func test_insert_deliversNoErrorOnEmptyCache() async throws {
@@ -37,7 +37,7 @@ class InMemoryTeamStoreTests: XCTestCase, TeamStoreSpecs {
 
     func test_insert_overridesPreviouslyInsertedCacheValues() async throws {
         let sut = makeSUT()
-        await assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut, with: "id")
+        await assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut, and: sut, with: "id")
     }
     
     // - MARK: Helpers

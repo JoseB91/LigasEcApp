@@ -8,7 +8,6 @@
 import CoreData
 
 extension CoreDataLigasEcStore: PlayerStore {
-    //TODO: Tests
     
     public func retrieve(with id: String) async throws -> [LocalPlayer]? {
         try await context.perform { [context] in

@@ -18,8 +18,6 @@ class Composer {
     private let httpClient: URLSessionHTTPClient
     private let appLocalLoader: AppLocalLoader
 
-    //let logger = Logger(subsystem: "com.joseB91.LatinCoaches", category: "main")
-
     init(flashLiveEndpointConfiguration: EndpointConfiguration,
          transferMarketEndpointConfiguration: EndpointConfiguration,
          httpClient: URLSessionHTTPClient,
@@ -73,13 +71,11 @@ class Composer {
                 apiKey = bundleAPIKey
                 
                 try? KeychainManager.saveAPIKey(apiKey)
-                // TODO: Log this --> print("Default API key saved to Keychain")
             } else {
-                // TODO: Log this --> print("No API key found in Keychain or Bundle")
-                // In a real app, you might want to show an error or prompt for the key
+                Logger.composer.error("No API key found in Keychain or Bundle")
             }
         } catch {
-            // TODO: Log this --> print("Error retrieving API key: \(error.localizedDescription)")
+            Logger.composer.error("Error retrieving API key : \(error.localizedDescription)")
         }
         
         return URLSessionHTTPClient(
@@ -134,8 +130,8 @@ class Composer {
                     return try await appLocalLoader.localTeamLoader.load(with: league.id, dataSource: .FlashLive)
                 } catch {
                     let url = TeamEndpoint.getFlashLive(seasonId: league.id,
-                                               standingType: "overall", // TODO: Manage constants
-                                               locale: "es_MX", // TODO: Get locale
+                                               standingType: "overall",
+                                               locale: "es_MX",
                                                         tournamentStageId: "OO37de6i").url(baseURL: flashLiveEndpointConfiguration.url)
                     
                     let (data, response) = try await httpClient.get(from: url, with: flashLiveEndpointConfiguration.host)
@@ -262,4 +258,8 @@ struct AppLocalLoader {
     let localTeamLoader: LocalTeamLoader
     let localPlayerLoader: LocalPlayerLoader
     let localImageLoader: LocalImageLoader
+}
+
+extension Logger {
+    static let composer = Logger(subsystem: "com.joseB91.LatinCoaches", category: "Composer")
 }

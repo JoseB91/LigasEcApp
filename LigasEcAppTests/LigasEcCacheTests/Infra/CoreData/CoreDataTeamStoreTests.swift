@@ -17,15 +17,15 @@ class CoreDataTeamStoreTests: XCTestCase, TeamStoreSpecs {
         
     //TODO: Analyze this
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() async throws {
-//        try await makeSUT { sut in
-//            await self.assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut, with: "id")
-//        }
+        try await makeSUT { sut in
+            await self.assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut, and: sut, with: "IaFDigtm")
+        }
     }
     
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() async throws {
-//        try makeSUT { sut in
-//            await self.assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on: sut, with: "id")
-//        }
+        try await makeSUT { sut in
+            await self.assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on: sut, and: sut, with: "IaFDigtm")
+        }
     }
     
     func test_insert_deliversNoErrorOnEmptyCache() async throws {
@@ -41,9 +41,9 @@ class CoreDataTeamStoreTests: XCTestCase, TeamStoreSpecs {
     }
     
     func test_insert_overridesPreviouslyInsertedCacheValues() async throws {
-//        try makeSUT { sut in
-//            await self.assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut, with: "id")
-//        }
+        try await makeSUT { sut in
+            await self.assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut, and: sut, with: "IaFDigtm")
+        }
     }
     
     // - MARK: Helpers
@@ -54,7 +54,7 @@ class CoreDataTeamStoreTests: XCTestCase, TeamStoreSpecs {
         trackForMemoryLeaks(sut, file: file, line: line)
 
         try await withCheckedThrowingContinuation { continuation in
-            sut.context.perform {
+            sut.context.performAndWait {
                 Task {
                     do {
                         try await test(sut)

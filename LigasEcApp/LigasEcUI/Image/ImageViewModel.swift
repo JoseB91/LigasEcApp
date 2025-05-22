@@ -29,7 +29,7 @@ final class ImageViewModel<Image>: ObservableObject {
             let dataImage = try await imageLoader()
             image = try UIImage.tryMake(data: dataImage)
         } catch {
-            image = UIImage(systemName: "soccerball") ?? UIImage() //TODO: Handle better placeholder
+            image = UIImage(systemName: "soccerball") ?? UIImage()
         }
         isLoading = false
     }

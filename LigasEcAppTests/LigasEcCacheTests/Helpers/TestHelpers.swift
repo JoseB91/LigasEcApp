@@ -42,7 +42,7 @@ func mockPlayerTable() -> Table {
 }
 
 func mockLeagues() -> (models: [League], local: [LocalLeague]) {
-    let models = [mockLeague(), mockLeague()]
+    let models = [mockLeague()]
     let local = models.toLocal()
     return (models, local)
 }
@@ -55,7 +55,7 @@ func mockLeague() -> League {
 }
 
 func mockTeams() -> (models: [Team], local: [LocalTeam]) {
-    let models = [mockTeam(), mockTeam()]
+    let models = [mockTeam()]
     let local = models.toLocal()
     return (models, local)
 }

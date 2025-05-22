@@ -14,18 +14,20 @@ extension TeamStoreSpecs where Self: XCTestCase {
         await expect(sut, with: id, toRetrieve: .success(.none), file: file, line: line)
     }
         
-    func assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on sut: TeamStore, with id: String, file: StaticString = #file, line: UInt = #line) async {
+    func assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on sut: TeamStore, and leagueStore: LeagueStore, with id: String, file: StaticString = #file, line: UInt = #line) async {
         
         // Act
+        await insertLeague(to: leagueStore)
         await insert(mockTeams().local, with: id, to: sut)
         
         // Act & Assert
         await expect(sut, with: id, toRetrieve: .success(mockTeams().local), file: file, line: line)
     }
     
-    func assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on sut: TeamStore, with id: String, file: StaticString = #file, line: UInt = #line) async {
+    func assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on sut: TeamStore, and leagueStore: LeagueStore, with id: String, file: StaticString = #file, line: UInt = #line) async {
         
         // Act
+        await insertLeague(to: leagueStore)
         await insert(mockTeams().local, with: id, to: sut)
 
         // Act & Assert
@@ -50,8 +52,9 @@ extension TeamStoreSpecs where Self: XCTestCase {
         XCTAssertNil(insertionError, "Expected to insert just once without error", file: file, line: line)
     }
     
-    func assertThatInsertOverridesPreviouslyInsertedCacheValues(on sut: TeamStore, with id: String, file: StaticString = #file, line: UInt = #line) async {
+    func assertThatInsertOverridesPreviouslyInsertedCacheValues(on sut: TeamStore, and leagueStore: LeagueStore, with id: String, file: StaticString = #file, line: UInt = #line) async {
         // Act
+        await insertLeague(to: leagueStore)
         await insert([LocalTeam(id: "id",
                           name: "LDU",
                           logoURL: anyURL())], with: id, to: sut)
@@ -61,7 +64,18 @@ extension TeamStoreSpecs where Self: XCTestCase {
         //Assert
         await expect(sut, with: id, toRetrieve: .success(mockTeams().local))
     }
-                
+            
+    @discardableResult
+    func insertLeague(to sut: LeagueStore) async -> Error? {
+        do {
+            // Act
+            try await sut.insert(mockLeagues().local, timestamp: Date())
+            return nil
+        } catch {
+            return error
+        }
+    }
+    
     @discardableResult
     func insert(_ teams: [LocalTeam], with id: String, to sut: TeamStore) async -> Error? {
         do {

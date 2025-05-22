@@ -8,13 +8,13 @@
 import XCTest
 @testable import LigasEcApp
 
-//TODO: When executing all tests not passing, just with async
+//TODO: Review tests
 class CoreDataImageStoreTests: XCTestCase, ImageStoreSpecs {
     // MARK: League
     func test_retrieveLeagueImageData_deliversLastInsertedValue() async throws {
-//        try await makeSUT { sut, imageDataURL in
-//            await self.assertThatRetrieveLeagueImageDataDeliversLastInsertedValueForURL(on: sut, imageDataURL: imageDataURL)
-//        }
+        try await makeSUT { sut, imageDataURL in
+            await self.assertThatRetrieveLeagueImageDataDeliversLastInsertedValueForURL(on: sut, imageDataURL: imageDataURL)
+        }
     }
     
     func test_retrieveLeagueImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() async throws {
@@ -24,9 +24,9 @@ class CoreDataImageStoreTests: XCTestCase, ImageStoreSpecs {
     }
 
     func test_retrieveLeagueImageData_deliversNotFoundWhenEmpty() async throws {
-//        try await makeSUT { sut, imageDataURL in
-//            await self.assertThatRetrieveLeagueImageDataDeliversNotFoundOnEmptyCache(on: sut, imageDataURL: imageDataURL)
-//        }
+        try await makeSUT { sut, imageDataURL in
+            await self.assertThatRetrieveLeagueImageDataDeliversNotFoundOnEmptyCache(on: sut, imageDataURL: imageDataURL)
+        }
     }
 
     func test_retrieveLeagueImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() async throws {
@@ -37,51 +37,51 @@ class CoreDataImageStoreTests: XCTestCase, ImageStoreSpecs {
     
     // MARK: Team
     func test_retrieveTeamImageData_deliversNotFoundWhenEmpty() async throws {
-//        try await makeSUT { sut, imageDataURL in
-//            await self.assertThatRetrieveTeamImageDataDeliversLastInsertedValueForURL(on: sut, imageDataURL: imageDataURL)
-//        }
-    }
-    
-    func test_retrieveTeamImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() async throws {
         try await makeSUT { sut, imageDataURL in
-            await self.assertThatRetrieveTeamImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut, imageDataURL: imageDataURL)
+            await self.assertThatRetrieveTeamImageDataDeliversNotFoundOnEmptyCache(on: sut, imageDataURL: imageDataURL)
         }
     }
     
-    func test_retrieveTeamImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() async throws {
-//        try await makeSUT { sut, imageDataURL in
-//            await self.assertThatRetrieveTeamImageDataDeliversNotFoundOnEmptyCache(on: sut, imageDataURL: imageDataURL)
-//        }
-    }
-    
-    func test_retrieveTeamImageData_deliversLastInsertedValue() async throws {
+    func test_retrieveTeamImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() async throws {
         try await makeSUT { sut, imageDataURL in
             await self.assertThatRetrieveTeamImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut, imageDataURL: imageDataURL)
         }
     }
     
+    func test_retrieveTeamImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() async throws {
+        try await makeSUT { sut, imageDataURL in
+            await self.assertThatRetrieveTeamImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut, imageDataURL: imageDataURL)
+        }
+    }
+    
+    func test_retrieveTeamImageData_deliversLastInsertedValue() async throws {
+        try await makeSUT { sut, imageDataURL in
+            await self.assertThatRetrieveTeamImageDataDeliversLastInsertedValueForURL(on: sut, imageDataURL: imageDataURL)
+        }
+    }
+    
     // MARK: Player
     func test_retrievePlayerImageData_deliversNotFoundWhenEmpty() async throws {
-//        try await makeSUT { sut, imageDataURL in
-//            await self.assertThatRetrievePlayerImageDataDeliversLastInsertedValueForURL(on: sut, imageDataURL: imageDataURL)
-//        }
+        try await makeSUT { sut, imageDataURL in
+            await self.assertThatRetrievePlayerImageDataDeliversNotFoundOnEmptyCache(on: sut, imageDataURL: imageDataURL)
+        }
     }
     
     func test_retrievePlayerImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() async throws {
+        try await makeSUT { sut, imageDataURL in
+            await self.assertThatRetrievePlayerImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut, imageDataURL: imageDataURL)
+        }
+    }
+    
+    func test_retrievePlayerImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() async throws {
         try await makeSUT { sut, imageDataURL in
             await self.assertThatRetrievePlayerImageDataDeliversFoundDataWhenThereIsAStoredImageDataMatchingURL(on: sut, imageDataURL: imageDataURL)
         }
     }
     
-    func test_retrievePlayerImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() async throws {
-//        try await makeSUT { sut, imageDataURL in
-//            await self.assertThatRetrieveTeamImageDataDeliversNotFoundOnEmptyCache(on: sut, imageDataURL: imageDataURL)
-//        }
-    }
-    
     func test_retrievePlayerImageData_deliversLastInsertedValue() async throws {
         try await makeSUT { sut, imageDataURL in
-            await self.assertThatRetrievePlayerImageDataDeliversNotFoundWhenStoredDataURLDoesNotMatch(on: sut, imageDataURL: imageDataURL)
+            await self.assertThatRetrievePlayerImageDataDeliversLastInsertedValueForURL(on: sut, imageDataURL: imageDataURL)
         }
     }
     

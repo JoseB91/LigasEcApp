@@ -35,9 +35,7 @@ final class LeagueLocalizedTests: XCTestCase {
         let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
         XCTAssertEqual(playerViewModel.coach, localized("COACH"))
     }
-    
-    //TODO: Add localized for groups of players
-    
+        
     func test_localizedStrings_haveKeysAndValuesForAllSupportedLocalizations() {
         let table = "LigasEc"
         let bundle = Bundle(for: LeagueViewModel.self)
