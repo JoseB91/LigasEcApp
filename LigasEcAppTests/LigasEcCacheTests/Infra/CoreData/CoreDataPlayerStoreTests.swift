@@ -16,15 +16,15 @@ class CoreDataPlayerStoreTests: XCTestCase, PlayerStoreSpecs {
     }
         
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() async throws {
-//        try await makeSUT { sut in
-//            await self.assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut, with: "id")
-//        }
+        try await makeSUT { sut in
+            await self.assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut, leagueStore: sut, teamStore: sut, with: "pCMG6CNp")
+        }
     }
     
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() async throws {
-//        try makeSUT { sut in
-//            await self.assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on: sut, with: "id")
-//        }
+        try await makeSUT { sut in
+            await self.assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on: sut, leagueStore: sut, teamStore: sut, with: "pCMG6CNp")
+        }
     }
     
     func test_insert_deliversNoErrorOnEmptyCache() async throws {
@@ -40,9 +40,9 @@ class CoreDataPlayerStoreTests: XCTestCase, PlayerStoreSpecs {
     }
     
     func test_insert_overridesPreviouslyInsertedCacheValues() async throws {
-//        try makeSUT { sut in
-//            await self.assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut, with: "id")
-//        }
+        try await makeSUT { sut in
+            await self.assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut, leagueStore: sut, teamStore: sut, with: "pCMG6CNp")
+        }
     }
     
     // - MARK: Helpers

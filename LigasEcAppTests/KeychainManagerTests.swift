@@ -29,7 +29,7 @@ class KeychainManagerTests: XCTestCase {
     
     // MARK: - Save API Key Tests
     
-    func testSaveAPIKey_Success() {
+    func test_saveAPIKey_Success() {
         // Arrange
         let testAPIKey = "test-api-key-12345"
         
@@ -37,7 +37,7 @@ class KeychainManagerTests: XCTestCase {
         XCTAssertNoThrow(try KeychainManager.saveAPIKey(testAPIKey))
     }
     
-    func testSaveAPIKey_OverwritesExistingKey() throws {
+    func test_saveAPIKey_OverwritesExistingKey() throws {
         // Arrange
         let firstAPIKey = "first-api-key"
         let secondAPIKey = "second-api-key"
@@ -52,17 +52,17 @@ class KeychainManagerTests: XCTestCase {
         XCTAssertNotEqual(retrievedKey, firstAPIKey)
     }
     
-    func testSaveAPIKey_EmptyString() {
+    func test_saveAPIKey_EmptyString() {
         // Arrange
         let emptyAPIKey = ""
         
         // Act & Assert
         XCTAssertNoThrow(try KeychainManager.saveAPIKey(emptyAPIKey))
     }
-    
+        
     // MARK: - Retrieve API Key Tests
     
-    func testRetrieveAPIKey_Success() throws {
+    func test_retrieveAPIKey_Success() throws {
         // Arrange
         let testAPIKey = "test-retrieve-key-67890"
         try KeychainManager.saveAPIKey(testAPIKey)
@@ -74,7 +74,7 @@ class KeychainManagerTests: XCTestCase {
         XCTAssertEqual(retrievedKey, testAPIKey)
     }
     
-    func testRetrieveAPIKey_ItemNotFound() {
+    func test_retrieveAPIKey_ItemNotFound() {
         // Act & Assert
         XCTAssertThrowsError(try KeychainManager.retrieveAPIKey()) { error in
             XCTAssertTrue(error is KeychainError)
@@ -86,7 +86,7 @@ class KeychainManagerTests: XCTestCase {
         }
     }
     
-    func testRetrieveAPIKey_AfterDelete() throws {
+    func test_retrieveAPIKey_AfterDelete() throws {
         // Arrange
         let testAPIKey = "test-key-to-delete"
         try KeychainManager.saveAPIKey(testAPIKey)
@@ -104,7 +104,7 @@ class KeychainManagerTests: XCTestCase {
     
     // MARK: - Delete API Key Tests
     
-    func testDeleteAPIKey_Success() throws {
+    func test_deleteAPIKey_Success() throws {
         // Arrange
         let testAPIKey = "test-key-for-deletion"
         try KeychainManager.saveAPIKey(testAPIKey)
@@ -125,12 +125,12 @@ class KeychainManagerTests: XCTestCase {
         }
     }
     
-    func testDeleteAPIKey_ItemNotFound() {
+    func test_deleteAPIKey_ItemNotFound() {
         // Act & Assert
         XCTAssertNoThrow(try KeychainManager.deleteAPIKey())
     }
     
-    func testDeleteAPIKey_MultipleDeletes() throws {
+    func test_deleteAPIKey_MultipleDeletes() throws {
         // Arrange
         let testAPIKey = "test-key-multiple-deletes"
         try KeychainManager.saveAPIKey(testAPIKey)
@@ -146,7 +146,7 @@ class KeychainManagerTests: XCTestCase {
     
     // MARK: - Integration Tests
     
-    func testSaveRetrieveDeleteCycle() throws {
+    func test_saveRetrieveDeleteCycle() throws {
         // Arrange
         let testAPIKey = "integration-test-key"
         
@@ -168,7 +168,7 @@ class KeychainManagerTests: XCTestCase {
         
     // MARK: - Edge Cases
         
-    func testApiKeyIdentifierConstant() {
+    func test_apiKeyIdentifierConstant() {
         // Act
         let identifier = KeychainManager.apiKeyIdentifier
         
@@ -179,7 +179,7 @@ class KeychainManagerTests: XCTestCase {
     
     // MARK: - Performance Tests
     
-    func testSaveAPIKeyPerformance() {
+    func test_saveAPIKeyPerformance() {
         // Arrange
         let testAPIKey = "performance-test-key"
         
@@ -193,7 +193,7 @@ class KeychainManagerTests: XCTestCase {
         }
     }
     
-    func testRetrieveAPIKeyPerformance() throws {
+    func test_retrieveAPIKeyPerformance() throws {
         // Arrange
         let testAPIKey = "performance-retrieve-key"
         try KeychainManager.saveAPIKey(testAPIKey)
