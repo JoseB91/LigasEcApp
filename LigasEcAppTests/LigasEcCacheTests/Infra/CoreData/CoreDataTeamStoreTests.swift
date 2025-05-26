@@ -15,7 +15,6 @@ class CoreDataTeamStoreTests: XCTestCase, TeamStoreSpecs {
         }
     }
         
-    //TODO: Analyze this
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() async throws {
         try await makeSUT { sut in
             await self.assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut, and: sut, with: "IaFDigtm")

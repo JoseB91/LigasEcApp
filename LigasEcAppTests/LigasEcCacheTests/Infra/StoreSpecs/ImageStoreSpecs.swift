@@ -16,9 +16,9 @@ protocol ImageStoreSpecs {
     func test_retrieveTeamImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() async throws
     func test_retrieveTeamImageData_deliversLastInsertedValue() async throws
     
-    func test_retrievePlayerImageData_deliversNotFoundWhenEmpty() async throws
-    func test_retrievePlayerImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() async throws
-    func test_retrievePlayerImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() async throws
-    func test_retrievePlayerImageData_deliversLastInsertedValue() async throws
+//    func test_retrievePlayerImageData_deliversNotFoundWhenEmpty() async throws
+//    func test_retrievePlayerImageData_deliversNotFoundWhenStoredDataURLDoesNotMatch() async throws
+//    func test_retrievePlayerImageData_deliversFoundDataWhenThereIsAStoredImageDataMatchingURL() async throws
+//    func test_retrievePlayerImageData_deliversLastInsertedValue() async throws
 
 }
