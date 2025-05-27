@@ -1,5 +1,5 @@
 # LigasEc 
-<!-- ![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/CI-iOS/badge.svg) -->
+<!-- ![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/CI-iOS/badge.svg) TODO -->
 <!-- Add badge -->
 
 ## Leagues Feature Specs

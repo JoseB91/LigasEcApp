@@ -5,7 +5,6 @@
 //  Created by José Briones on 10/3/25.
 //
 
-import Foundation
 import SwiftUI
 import CoreData
 import os

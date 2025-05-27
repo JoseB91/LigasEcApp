@@ -6,8 +6,6 @@
 //
 
 import LigasEcAPI
-import SharedAPI
-import UIKit
 
 final class TeamViewModel: ObservableObject {
 

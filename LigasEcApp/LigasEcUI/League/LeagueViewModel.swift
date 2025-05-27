@@ -6,7 +6,6 @@
 //
 
 import LigasEcAPI
-import SharedAPI
 import UIKit
 
 final class LeagueViewModel: ObservableObject {

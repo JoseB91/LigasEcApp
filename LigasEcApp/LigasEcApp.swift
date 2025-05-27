@@ -15,12 +15,8 @@ import os
 
 @main
 struct LigasEcApp: App {
-    private let composer: Composer
-    
-    init() {
-        self.composer = Composer.makeComposer()
-    }
-    
+    private let composer = Composer.makeComposer()
+        
     @State private var navigationPath = NavigationPath()
         
     var body: some Scene {

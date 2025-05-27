@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import LigasEcAPI
-import SharedAPI
 
 struct TeamView: View {
     @ObservedObject var teamViewModel: TeamViewModel

@@ -6,7 +6,6 @@
 //
 
 import LigasEcAPI
-import SharedAPI
 
 final class PlayerViewModel: ObservableObject {
 
