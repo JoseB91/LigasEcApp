@@ -30,20 +30,7 @@ struct LigasEcApp: App {
                                  navigationPath: $navigationPath,
                                  imageView: composer.composeImageView,
                                  title: league.name)
-                        .navigationBarBackButtonHidden(true)
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                Button {
-                                    navigationPath.removeLast()
-                                } label: {
-                                    HStack(spacing: 5) {
-                                        Image(systemName: "chevron.left")
-                                        Text("LigasEc")
-                                            .fontWeight(.regular)
-                                    }
-                                }
-                            }
-                        }
+
                     }
                     .navigationDestination(for: Team.self) { team in
                         PlayerView(playerViewModel: composer.composePlayerViewModel(for: team),
