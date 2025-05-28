@@ -6,8 +6,12 @@
 ## App Architecture
 
 ![LigasEc Architecture](LigasEc_Architecture.png)
+
 ---
 
+## Data Flowchart
+
+![LigasEc Flowchart](LigasEc_Flowchart.png)
 
 ## Leagues Feature Specs
 
