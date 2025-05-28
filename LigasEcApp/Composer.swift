@@ -111,7 +111,7 @@ class Composer {
             do {
                 try await appLocalLoader.localLeagueLoader.save(hardcodedLeagues)
             } catch {
-                print(error)
+                Logger.composer.error("Couldn't save leagues to cache")
             }
             
             return hardcodedLeagues
@@ -140,7 +140,7 @@ class Composer {
                     do {
                         try await appLocalLoader.localTeamLoader.save(teams, with: league.id)
                     } catch {
-                        print(error)
+                        Logger.composer.error("Couldn't save getFlashLive teams to cache")
                     }
                     
                     return teams
@@ -159,7 +159,7 @@ class Composer {
                     do {
                         try await appLocalLoader.localTeamLoader.save(teams, with: league.id)
                     } catch {
-                        print(error)
+                        Logger.composer.error("Couldn't save TransferMarket teams to cache")
                     }
                     
                     return teams
@@ -188,7 +188,7 @@ class Composer {
                     do {
                         try await appLocalLoader.localPlayerLoader.save(players, with: team.id)
                     } catch {
-                        print(error)
+                        Logger.composer.error("Couldn't save FlashLive teams to cache")
                     }
                     
                     return players
@@ -207,7 +207,7 @@ class Composer {
                     do {
                         try await appLocalLoader.localPlayerLoader.save(players, with: team.id)
                     } catch {
-                        print(error)
+                        Logger.composer.error("Couldn't save TransferMarket players to cache")
                     }
                     
                     return players
@@ -231,7 +231,7 @@ class Composer {
                 do {
                     try await appLocalLoader.localImageLoader.save(imageData, for: url, on: table)
                 } catch {
-                    print(error)
+                    Logger.composer.error("Couldn't save image data to cache")
                 }
                 
                 return imageData

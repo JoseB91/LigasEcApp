@@ -6,12 +6,7 @@
 //
 
 import SwiftUI
-import Combine
 import LigasEcAPI
-import SharedAPI
-import Security
-import CoreData
-import os
 
 @main
 struct LigasEcApp: App {
@@ -39,11 +34,7 @@ struct LigasEcApp: App {
                     }
             }
             .task {
-                do {
-                    try await composer.validateCache()
-                } catch {
-                    print(error)
-                }
+                try? await composer.validateCache()
             }
         }
     }
