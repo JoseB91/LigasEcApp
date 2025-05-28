@@ -2,6 +2,13 @@
 <!-- ![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/CI-iOS/badge.svg) TODO -->
 <!-- Add badge -->
 
+
+## App Architecture
+
+![LigasEc Architecture](LigasEc_Architecture.png)
+---
+
+
 ## Leagues Feature Specs
 
 ### Story: Customer requests to see Ecuadorian leagues
@@ -292,7 +299,4 @@ GET /image/{image-id}/comments
 ```
 
 ---
-
-## App Architecture
-
 
