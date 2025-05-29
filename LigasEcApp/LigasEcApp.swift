@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import LigasEcAPI
 
 @main
 struct LigasEcApp: App {

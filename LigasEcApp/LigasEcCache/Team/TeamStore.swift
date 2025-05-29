@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import LigasEcAPI
     
 public protocol TeamStore {
     func insert(_ teams: [LocalTeam], with id: String) async throws

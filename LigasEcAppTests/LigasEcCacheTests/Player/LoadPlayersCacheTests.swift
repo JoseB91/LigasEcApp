@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import LigasEcAPI
 @testable import LigasEcApp
 
 final class LoadPlayersCacheTests: XCTestCase {

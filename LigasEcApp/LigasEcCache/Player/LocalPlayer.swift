@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import LigasEcAPI
 
 public struct LocalPlayer: Equatable {
     public let id: String

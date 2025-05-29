@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import LigasEcAPI
 
 public final class LocalPlayerLoader {
     private let store: PlayerStore

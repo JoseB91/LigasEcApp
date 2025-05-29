@@ -5,7 +5,6 @@
 //  Created by José Briones on 24/2/25.
 //
 
-import LigasEcAPI
 import UIKit
 
 final class LeagueViewModel: ObservableObject {

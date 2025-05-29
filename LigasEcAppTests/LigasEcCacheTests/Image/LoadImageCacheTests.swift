@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import LigasEcAPI
 @testable import LigasEcApp
 
 class LoadImageCacheTests: XCTestCase {

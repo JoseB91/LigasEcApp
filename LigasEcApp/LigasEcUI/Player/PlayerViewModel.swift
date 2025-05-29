@@ -5,7 +5,7 @@
 //  Created by José Briones on 26/2/25.
 //
 
-import LigasEcAPI
+import Foundation
 
 final class PlayerViewModel: ObservableObject {
 

@@ -16,12 +16,14 @@ jobs:
       
     - name: Setup Xcode
       run: sudo xcode-select -s /Applications/Xcode_16.1.app/Contents/Developer
-
-    - name: Clean Derived Data
+    
+    - name: Create Config.xcconfig
       run: |
-        rm -rf ~/Library/Developer/Xcode/DerivedData
-        rm -rf "${HOME}/Library/Caches/org.swift.swiftpm/"
-            
+        cat > LigasEcApp/Config.xcconfig << EOF
+        API_KEY = ${{ secrets.API_KEY }}
+        DEBUG_MODE = 0
+        EOF
+    
     - name: Build and Test
       run: |
         xcodebuild clean build test \
@@ -30,4 +32,3 @@ jobs:
         -sdk iphonesimulator \
         -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=18.1" ONLY_ACTIVE_ARCH=YES \
         CODE_SIGNING_ALLOWED=NO
-

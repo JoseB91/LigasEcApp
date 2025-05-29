@@ -8,8 +8,6 @@
 import SwiftUI
 import CoreData
 import os
-import SharedAPI
-import LigasEcAPI
 
 class Composer {
     private let flashLiveEndpointConfiguration: EndpointConfiguration
