@@ -1,7 +1,5 @@
 # LigasEc 
-<!-- ![](https://github.com/essentialdevelopercom/essential-feed-case-study/workflows/CI-iOS/badge.svg) TODO -->
-<!-- Add badge -->
-
+![](https://github.com/JoseB91/LigasEcApp/actions/workflows/CI-LigasEc.yml/badge.svg)
 
 ## App Architecture
 
