@@ -13,6 +13,8 @@
 
 ![LigasEc Flowchart](LigasEc_Flowchart.png)
 
+---
+
 ## Leagues Feature Specs
 
 ### Story: Customer requests to see Ecuadorian leagues
@@ -29,16 +31,15 @@ So I can choose one of them
 
 ```
 Given an online/offline customer
-  And the cache is empty
  When the customer requests to see the leagues
- Then the app should display two hardcoded leagues
+ Then the app should display hardcoded leagues
   And save those leagues to cache 
   And if saving fails, delete the cache
   
 Given an online/offline customer
   And there's a cached version of the leagues
  When the customer requests to see the leagues
- Then the app should display two hardcoded leagues
+ Then the app should display hardcoded leagues
   And don't save those leagues to cache
 ```
 
@@ -67,7 +68,7 @@ Given an online/offline customer
 4. System delivers image data.
 
 #### Cancel course:
-1. System does not deliver image data nor error. //TODO: Implement
+1. System does not deliver image data nor error. (To Implement)
 
 #### Any error – error course (sad path):
 1. System delivers respective error.
@@ -85,7 +86,7 @@ Given an online/offline customer
 3. System delivers cached image data.
 
 #### Cancel course:
-1. System does not deliver image data nor error. // TODO: Implement
+1. System does not deliver image data nor error. (To Implement)
 
 #### Retrieval error course (sad path):
 1. System delivers error.
@@ -142,8 +143,6 @@ Given an online/offline customer
 
 ---
 
-## Flowchart
-
 ## Model Specs
 
 ### League
@@ -151,9 +150,9 @@ Given an online/offline customer
 | Property      | Type                |
 |---------------|---------------------|
 | `id`          | `String`            |
-| `stageId`     | `String`            |
 | `name`        | `String`            |
 | `logoURL`     | `URL`               |
+| `dataSource`  | `DataSource`        |
 
 
 ## Teams Feature Specs
@@ -197,7 +196,7 @@ So I can choose one of them
 Given the customer doesn't have connectivity
   And the cache is empty
  When the customer requests to see the teams
- Then the app should display an error message
+ Then the app should display an error message // TODO: Review
  
 Given the customer doesn't have connectivity
   And there's a cached version of the teams
@@ -270,9 +269,10 @@ Given the customer doesn't have connectivity
 | `id`              | `String`                |
 | `name`            | `String`                |
 | `logoURL`         | `URL`                   |
+| `dataSource`      | `DataSource`            |
 
 
-### Payload contract
+### Payload contract //TODO: Add
 
 ```
 GET /image/{image-id}/comments
@@ -304,3 +304,5 @@ GET /image/{image-id}/comments
 
 ---
 
+//TODO: Add players specs
+//TODO: Implement workflow
