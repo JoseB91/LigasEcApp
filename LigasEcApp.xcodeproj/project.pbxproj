@@ -33,7 +33,6 @@
 		B09583B32D6CEB0900C4B206 /* SharedAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09581122D6CE59100C4B206 /* SharedAPI.framework */; };
 		B09583B42D6CEB0900C4B206 /* SharedAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B09581122D6CE59100C4B206 /* SharedAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B09758012DDE806500F99E45 /* KeychainManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09758002DDE806500F99E45 /* KeychainManagerTests.swift */; };
-		B0CCD5752DE8CC9100AE51EE /* CI-LigasEc.yml in Resources */ = {isa = PBXBuildFile; fileRef = B0CCD5742DE8CC9100AE51EE /* CI-LigasEc.yml */; };
 		B0F482382D920BF400874AA8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B0F482372D920BF400874AA8 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -104,7 +103,6 @@
 		B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataLigasEcStore+PlayerStore.swift"; sourceTree = "<group>"; };
 		B09581082D6CE59100C4B206 /* LigasEcAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LigasEcAPI.xcodeproj; path = ../LigasEcAPI/LigasEcAPI.xcodeproj; sourceTree = SOURCE_ROOT; };
 		B09758002DDE806500F99E45 /* KeychainManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManagerTests.swift; sourceTree = "<group>"; };
-		B0CCD5742DE8CC9100AE51EE /* CI-LigasEc.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "CI-LigasEc.yml"; sourceTree = "<group>"; };
 		B0F482372D920BF400874AA8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,7 +207,6 @@
 		B03E6F842D6CE44F00DE1485 = {
 			isa = PBXGroup;
 			children = (
-				B0CCD5742DE8CC9100AE51EE /* CI-LigasEc.yml */,
 				B0F482372D920BF400874AA8 /* README.md */,
 				B09581082D6CE59100C4B206 /* LigasEcAPI.xcodeproj */,
 				B05361862D821B3300BE41F0 /* LigasEcApp */,
@@ -503,7 +500,6 @@
 				B05361A02D821B3300BE41F0 /* Preview Assets.xcassets in Resources */,
 				B05361A12D821B3300BE41F0 /* Assets.xcassets in Resources */,
 				B05361A22D821B3300BE41F0 /* LigasEc.xcstrings in Resources */,
-				B0CCD5752DE8CC9100AE51EE /* CI-LigasEc.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

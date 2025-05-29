@@ -8,41 +8,25 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: macos-13
-
-    timeout-minutes: 10
+    runs-on: macos-latest
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-      with:
-       fetch-depth: 0
-       
-    - name: Select Xcode Version
-    run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+      
+    - name: Setup Xcode
+      run: sudo xcode-select -s /Applications/Xcode_16.1.app/Contents/Developer
     
     - name: Clean Derived Data
       run: |
         rm -rf ~/Library/Developer/Xcode/DerivedData
         rm -rf "${HOME}/Library/Caches/org.swift.swiftpm/"
             
-    - name: Build and Test
-      run: |
-        set -o pipefail
-        xcodebuild build test -project LigasEc.xcodeproj -scheme "LigasEcApp" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.0" ONLY_ACTIVE_ARCH=YES -showBuildSettings
-        
-    - name: Upload Test Results
-      uses: actions/upload-artifact@v4
-      if: success() || failure()
-      with:
-        name: test-results
-        path: |
-          TestResults
-          ~/Library/Logs/scan/*.log
-          
-    - name: Capture Detailed Logs
-      if: failure()
-      run: |
-        echo "Capturing detailed build logs..."
-        find ~/Library/Logs/scan -type f -name "*.log"
-        find ~/Library/Logs/xcodebuild -type f -name "*.log"
+      - name: Build and Test
+        run: |
+          xcodebuild clean build test \
+          -project LigasEcApp.xcodeproj \
+          -scheme LigasEcApp \
+          -sdk iphonesimulator \
+          -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=18.1" ONLY_ACTIVE_ARCH=YES \
+          CODE_SIGNING_ALLOWED=NO
