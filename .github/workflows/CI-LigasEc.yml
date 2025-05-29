@@ -16,7 +16,7 @@ jobs:
       
     - name: Setup Xcode
       run: sudo xcode-select -s /Applications/Xcode_16.1.app/Contents/Developer
-    
+
     - name: Clean Derived Data
       run: |
         rm -rf ~/Library/Developer/Xcode/DerivedData
