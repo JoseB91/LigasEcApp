@@ -217,7 +217,6 @@
 				B0F482372D920BF400874AA8 /* README.md */,
 				B05361862D821B3300BE41F0 /* LigasEcApp */,
 				B05361DD2D821B8500BE41F0 /* LigasEcAppTests */,
-				B09581192D6CE61400C4B206 /* Frameworks */,
 				B03E6F8E2D6CE44F00DE1485 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -357,13 +356,6 @@
 				B09758002DDE806500F99E45 /* KeychainManagerTests.swift */,
 			);
 			path = LigasEcAppTests;
-			sourceTree = "<group>";
-		};
-		B09581192D6CE61400C4B206 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B0CCD6082DE8D73700AE51EE /* LigasEcAPI */ = {
