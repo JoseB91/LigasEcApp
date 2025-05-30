@@ -20,12 +20,12 @@ struct LeagueView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: geometry.size.width)
-                    .frame(height: geometry.size.height * 0.70)
+                    .frame(height: geometry.size.height * 0.75)
                     .edgesIgnoringSafeArea(.top)
                 
                 VStack {
                     Spacer()
-                        .frame(height: geometry.size.height * 0.60)
+                        .frame(height: geometry.size.height * 0.66)
                     
                     VStack {
                         if leagueViewModel.isLoading {
@@ -38,7 +38,7 @@ struct LeagueView: View {
                                 } label: {
                                     HStack {
                                         imageView(league.logoURL, Table.League)
-                                            .frame(width: 96, height: 48)
+                                            .frame(width: 96, height: 36)
                                         Text(league.name)
                                             .font(.title)
                                             .foregroundColor(.primary)
@@ -48,10 +48,10 @@ struct LeagueView: View {
                                 }
                                 .cornerRadius(10)
                             }
+                            .listRowSpacing(24)
                         }
                     }
-                    .listRowSpacing(36)
-                    .frame(height: geometry.size.height * 0.40)
+                    .frame(height: geometry.size.height * 0.34)
                     .task {
                         await leagueViewModel.loadLeagues()
                     }
