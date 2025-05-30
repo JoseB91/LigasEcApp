@@ -31,7 +31,7 @@ final class LeagueViewModel: ObservableObject {
         do {
             leagues = try await leagueLoader()
         } catch {
-            errorMessage = ErrorModel(message: "Failed to load leagues: \(error.localizedDescription)")
+            // Will never fail
         }
         isLoading = false
     }

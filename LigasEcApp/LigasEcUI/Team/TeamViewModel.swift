@@ -25,7 +25,7 @@ final class TeamViewModel: ObservableObject {
         do {
             teams = try await teamLoader()
         } catch {
-            errorMessage = ErrorModel(message: "Failed to load teams: \(error.localizedDescription)")
+            errorMessage = ErrorModel(message: error.localizedDescription)
         }
         isLoading = false
     }

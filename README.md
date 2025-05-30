@@ -194,7 +194,7 @@ So I can choose one of them
 Given the customer doesn't have connectivity
   And the cache is empty
  When the customer requests to see the teams
- Then the app should display an error message // TODO: Review
+ Then the app should display an error message 
  
 Given the customer doesn't have connectivity
   And there's a cached version of the teams
@@ -303,4 +303,4 @@ GET /image/{image-id}/comments
 ---
 
 //TODO: Add players specs
-//TODO: Implement workflow
+//TODO: Implement apikey for workflow tests

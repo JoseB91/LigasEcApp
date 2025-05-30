@@ -56,7 +56,7 @@ final class PlayerViewModel: ObservableObject {
         do {
             squad = try await playerLoader()
         } catch {
-            errorMessage = ErrorModel(message: "Failed to load squad: \(error.localizedDescription)")
+            errorMessage = ErrorModel(message: error.localizedDescription)
         }
         isLoading = false
     }
