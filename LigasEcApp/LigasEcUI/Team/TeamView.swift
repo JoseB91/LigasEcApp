@@ -30,7 +30,8 @@ struct TeamView: View {
                                 .font(.title2)
                                 .foregroundColor(.primary)
                         }
-                    }.tint(.black)
+                    }
+                    .listRowSeparator(.hidden)
                 }
             }
         }

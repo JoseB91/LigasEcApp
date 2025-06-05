@@ -33,14 +33,14 @@ struct PlayerView: View {
                                 HStack {
                                     if let url = player.photoURL {
                                         imageView(url, Table.Player)
-                                            .frame(width: 96, height: 48)
+                                            .frame(width: 72, height: 36)
                                             .clipShape(Circle())
                                             .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))
                                     } else {
                                         Image(systemName: "person.circle")
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: 96, height: 48)
+                                            .frame(width: 72, height: 36)
                                     }
                                     Text(player.name)
                                         .font(.body)
@@ -78,7 +78,7 @@ struct PlayerView: View {
             }
         }
         .listStyle(.plain)
-        .listRowSpacing(0)
+        .listRowSpacing(4)
         .navigationTitle(title)
         .toolbarTitleDisplayMode(.large)
         .refreshable {

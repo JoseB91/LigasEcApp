@@ -41,7 +41,11 @@ final class MockTeamViewModel {
         return [Team(id: "pCMG6CNp",
                      name: "Barcelona SC",
                      logoURL: URL(string: "https://www.flashscore.com/res/image/data/nit9vJwS-WErjuywa.png")!,
-                     dataSource: .FlashLive)]
+                     dataSource: .FlashLive),
+                Team(id: "pCMG6CNq",
+                             name: "Barcelona SC",
+                             logoURL: URL(string: "https://www.flashscore.com/res/image/data/nit9vJwS-WErjuywa.png")!,
+                             dataSource: .FlashLive)]
     }
 }
 
