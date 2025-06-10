@@ -15,6 +15,10 @@ class KeychainManagerTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        if ProcessInfo.processInfo.environment["CI"] == "TRUE" {
+            return
+        }
+        
         cleanupKeychain()
     }
     
