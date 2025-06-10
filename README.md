@@ -217,7 +217,7 @@ Given the customer doesn't have connectivity
 2. System retrieves data from the cache.
 3. System delivers teams.
 
-#### Load empty data with succesfull remote (sad path): //TODO: Review
+#### Load empty data with succesfull remote (sad path):
 1. Execute load command.
 2. System gets empty data.
 3. Execute get command from remote.
@@ -333,7 +333,7 @@ Given the customer doesn't have connectivity
 2. System retrieves data from the cache.
 3. System delivers players.
 
-#### Load empty data with succesfull remote (sad path): //TOOD: Delete this
+#### Load empty data with succesfull remote (sad path):
 1. Execute load command.
 2. System gets empty data.
 3. Execute get command from remote.
@@ -383,9 +383,11 @@ Given the customer doesn't have connectivity
 |-------------------|-------------------------|
 | `id`              | `String`                |
 | `name`            | `String`                |
-| `logoURL`         | `URL`                   |
+| `number`          | `Int?`                  |
+| `position`        | `String`                |
+| `flagId`          | `Int?`                  |
+| `nationality`     | `String?`               |
+| `photoURL`        | `URL?`                  |
 | `dataSource`      | `DataSource`            |
 
 ---
-
-//TODO: Implement apikey for workflow tests
