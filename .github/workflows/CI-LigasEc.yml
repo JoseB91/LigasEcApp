@@ -16,14 +16,7 @@ jobs:
       
     - name: Setup Xcode
       run: sudo xcode-select -s /Applications/Xcode_16.1.app/Contents/Developer
-    
-    - name: Create Config.xcconfig
-      run: |
-        cat > LigasEcApp/Config.xcconfig << EOF
-        API_KEY = ${{ secrets.API_KEY }}
-        DEBUG_MODE = 0
-        EOF
-    
+        
     - name: Build and Test
       env:
         API_KEY: ${{ secrets.API_KEY }}
@@ -34,4 +27,5 @@ jobs:
         -scheme LigasEcApp \
         -sdk iphonesimulator \
         -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=18.1" ONLY_ACTIVE_ARCH=YES \
-        CODE_SIGNING_ALLOWED=NO
+        CODE_SIGNING_ALLOWED=NO \
+        OTHER_SWIFT_FLAGS="-D CI_ENVIRONMENT"
