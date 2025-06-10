@@ -141,7 +141,7 @@ Given an online/offline customer
 
 ---
 
-## Model Specs
+## League Model Spec
 
 ### League
 
@@ -153,9 +153,12 @@ Given an online/offline customer
 | `dataSource`  | `DataSource`        |
 
 
+---
+
+
 ## Teams Feature Specs
 
-### Story: Customer requests to see leagues' teams
+### Story: Customer requests to see teams of a selected league
 
 ### Narrative #1
 
@@ -214,7 +217,7 @@ Given the customer doesn't have connectivity
 2. System retrieves data from the cache.
 3. System delivers teams.
 
-#### Load empty data with succesfull remote (sad path):
+#### Load empty data with succesfull remote (sad path): //TODO: Review
 1. Execute load command.
 2. System gets empty data.
 3. Execute get command from remote.
@@ -256,9 +259,7 @@ Given the customer doesn't have connectivity
 1. System delivers error.
 ---
 
-## Flowchart
-
-## Model Specs
+## Team Model Specs
 
 ### Team
 
@@ -269,38 +270,122 @@ Given the customer doesn't have connectivity
 | `logoURL`         | `URL`                   |
 | `dataSource`      | `DataSource`            |
 
+---
 
-### Payload contract //TODO: Add
+## Players Feature Specs
+
+### Story: Customer requests to see players of a selected team
+
+### Narrative #1
 
 ```
-GET /image/{image-id}/comments
-
-2xx RESPONSE
-
-{
-    "items": [
-        {
-            "id": "a UUID",
-            "message": "a message",
-            "created_at": "2020-05-20T11:24:59+0000",
-            "author": {
-                "username": "a username"
-            }
-        },
-        {
-            "id": "another UUID",
-            "message": "another message",
-            "created_at": "2020-05-19T14:23:53+0000",
-            "author": {
-                "username": "another username"
-            }
-        },
-        ...
-    ]
-}
+As an online customer
+I want the app to load players of a selected ecuadorian league team
+So I can visualize basic information of squad 
 ```
+
+#### Scenarios (Acceptance criteria)
+
+```
+Given the customer has connectivity
+  And the cache is empty
+ When the customer requests to see players of a team
+ Then the app should display all players from remote
+  And save those players to cache
+
+Given the customer has connectivity
+  And there's a cached version of the players
+ When the customer requests to see players of a team
+ Then the app should display all players from cache
+```
+
+### Narrative #2
+
+```
+As an offline customer
+I want the app to load players of a selected ecuadorian team
+So I can visualize basic information of squad 
+```
+
+#### Scenarios (Acceptance criteria)
+
+```
+Given the customer doesn't have connectivity
+  And the cache is empty
+ When the customer requests to see the players
+ Then the app should display an error message 
+ 
+Given the customer doesn't have connectivity
+  And there's a cached version of the players
+ When the customer requests to see the players
+ Then the app should display players from cache
+```
+
+## Use Cases
+
+### Load Players From Local Use Case
+
+#### Data:
+- URL
+
+#### Primary course (happy path):
+1. Execute load command.
+2. System retrieves data from the cache.
+3. System delivers players.
+
+#### Load empty data with succesfull remote (sad path): //TOOD: Delete this
+1. Execute load command.
+2. System gets empty data.
+3. Execute get command from remote.
+4. System retrieves data from remote
+5. System delivers players.
+
+#### Load empty data with failing remote (sad path):
+1. Execute load command.
+2. System gets empty data.
+3. Execute get command from remote.
+4. System retrieves data from remote
+5. System delivers error.
+
+#### Load error course with successfull remote (sad path):
+1. Execute load command.
+2. System delivers error.
+3. Execute get command from remote.
+4. System retrieves data from remote
+5. System delivers teams.
+
+#### Load error course with failing remote (sad path):
+1. Execute load command.
+2. System delivers error.
+3. Execute get command from remote.
+4. System retrieves data from remote
+5. System delivers error.
+---
+
+### Save Players To Local Use Case
+
+#### Data:
+- Player
+
+#### Primary course (happy path):
+1. Execute save command.
+2. System saves new cache data with respective id.
+
+#### Saving error course (sad path):
+1. System delivers error.
+---
+
+## Player Model Specs
+
+### Team
+
+| Property          | Type                    |
+|-------------------|-------------------------|
+| `id`              | `String`                |
+| `name`            | `String`                |
+| `logoURL`         | `URL`                   |
+| `dataSource`      | `DataSource`            |
 
 ---
 
-//TODO: Add players specs
 //TODO: Implement apikey for workflow tests
