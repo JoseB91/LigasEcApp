@@ -647,7 +647,6 @@
 		};
 		B03E6FB02D6CE45000DE1485 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B08CFD662DFB86D700F4D8FD /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
