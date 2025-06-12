@@ -19,7 +19,7 @@ jobs:
 
     - name: Create Config.xcconfig
       run: |
-       echo "API_KEY=${{ secrets.API_KEY }}" >> LigasEcApp/LigasEcApp/Config.xcconfig
+       echo "API_KEY=${{ secrets.API_KEY }}" > LigasEcApp/Config.xcconfig
     
     - name: Build and Test
       run: |
@@ -29,5 +29,4 @@ jobs:
         -sdk iphonesimulator \
         -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=18.1" ONLY_ACTIVE_ARCH=YES \
         CODE_SIGNING_ALLOWED=NO \
-        API_KEY="${{ secrets.API_KEY }}" \
         OTHER_SWIFT_FLAGS="-D CI_ENVIRONMENT"
