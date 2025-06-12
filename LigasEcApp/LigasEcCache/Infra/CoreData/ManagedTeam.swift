@@ -34,7 +34,6 @@ extension ManagedTeam {
     static func getFirst(with url: URL, in context: NSManagedObjectContext) throws -> ManagedTeam? {
         let request = NSFetchRequest<ManagedTeam>(entityName: entity().name!)
         request.predicate = NSPredicate(format: "%K = %@", argumentArray: [#keyPath(ManagedTeam.logoURL), url])
-        request.returnsObjectsAsFaults = false
         request.fetchLimit = 1
         return try context.fetch(request).first
     }
@@ -56,7 +55,6 @@ extension ManagedTeam {
     static func find(with id: String, in context: NSManagedObjectContext) throws -> ManagedTeam? {
         let request = NSFetchRequest<ManagedTeam>(entityName: entity().name!)
         request.predicate = NSPredicate(format: "id == %@", id)
-        request.returnsObjectsAsFaults = false
         request.fetchLimit = 1
         return try context.fetch(request).first
     }

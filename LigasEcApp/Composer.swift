@@ -66,6 +66,10 @@ class Composer {
             if let envAPIKey = ProcessInfo.processInfo.environment["API_KEY"], !envAPIKey.isEmpty {
                 apiKey = envAPIKey
                 try? KeychainManager.saveAPIKey(apiKey)
+            } else if let bundleAPIKey = Bundle.main.infoDictionary?["API_KEY"] as? String,
+               !bundleAPIKey.isEmpty {
+                apiKey = bundleAPIKey
+                try? KeychainManager.saveAPIKey(apiKey)
             } else {
                 Logger.composer.error("No API key found in Keychain or Bundle")
             }

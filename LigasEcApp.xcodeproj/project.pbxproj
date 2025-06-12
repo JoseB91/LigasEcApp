@@ -28,6 +28,7 @@
 		B053621E2D8232CA00BE41F0 /* ManagedLeague.swift in Sources */ = {isa = PBXBuildFile; fileRef = B053621D2D8232CA00BE41F0 /* ManagedLeague.swift */; };
 		B05362272D82AB3B00BE41F0 /* ManagedPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05362262D82AB3B00BE41F0 /* ManagedPlayer.swift */; };
 		B05362322D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */; };
+		B08CFD672DFB86D700F4D8FD /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B08CFD662DFB86D700F4D8FD /* Config.xcconfig */; };
 		B09758012DDE806500F99E45 /* KeychainManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09758002DDE806500F99E45 /* KeychainManagerTests.swift */; };
 		B0CCD60D2DE8D73700AE51EE /* ImageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6072DE8D73700AE51EE /* ImageMapper.swift */; };
 		B0CCD61C2DE8D75100AE51EE /* ImageMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6182DE8D75100AE51EE /* ImageMapperTests.swift */; };
@@ -71,6 +72,7 @@
 		B053621D2D8232CA00BE41F0 /* ManagedLeague.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedLeague.swift; sourceTree = "<group>"; };
 		B05362262D82AB3B00BE41F0 /* ManagedPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedPlayer.swift; sourceTree = "<group>"; };
 		B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataLigasEcStore+PlayerStore.swift"; sourceTree = "<group>"; };
+		B08CFD662DFB86D700F4D8FD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		B09758002DDE806500F99E45 /* KeychainManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManagerTests.swift; sourceTree = "<group>"; };
 		B0CCD6072DE8D73700AE51EE /* ImageMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMapper.swift; sourceTree = "<group>"; };
 		B0CCD6182DE8D75100AE51EE /* ImageMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMapperTests.swift; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				B05361832D821B3300BE41F0 /* Info.plist */,
 				B05361842D821B3300BE41F0 /* KeychainManager.swift */,
 				B05361852D821B3300BE41F0 /* LigasEcApp.swift */,
+				B08CFD662DFB86D700F4D8FD /* Config.xcconfig */,
 			);
 			path = LigasEcApp;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0F482382D920BF400874AA8 /* README.md in Resources */,
+				B08CFD672DFB86D700F4D8FD /* Config.xcconfig in Resources */,
 				B05361A02D821B3300BE41F0 /* Preview Assets.xcassets in Resources */,
 				B05361A12D821B3300BE41F0 /* Assets.xcassets in Resources */,
 				B05361A22D821B3300BE41F0 /* LigasEc.xcstrings in Resources */,
@@ -576,6 +580,7 @@
 /* Begin XCBuildConfiguration section */
 		B03E6FAF2D6CE45000DE1485 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B08CFD662DFB86D700F4D8FD /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -642,6 +647,7 @@
 		};
 		B03E6FB02D6CE45000DE1485 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B08CFD662DFB86D700F4D8FD /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

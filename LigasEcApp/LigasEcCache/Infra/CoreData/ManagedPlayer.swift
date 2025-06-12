@@ -63,7 +63,6 @@ extension ManagedPlayer {
     static func getFirst(with url: URL, in context: NSManagedObjectContext) throws -> ManagedPlayer? {
         let request = NSFetchRequest<ManagedPlayer>(entityName: entity().name!)
         request.predicate = NSPredicate(format: "%K = %@", argumentArray: [#keyPath(ManagedPlayer.photoURL), url])
-        request.returnsObjectsAsFaults = false
         request.fetchLimit = 1
         return try context.fetch(request).first
     }
