@@ -94,6 +94,8 @@ final class PlayerViewModel: ObservableObject {
             return 151
         case "Uruguay":
             return 201
+        case "Venezuela":
+            return 205
         default:
             return 0
         }

@@ -55,6 +55,7 @@ struct PlayerView: View {
                                         Image("country_flag_\(flagId)")
                                             .resizable()
                                             .frame(width: 24, height: 16)
+                                            .accessibilityLabel(nationality)
                                     }
                                     if position != "Entrenador" {
                                         Spacer()
