@@ -63,7 +63,7 @@ class LoadImageCacheTests: XCTestCase {
     
     // MARK: - Helpers
 
-    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #file, line: UInt = #line) -> (sut: LocalImageLoader, store: ImageStoreSpy) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalImageLoader, store: ImageStoreSpy) {
         let store = ImageStoreSpy()
         let sut = LocalImageLoader(store: store)
         trackForMemoryLeaks(store, file: file, line: line)

@@ -10,6 +10,7 @@ import SwiftUI
 struct LeagueView: View {
     @ObservedObject var leagueViewModel: LeagueViewModel
     @Binding var navigationPath: NavigationPath
+    @State private var hasLoaded = false
     
     let imageView: (URL, Table) -> ImageView
     
@@ -51,8 +52,13 @@ struct LeagueView: View {
                         }
                     }
                     .frame(height: geometry.size.height * 0.30)
-                    .task {
-                        await leagueViewModel.loadLeagues()
+                    .onAppear {
+                        if !hasLoaded {
+                            hasLoaded = true
+                            Task {
+                                await leagueViewModel.loadLeagues()
+                            }
+                        }
                     }
                 }
             }
