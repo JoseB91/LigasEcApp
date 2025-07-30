@@ -20,8 +20,8 @@ public enum PlayerEndpoint {
             components.path = baseURL.path + "/teams" + "/squad"
             components.queryItems = [
                 URLQueryItem(name: "sport_id", value: "\(sportId)"),
-                URLQueryItem(name: "locale", value: "\(locale)"),
-                URLQueryItem(name: "team_id", value: "\(teamId)")
+                URLQueryItem(name: "locale", value: locale),
+                URLQueryItem(name: "team_id", value: teamId)
             ].compactMap { $0 }
             return components.url!
             
@@ -31,8 +31,8 @@ public enum PlayerEndpoint {
             components.host = baseURL.host
             components.path = baseURL.path + "clubs/get-squad"
             components.queryItems = [
-                URLQueryItem(name: "id", value: "\(id)"),
-                URLQueryItem(name: "domain", value: "\(domain)")
+                URLQueryItem(name: "id", value: id),
+                URLQueryItem(name: "domain", value: domain)
             ].compactMap { $0 }
             return components.url!
         }
