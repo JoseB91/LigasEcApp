@@ -38,7 +38,7 @@ struct MockImageRepository: ImageRepository {
 }
 
 struct MockImageComposer {
-    func composeImageView(with url: URL) -> ImageView {
+    func composeImageView(with url: URL, on table: Table) -> ImageView {
         let mockRepository = MockImageRepository()
         let mockViewModel = ImageViewModel(repository: mockRepository)
         return ImageView(imageViewModel: mockViewModel)

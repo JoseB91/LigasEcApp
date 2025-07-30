@@ -12,7 +12,7 @@ struct LeagueView: View {
     @Binding var navigationPath: NavigationPath
     @State private var hasLoaded = false
     
-    let imageView: (URL, Table) -> ImageView
+    let imageViewLoader: (URL, Table) -> ImageView
     
     var body: some View {
         GeometryReader { geometry in
@@ -38,7 +38,7 @@ struct LeagueView: View {
                                     navigationPath.append(league)
                                 } label: {
                                     HStack {
-                                        imageView(league.logoURL, Table.League)
+                                        imageViewLoader(league.logoURL, Table.League)
                                             .frame(width: 96, height: 48)
                                         Text(league.name)
                                             .font(.title)
@@ -66,10 +66,10 @@ struct LeagueView: View {
     }
 }
 
-//#Preview {
-//    let leagueViewModel = LeagueViewModel(leagueLoader: MockLeagueViewModel.mockLeagueLoader)
-//    
-//    LeagueView(leagueViewModel: leagueViewModel,
-//               navigationPath: .constant(NavigationPath()),
-//               imageView: MockImageView.mockImageView)
-//}
+#Preview {
+    let leagueViewModel = LeagueViewModel(leagueLoader: MockLeagueViewModel.mockLeagueLoader)
+    
+    LeagueView(leagueViewModel: leagueViewModel,
+               navigationPath: .constant(NavigationPath()),
+               imageViewLoader: MockImageComposer().composeImageView)
+}
