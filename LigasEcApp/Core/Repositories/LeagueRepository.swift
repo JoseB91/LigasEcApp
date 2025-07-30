@@ -25,11 +25,11 @@ final class LeagueRepositoryImpl: LeagueRepository {
             League(id: "IaFDigtm",
                    name: "LigaPro Serie A",
                    logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
-                   dataSource: .FlashLive),
+                   dataSource: .flashLive),
             League(id: "EC2L",
                    name: "LigaPro Serie B",
                    logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!,
-                   dataSource: .TransferMarket)
+                   dataSource: .transferMarket)
         ]
         
         try? await appLocalLoader.localLeagueLoader.save(hardcodedLeagues)

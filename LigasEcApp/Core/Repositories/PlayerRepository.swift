@@ -23,11 +23,11 @@ final class PlayerRepositoryImpl: PlayerRepository {
     }
     
     func loadPlayers() async throws -> [Player] {
-        if playerRepositoryParams.team.dataSource == .FlashLive {
+        if playerRepositoryParams.team.dataSource == .flashLive {
             do {
                 return try await appLocalLoader.localPlayerLoader.load(
                     with: playerRepositoryParams.team.id,
-                    dataSource: .FlashLive
+                    dataSource: .flashLive
                 )
             } catch {
                 let url = PlayerEndpoint.getFlashLive(
@@ -41,7 +41,7 @@ final class PlayerRepositoryImpl: PlayerRepository {
                     with: playerRepositoryParams.flashLiveEndpointConfiguration.host
                 )
                 
-                let players = try PlayerMapper.map(data, from: response, with: .FlashLive)
+                let players = try PlayerMapper.map(data, from: response, with: .flashLive)
                 
                 try? await appLocalLoader.localPlayerLoader.save(
                     players,
@@ -54,7 +54,7 @@ final class PlayerRepositoryImpl: PlayerRepository {
             do {
                 return try await appLocalLoader.localPlayerLoader.load(
                     with: playerRepositoryParams.team.id,
-                    dataSource: .TransferMarket
+                    dataSource: .transferMarket
                 )
             } catch {
                 let url = PlayerEndpoint.getTransferMarket(
@@ -67,7 +67,7 @@ final class PlayerRepositoryImpl: PlayerRepository {
                     with: playerRepositoryParams.transferMarketEndpointConfiguration.host
                 )
                 
-                let players = try PlayerMapper.map(data, from: response, with: .TransferMarket)
+                let players = try PlayerMapper.map(data, from: response, with: .transferMarket)
                 
                 try? await appLocalLoader.localPlayerLoader.save(
                     players,

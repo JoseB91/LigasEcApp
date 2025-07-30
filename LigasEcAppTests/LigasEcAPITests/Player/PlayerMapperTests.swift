@@ -19,7 +19,7 @@ final class PlayerMapperTests: XCTestCase {
             // Assert
             XCTAssertThrowsError(
                 // Act
-                try PlayerMapper.map(json, from: HTTPURLResponse(statusCode: code), with: .FlashLive)
+                try PlayerMapper.map(json, from: HTTPURLResponse(statusCode: code), with: .flashLive)
             )
         }
     }
@@ -31,7 +31,7 @@ final class PlayerMapperTests: XCTestCase {
         // Assert
         XCTAssertThrowsError(
             // Act
-            try PlayerMapper.map(invalidJSON, from: HTTPURLResponse(statusCode: 200), with: .FlashLive)
+            try PlayerMapper.map(invalidJSON, from: HTTPURLResponse(statusCode: 200), with: .flashLive)
         )
     }
 
@@ -45,7 +45,7 @@ final class PlayerMapperTests: XCTestCase {
 
         // Act
         let result = try PlayerMapper.map(json,
-                                          from: HTTPURLResponse(statusCode: 200), with: .FlashLive)
+                                          from: HTTPURLResponse(statusCode: 200), with: .flashLive)
 
         // Assert
         XCTAssertEqual(result, [item])
@@ -61,7 +61,7 @@ final class PlayerMapperTests: XCTestCase {
 
         // Act
         let result = try PlayerMapper.map(json,
-                                          from: HTTPURLResponse(statusCode: 200), with: .FlashLive)
+                                          from: HTTPURLResponse(statusCode: 200), with: .flashLive)
 
         // Assert
         XCTAssertEqual(result, [item])
@@ -96,13 +96,13 @@ final class PlayerMapperTests: XCTestCase {
 
         // Act
         let result3 = try PlayerMapper.map(json3,
-                                          from: HTTPURLResponse(statusCode: 200), with: .FlashLive)
+                                          from: HTTPURLResponse(statusCode: 200), with: .flashLive)
         let result4 = try PlayerMapper.map(json4,
-                                          from: HTTPURLResponse(statusCode: 200), with: .FlashLive)
+                                          from: HTTPURLResponse(statusCode: 200), with: .flashLive)
         let result5 = try PlayerMapper.map(json5,
-                                          from: HTTPURLResponse(statusCode: 200), with: .FlashLive)
+                                          from: HTTPURLResponse(statusCode: 200), with: .flashLive)
         let result6 = try PlayerMapper.map(json6,
-                                          from: HTTPURLResponse(statusCode: 200), with: .FlashLive)
+                                          from: HTTPURLResponse(statusCode: 200), with: .flashLive)
 
         // Assert
         XCTAssertEqual(result3, [item3])
@@ -122,7 +122,7 @@ final class PlayerMapperTests: XCTestCase {
 
         // Act
         let result = try PlayerMapper.map(json,
-                                          from: HTTPURLResponse(statusCode: 200), with: .TransferMarket)
+                                          from: HTTPURLResponse(statusCode: 200), with: .transferMarket)
 
         // Assert
         XCTAssertEqual(result, [item])
@@ -138,7 +138,7 @@ final class PlayerMapperTests: XCTestCase {
 
         // Act
         let result = try PlayerMapper.map(json,
-                                          from: HTTPURLResponse(statusCode: 200), with: .TransferMarket)
+                                          from: HTTPURLResponse(statusCode: 200), with: .transferMarket)
 
         // Assert
         XCTAssertEqual(result, [item])
@@ -154,7 +154,7 @@ final class PlayerMapperTests: XCTestCase {
 
         // Act
         let result = try PlayerMapper.map(json,
-                                          from: HTTPURLResponse(statusCode: 200), with: .TransferMarket)
+                                          from: HTTPURLResponse(statusCode: 200), with: .transferMarket)
 
         // Assert
         XCTAssertEqual(result, [item])
@@ -170,7 +170,7 @@ final class PlayerMapperTests: XCTestCase {
                position: "Portero",
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
-               dataSource: .FlashLive)
+               dataSource: .flashLive)
     }
     
     private func makePlayerItemFlashLiveWithoutNumber() -> Player {
@@ -180,7 +180,7 @@ final class PlayerMapperTests: XCTestCase {
                position: "Portero",
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
-               dataSource: .FlashLive)
+               dataSource: .flashLive)
     }
     
     private func makePlayerItemFlashLiveWithoutNumberAndDefender() -> Player {
@@ -190,7 +190,7 @@ final class PlayerMapperTests: XCTestCase {
                position: "Defensa",
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
-               dataSource: .FlashLive)
+               dataSource: .flashLive)
     }
     
     private func makePlayerItemFlashLiveWithoutNumberAndMidfielder() -> Player {
@@ -200,7 +200,7 @@ final class PlayerMapperTests: XCTestCase {
                position: "Centrocampista",
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
-               dataSource: .FlashLive)
+               dataSource: .flashLive)
     }
     
     private func makePlayerItemFlashLiveWithoutNumberAndForward() -> Player {
@@ -210,7 +210,7 @@ final class PlayerMapperTests: XCTestCase {
                position: "Delantero",
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
-               dataSource: .FlashLive)
+               dataSource: .flashLive)
     }
     
     private func makePlayerItemFlashLiveWithoutNumberAndCoach() -> Player {
@@ -220,7 +220,7 @@ final class PlayerMapperTests: XCTestCase {
                position: "Entrenador",
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
-               dataSource: .FlashLive)
+               dataSource: .flashLive)
     }
     
     private func makePlayerItemTransferMarket() -> Player {
@@ -230,7 +230,7 @@ final class PlayerMapperTests: XCTestCase {
                position: "Centrocampista",
                nationality: "Ecuador",
                photoURL: URL(string: "https://img.a.transfermarkt.technology/portrait/medium/106495-1733949391.JPG?lm=1")!,
-               dataSource: .TransferMarket)
+               dataSource: .transferMarket)
     }
     
     private func makePlayerItemTransferMarketWithoutNumber() -> Player {
@@ -240,7 +240,7 @@ final class PlayerMapperTests: XCTestCase {
                position: "Centrocampista",
                nationality: "Ecuador",
                photoURL: URL(string: "https://img.a.transfermarkt.technology/portrait/medium/106495-1733949391.JPG?lm=1")!,
-               dataSource: .TransferMarket)
+               dataSource: .transferMarket)
     }
     
     private func makePlayerItemTransferMarketWithoutNumberAndWithNationality() -> Player {
@@ -250,7 +250,7 @@ final class PlayerMapperTests: XCTestCase {
                position: "",
                nationality: "Ecuador",
                photoURL: URL(string: "https://img.a.transfermarkt.technology/portrait/medium/106495-1733949391.JPG?lm=1")!,
-               dataSource: .TransferMarket)
+               dataSource: .transferMarket)
     }
 
 }

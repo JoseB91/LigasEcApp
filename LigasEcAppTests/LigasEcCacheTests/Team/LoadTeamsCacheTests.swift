@@ -24,7 +24,7 @@ final class LoadTeamsCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
         
         // Act
-        _ = try? await sut.load(with: id, dataSource: .FlashLive)
+        _ = try? await sut.load(with: id, dataSource: .flashLive)
         
         // Assert
         XCTAssertEqual(store.receivedMessages, [.retrieve(id)])
@@ -71,7 +71,7 @@ final class LoadTeamsCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
         store.completeRetrieval(with: anyNSError())
         
-        _ = try? await sut.load(with: id, dataSource: .FlashLive)
+        _ = try? await sut.load(with: id, dataSource: .flashLive)
         
         XCTAssertEqual(store.receivedMessages, [.retrieve(id)])
     }
@@ -82,7 +82,7 @@ final class LoadTeamsCacheTests: XCTestCase {
         let (sut, store) = makeSUT()
         store.completeRetrieval(with: localTeams)
         
-        _ = try? await sut.load(with: id, dataSource: .FlashLive)
+        _ = try? await sut.load(with: id, dataSource: .flashLive)
         
         XCTAssertEqual(store.receivedMessages, [.retrieve(id)])
     }
@@ -103,7 +103,7 @@ final class LoadTeamsCacheTests: XCTestCase {
         let receivedResult: Result<[Team], Error>
         
         do {
-            let receivedTeams = try await sut.load(with: id, dataSource: .FlashLive)
+            let receivedTeams = try await sut.load(with: id, dataSource: .flashLive)
             receivedResult = .success(receivedTeams)
         } catch {
             receivedResult = .failure(error)

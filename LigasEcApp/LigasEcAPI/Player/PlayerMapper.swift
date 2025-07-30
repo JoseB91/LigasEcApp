@@ -22,7 +22,7 @@ public final class PlayerMapper {
                            position: item.playerTypeID.spanishName,
                            flagId: item.playerFlagID,
                            photoURL: item.playerImagePath,
-                           dataSource: .FlashLive)
+                           dataSource: .flashLive)
                 }
             }
         }
@@ -98,7 +98,7 @@ public final class PlayerMapper {
                                               position: $0.positions?.first?.group ?? "",
                                               nationality: $0.nationalities.first?.name,
                                               photoURL: $0.image,
-                                              dataSource: .TransferMarket)
+                                              dataSource: .transferMarket)
                 }
         }
 
@@ -132,7 +132,7 @@ public final class PlayerMapper {
         }
         
         do {
-            if source == .FlashLive {
+            if source == .flashLive {
                 let root = try JSONDecoder().decode(RootFlashLive.self, from: data)
                 return root.squad
             } else {

@@ -14,12 +14,12 @@ final class LeagueTests: XCTestCase {
         let league = League(id: "IaFDigtm",
                             name: "LigaPro Serie A",
                             logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
-                            dataSource: .FlashLive)
+                            dataSource: .flashLive)
         
         XCTAssertEqual(league.id, "IaFDigtm")
         XCTAssertEqual(league.name, "LigaPro Serie A")
         XCTAssertEqual(league.logoURL, URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!)
-        XCTAssertEqual(league.dataSource, .FlashLive)
+        XCTAssertEqual(league.dataSource, .flashLive)
 
     }
 }

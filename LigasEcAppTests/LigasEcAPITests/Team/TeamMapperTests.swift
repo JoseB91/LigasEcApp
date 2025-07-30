@@ -19,7 +19,7 @@ final class TeamMapperTests: XCTestCase {
             // Assert
             XCTAssertThrowsError(
                 // Act
-                try TeamMapper.map(json, from: HTTPURLResponse(statusCode: code), with: .FlashLive)
+                try TeamMapper.map(json, from: HTTPURLResponse(statusCode: code), with: .flashLive)
             )
         }
     }
@@ -31,7 +31,7 @@ final class TeamMapperTests: XCTestCase {
         // Assert
         XCTAssertThrowsError(
             // Act
-            try TeamMapper.map(invalidJSON, from: HTTPURLResponse(statusCode: 200), with: .FlashLive)
+            try TeamMapper.map(invalidJSON, from: HTTPURLResponse(statusCode: 200), with: .flashLive)
         )
     }
 
@@ -44,7 +44,7 @@ final class TeamMapperTests: XCTestCase {
         let json = jsonString.makeJSON()
 
         // Act
-        let result = try TeamMapper.map(json, from: HTTPURLResponse(statusCode: 200), with: .FlashLive)
+        let result = try TeamMapper.map(json, from: HTTPURLResponse(statusCode: 200), with: .flashLive)
 
         // Assert
         XCTAssertEqual(result, [item])
@@ -59,7 +59,7 @@ final class TeamMapperTests: XCTestCase {
         let json = jsonString.makeJSON()
 
         // Act
-        let result = try TeamMapper.map(json, from: HTTPURLResponse(statusCode: 200), with: .TransferMarket)
+        let result = try TeamMapper.map(json, from: HTTPURLResponse(statusCode: 200), with: .transferMarket)
 
         // Assert
         XCTAssertEqual(result, [item])
@@ -71,14 +71,14 @@ final class TeamMapperTests: XCTestCase {
         Team(id: "pCMG6CNp",
              name: "Barcelona SC",
              logoURL: URL(string: "https://www.flashscore.com/res/image/data/nit9vJwS-WErjuywa.png")!,
-             dataSource: .FlashLive)
+             dataSource: .flashLive)
     }
     
     private func makeTeamItemTransferMarket() -> Team {
         Team(id: "41301",
              name: "Cumbayá FC",
              logoURL: URL(string: "https://tmssl.akamaized.net//images/wappen/medium/41301.png?lm=1677580396")!,
-             dataSource: .TransferMarket)
+             dataSource: .transferMarket)
     }
 }
 

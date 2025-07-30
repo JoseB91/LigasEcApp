@@ -17,7 +17,7 @@ public final class TeamMapper {
             return firstData.rows.compactMap { Team(id: $0.teamID,
                                                     name: $0.teamName,
                                                     logoURL: $0.teamImagePath,
-                                                    dataSource: .FlashLive)
+                                                    dataSource: .flashLive)
             }
         }
 
@@ -55,7 +55,7 @@ public final class TeamMapper {
             clubs.compactMap { Team(id: $0.id,
                                     name: $0.name,
                                     logoURL: $0.image,
-                                    dataSource: .TransferMarket)
+                                    dataSource: .transferMarket)
             }
         }
 
@@ -71,7 +71,7 @@ public final class TeamMapper {
         }
         
         do {
-            if source == .FlashLive {
+            if source == .flashLive {
                 let root = try JSONDecoder().decode(RootFlashLive.self, from: data)
                 return root.teams
             } else {
@@ -111,6 +111,6 @@ public struct Team: Hashable, Identifiable {
 }
 
 public enum DataSource {
-    case FlashLive
-    case TransferMarket
+    case flashLive
+    case transferMarket
 }

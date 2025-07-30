@@ -23,9 +23,9 @@ final class TeamRepositoryImpl: TeamRepository {
     }
     
     func loadTeams() async throws -> [Team] {
-        if teamRepositoryParams.league.dataSource == .FlashLive {
+        if teamRepositoryParams.league.dataSource == .flashLive {
             do {
-                return try await appLocalLoader.localTeamLoader.load(with: teamRepositoryParams.league.id, dataSource: .FlashLive)
+                return try await appLocalLoader.localTeamLoader.load(with: teamRepositoryParams.league.id, dataSource: .flashLive)
             } catch {
                 let url = TeamEndpoint.getFlashLive(
                     seasonId: teamRepositoryParams.league.id,
@@ -40,7 +40,7 @@ final class TeamRepositoryImpl: TeamRepository {
                     with: teamRepositoryParams.flashLiveEndpointConfiguration.host
                 )
                 
-                let teams = try TeamMapper.map(data, from: response, with: .FlashLive)
+                let teams = try TeamMapper.map(data, from: response, with: .flashLive)
                 
                 try? await appLocalLoader.localTeamLoader.save(
                     teams,
@@ -53,7 +53,7 @@ final class TeamRepositoryImpl: TeamRepository {
             do {
                 return try await appLocalLoader.localTeamLoader.load(
                     with: teamRepositoryParams.league.id,
-                    dataSource: .TransferMarket
+                    dataSource: .transferMarket
                 )
             } catch {
                 let url = TeamEndpoint.getTransferMarket(
@@ -66,7 +66,7 @@ final class TeamRepositoryImpl: TeamRepository {
                     with: teamRepositoryParams.transferMarketEndpointConfiguration.host
                 )
                 
-                let teams = try TeamMapper.map(data, from: response, with: .TransferMarket)
+                let teams = try TeamMapper.map(data, from: response, with: .transferMarket)
                 
                 try? await appLocalLoader.localTeamLoader.save(
                     teams,

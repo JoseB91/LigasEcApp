@@ -50,7 +50,7 @@ func mockLeague() -> League {
     return League(id: "IaFDigtm",
                   name: "LigaPro Serie A",
                   logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
-                  dataSource: .FlashLive)
+                  dataSource: .flashLive)
 }
 
 func mockTeams() -> (models: [Team], local: [LocalTeam]) {
@@ -63,7 +63,7 @@ func mockTeam() -> Team {
     return Team(id: "pCMG6CNp",
                 name: "Barcelona SC",
                 logoURL: URL(string: "https://www.flashscore.com/res/image/data/nit9vJwS-WErjuywa.png")!,
-                dataSource: .FlashLive)
+                dataSource: .flashLive)
 }
 
 func mockPlayers() -> (models: [Player], local: [LocalPlayer]) {
@@ -79,7 +79,7 @@ func mockPlayer() -> Player {
                   position: "Portero",
                   flagId: 205,
                   photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
-                  dataSource: .FlashLive)
+                  dataSource: .flashLive)
 }
 
 extension Date {
