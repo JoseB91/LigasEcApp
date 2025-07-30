@@ -120,6 +120,15 @@ struct MockPlayerViewModel {
                                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                                dataSource: .FlashLive)]
     }
+    
+    static func mockPlayer() -> Player {
+        return Player(id: "S0nWKdXm",
+                       name: "Contreras José",
+                       number: 1,
+                       position: "Portero",
+                       photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
+                       dataSource: .FlashLive)
+    }
 }
 
 struct MockPlayerRepository: PlayerRepository {

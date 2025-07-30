@@ -19,10 +19,10 @@ public enum TeamEndpoint {
             components.host = baseURL.host
             components.path = baseURL.path + "/tournaments/standings"
             components.queryItems = [
-                URLQueryItem(name: "tournament_season_id", value: "\(seasonId)"),
-                URLQueryItem(name: "standing_type", value: "\(standingType)"),
-                URLQueryItem(name: "locale", value: "\(locale)"),
-                URLQueryItem(name: "tournament_stage_id", value: "\(tournamentStageId)")
+                URLQueryItem(name: "tournament_season_id", value: seasonId),
+                URLQueryItem(name: "standing_type", value: standingType),
+                URLQueryItem(name: "locale", value: locale),
+                URLQueryItem(name: "tournament_stage_id", value: tournamentStageId)
 
             ].compactMap { $0 }
             return components.url!
@@ -32,8 +32,8 @@ public enum TeamEndpoint {
             components.host = baseURL.host
             components.path = baseURL.path + "clubs/list-by-competition/"
             components.queryItems = [
-                URLQueryItem(name: "id", value: "\(id)"),
-                URLQueryItem(name: "domain", value: "\(domain)")
+                URLQueryItem(name: "id", value: id),
+                URLQueryItem(name: "domain", value: domain)
 
             ].compactMap { $0 }
             return components.url!
