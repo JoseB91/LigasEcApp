@@ -66,10 +66,10 @@ struct LeagueView: View {
     }
 }
 
-#Preview {
-    let leagueViewModel = LeagueViewModel(leagueLoader: MockLeagueViewModel.mockLeagueLoader)
-    
-    LeagueView(leagueViewModel: leagueViewModel,
-               navigationPath: .constant(NavigationPath()),
-               imageView: MockImageView.mockImageView)
-}
+//#Preview {
+//    let leagueViewModel = LeagueViewModel(leagueLoader: MockLeagueViewModel.mockLeagueLoader)
+//    
+//    LeagueView(leagueViewModel: leagueViewModel,
+//               navigationPath: .constant(NavigationPath()),
+//               imageView: MockImageView.mockImageView)
+//}

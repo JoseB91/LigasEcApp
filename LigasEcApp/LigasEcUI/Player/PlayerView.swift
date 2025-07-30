@@ -99,10 +99,10 @@ struct PlayerView: View {
 }
 
 
-#Preview {
-    let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
-    
-    PlayerView(playerViewModel: playerViewModel,
-               imageView: MockImageView.mockImageView,
-               title: "Barcelona SC")
-}
+//#Preview {
+//    let playerViewModel = PlayerViewModel(playerLoader: MockPlayerViewModel.mockPlayerLoader)
+//    
+//    PlayerView(playerViewModel: playerViewModel,
+//               imageView: MockImageView.mockImageView,
+//               title: "Barcelona SC")
+//}

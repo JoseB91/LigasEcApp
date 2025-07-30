@@ -9,9 +9,9 @@ import SwiftUI
  
 struct ImageView: View {
  
-    var imageViewModel: ImageViewModel<UIImage>
+    var imageViewModel: ImageViewModel
 
-    init(imageViewModel: ImageViewModel<UIImage>) {
+    init(imageViewModel: ImageViewModel) {
         self.imageViewModel = imageViewModel
     }
 
@@ -22,7 +22,7 @@ struct ImageView: View {
                     .progressViewStyle(CircularProgressViewStyle())
                     .scaleEffect(1.5)
             } else {
-                Image(uiImage: imageViewModel.image)
+                Image.load(from: imageViewModel.data)
                     .resizable()
                     .scaledToFit()
             }
@@ -31,4 +31,9 @@ struct ImageView: View {
             await imageViewModel.loadImage()
         }
     }
+}
+
+#Preview {
+    let imageViewModel = ImageViewModel(repository: MockImageRepository())
+    ImageView(imageViewModel: imageViewModel)
 }

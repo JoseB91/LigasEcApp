@@ -5,7 +5,7 @@
 //  Created by José Briones on 24/2/25.
 //
 
-import UIKit
+import Foundation
 
 @Observable
 final class LeagueViewModel {
@@ -54,15 +54,3 @@ final class MockLeagueViewModel {
         return hardcodedLeagues
     }
 }
-
-final class MockImageView {
-    static func mockImageView(url: URL, table: Table) -> ImageView {
-        
-        let imageLoader = {
-            Data()
-        }
-        return ImageView(imageViewModel: ImageViewModel(imageLoader: imageLoader,
-                                                        imageTransformer: UIImage.init))
-    }
-}
-

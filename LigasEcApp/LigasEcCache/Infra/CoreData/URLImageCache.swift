@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 class URLImageCache {
     static let shared = URLImageCache()

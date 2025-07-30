@@ -56,14 +56,14 @@ struct TeamView: View {
 }
     
 
-#Preview {
-    let teamViewModel = TeamViewModel(teamLoader: MockTeamViewModel.mockTeamLoader)
-
-    TeamView(teamViewModel: teamViewModel,
-             navigationPath: .constant(NavigationPath()),
-             imageView: MockImageView.mockImageView,
-             title: "LigaPro Serie A")
-}
+//#Preview {
+//    let teamViewModel = TeamViewModel(teamLoader: MockTeamViewModel.mockTeamLoader)
+//
+//    TeamView(teamViewModel: teamViewModel,
+//             navigationPath: .constant(NavigationPath()),
+//             imageView: MockImageView.mockImageView,
+//             title: "LigaPro Serie A")
+//}
 
 
 

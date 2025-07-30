@@ -31,6 +31,7 @@
 		B08CFD672DFB86D700F4D8FD /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B08CFD662DFB86D700F4D8FD /* Config.xcconfig */; };
 		B08CFE6F2DFBA6C700F4D8FD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE6E2DFBA6C700F4D8FD /* SettingsView.swift */; };
 		B09758012DDE806500F99E45 /* KeychainManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09758002DDE806500F99E45 /* KeychainManagerTests.swift */; };
+		B0C1AE6B2E3A702C0077D6CA /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C1AE6A2E3A702C0077D6CA /* ImageRepository.swift */; };
 		B0CCD60D2DE8D73700AE51EE /* ImageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6072DE8D73700AE51EE /* ImageMapper.swift */; };
 		B0CCD61C2DE8D75100AE51EE /* ImageMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6182DE8D75100AE51EE /* ImageMapperTests.swift */; };
 		B0CCD62C2DE8D79200AE51EE /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6292DE8D79200AE51EE /* URLSessionHTTPClientTests.swift */; };
@@ -76,6 +77,7 @@
 		B08CFD662DFB86D700F4D8FD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		B08CFE6E2DFBA6C700F4D8FD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B09758002DDE806500F99E45 /* KeychainManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManagerTests.swift; sourceTree = "<group>"; };
+		B0C1AE6A2E3A702C0077D6CA /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
 		B0CCD6072DE8D73700AE51EE /* ImageMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMapper.swift; sourceTree = "<group>"; };
 		B0CCD6182DE8D75100AE51EE /* ImageMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMapperTests.swift; sourceTree = "<group>"; };
 		B0CCD6272DE8D79200AE51EE /* URLSessionSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionSpy.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				B05361842D821B3300BE41F0 /* KeychainManager.swift */,
 				B05361852D821B3300BE41F0 /* LigasEcApp.swift */,
 				B08CFD662DFB86D700F4D8FD /* Config.xcconfig */,
+				B0C1AE6A2E3A702C0077D6CA /* ImageRepository.swift */,
 			);
 			path = LigasEcApp;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B053618A2D821B3300BE41F0 /* CoreDataLigasEcStore.swift in Sources */,
+				B0C1AE6B2E3A702C0077D6CA /* ImageRepository.swift in Sources */,
 				B053618B2D821B3300BE41F0 /* CoreDataLigasEcStore+ImageStore.swift in Sources */,
 				B053618C2D821B3300BE41F0 /* CoreDataLigasEcStore+TeamStore.swift in Sources */,
 				B0CCD60D2DE8D73700AE51EE /* ImageMapper.swift in Sources */,

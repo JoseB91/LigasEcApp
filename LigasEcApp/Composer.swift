@@ -5,7 +5,6 @@
 //  Created by José Briones on 10/3/25.
 //
 
-import UIKit
 import CoreData
 import os
 
@@ -218,27 +217,13 @@ class Composer {
     }
     
     func composeImageView(with url: URL, on table: Table) -> ImageView {
+        let repository = ImageRepositoryImpl(url: url,
+                                             table: table,
+                                             httpClient: httpClient,
+                                             appLocalLoader: appLocalLoader)
 
-        let imageLoader: () async throws -> Data = { [httpClient, appLocalLoader] in
-            
-            do {
-                return try await appLocalLoader.localImageLoader.loadImageData(from: url, on: table)
-            } catch {
-                let (data, response) = try await httpClient.get(from: url)
-                
-                let imageData = try ImageMapper.map(data, from: response)
-                
-                do {
-                    try await appLocalLoader.localImageLoader.save(imageData, for: url, on: table)
-                } catch {
-                    Logger.composer.error("Couldn't save image data to cache")
-                }
-                
-                return imageData
-            }
-        }
-        let imageViewModel = ImageViewModel(imageLoader: imageLoader,
-                                            imageTransformer: UIImage.init)
+        let imageViewModel = ImageViewModel(repository: repository)
+
         return ImageView(imageViewModel: imageViewModel)
     }
     

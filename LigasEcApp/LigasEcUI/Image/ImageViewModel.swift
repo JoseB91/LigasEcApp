@@ -5,21 +5,18 @@
 //  Created by José Briones on 12/3/25.
 //
 
-import UIKit
+import SwiftUI
 
 @Observable
-final class ImageViewModel<Image> {
-    let imageLoader: () async throws -> Data
-    let imageTransformer: (Data) -> Image?
+final class ImageViewModel {
+    private let repository: ImageRepository
     
     var isLoading = false
-    var image: UIImage = UIImage.init()
-    
-    init(imageLoader: @escaping () async throws -> Data, imageTransformer: @escaping (Data) -> Image?) {
-        self.imageLoader = imageLoader
-        self.imageTransformer = imageTransformer
+    var data = Data()
+        
+    init(repository: ImageRepository) {
+        self.repository = repository
     }
-    
     
     @MainActor
     func loadImage() async {
@@ -27,23 +24,32 @@ final class ImageViewModel<Image> {
         defer { isLoading = false }
         
         do {
-            let dataImage = try await imageLoader()
-            image = try UIImage.tryMake(data: dataImage)
+            data = try await repository.loadImage()
         } catch {
-            image = UIImage(systemName: "soccerball") ?? UIImage()
+            // Error handled by fallback of Image.load
         }
-        isLoading = false
     }
-    
 }
 
-extension UIImage {
-    struct InvalidImageData: Error {}
-    
-    static func tryMake(data: Data) throws -> UIImage {
-        guard let image = UIImage(data: data) else {
-            throw InvalidImageData()
+struct MockImageRepository: ImageRepository {
+    func loadImage() async throws -> Data {
+        Data()
+    }
+}
+
+struct MockImageComposer {
+    func composeImageView(with url: URL) -> ImageView {
+        let mockRepository = MockImageRepository()
+        let mockViewModel = ImageViewModel(repository: mockRepository)
+        return ImageView(imageViewModel: mockViewModel)
+    }
+}
+
+extension Image {
+    static func load(from data: Data, fallback: String = "photo") -> Image {
+        guard let uiImage = UIImage(data: data) else {
+            return Image(systemName: fallback)
         }
-        return image
+        return Image(uiImage: uiImage)
     }
 }
