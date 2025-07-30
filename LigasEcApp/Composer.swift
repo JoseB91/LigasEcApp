@@ -94,78 +94,23 @@ class Composer {
     }
     
     func composeLeagueViewModel() -> LeagueViewModel {
-        let leagueLoader: () async throws -> [League] = { [appLocalLoader] in
-            
-            let hardcodedLeagues = [
-                League(id: "IaFDigtm",
-                       name: "LigaPro Serie A",
-                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
-                       dataSource: .FlashLive),
-                League(id: "EC2L",
-                       name: "LigaPro Serie B",
-                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!,
-                       dataSource: .TransferMarket)
-            ]
-                        
-            do {
-                try await appLocalLoader.localLeagueLoader.save(hardcodedLeagues)
-            } catch {
-                Logger.composer.error("Couldn't save leagues to cache")
-            }
-            
-            return hardcodedLeagues
-        }
+        let repository = LeagueRepositoryImpl(httpClient: httpClient,
+                                              appLocalLoader: appLocalLoader)
         
-        return LeagueViewModel(leagueLoader: leagueLoader)
+        return LeagueViewModel(repository: repository)
     }
     
     func composeTeamViewModel(for league: League) -> TeamViewModel {
-        let teamLoader: () async throws -> [Team] = {
-            [flashLiveEndpointConfiguration, transferMarketEndpointConfiguration, httpClient, appLocalLoader] in
-            
-            if league.dataSource == .FlashLive {
-                do {
-                    return try await appLocalLoader.localTeamLoader.load(with: league.id, dataSource: .FlashLive)
-                } catch {
-                    let url = TeamEndpoint.getFlashLive(seasonId: league.id,
-                                               standingType: "overall",
-                                               locale: "es_MX",
-                                                        tournamentStageId: "OO37de6i").url(baseURL: flashLiveEndpointConfiguration.url)
-                    
-                    let (data, response) = try await httpClient.get(from: url, with: flashLiveEndpointConfiguration.host)
-                                        
-                    let teams = try TeamMapper.map(data, from: response, with: .FlashLive)
-                    
-                    do {
-                        try await appLocalLoader.localTeamLoader.save(teams, with: league.id)
-                    } catch {
-                        Logger.composer.error("Couldn't save getFlashLive teams to cache")
-                    }
-                    
-                    return teams
-                }
-            } else {
-                do {
-                    return try await appLocalLoader.localTeamLoader.load(with: league.id, dataSource: .TransferMarket)
-                } catch {
-                    let url = TeamEndpoint.getTransferMarket(id: league.id,
-                                                             domain: "es").url(baseURL: transferMarketEndpointConfiguration.url)
-                    
-                    let (data, response) = try await httpClient.get(from: url, with: transferMarketEndpointConfiguration.host)
-                    
-                    let teams = try TeamMapper.map(data, from: response, with: .TransferMarket)
-                    
-                    do {
-                        try await appLocalLoader.localTeamLoader.save(teams, with: league.id)
-                    } catch {
-                        Logger.composer.error("Couldn't save TransferMarket teams to cache")
-                    }
-                    
-                    return teams
-                }
-            }
-        }
-        return TeamViewModel(teamLoader: teamLoader)
+        let teamRepositoryParams = TeamRepositoryParams(
+            league: league,
+            flashLiveEndpointConfiguration: flashLiveEndpointConfiguration,
+            transferMarketEndpointConfiguration: transferMarketEndpointConfiguration
+        )
+        
+        let repository = TeamRepositoryImpl(httpClient: httpClient,
+                                            appLocalLoader: appLocalLoader,
+                                            teamRepositoryParams: teamRepositoryParams)
+        return TeamViewModel(repository: repository)
     }
     
     func composePlayerViewModel(for team: Team) -> PlayerViewModel {
@@ -242,6 +187,12 @@ struct AppLocalLoader {
     let localTeamLoader: LocalTeamLoader
     let localPlayerLoader: LocalPlayerLoader
     let localImageLoader: LocalImageLoader
+}
+
+struct TeamRepositoryParams {
+    let league: League
+    let flashLiveEndpointConfiguration: EndpointConfiguration
+    let transferMarketEndpointConfiguration: EndpointConfiguration
 }
 
 extension Logger {

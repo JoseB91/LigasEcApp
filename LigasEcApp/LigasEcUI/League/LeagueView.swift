@@ -67,9 +67,11 @@ struct LeagueView: View {
 }
 
 #Preview {
-    let leagueViewModel = LeagueViewModel(leagueLoader: MockLeagueViewModel.mockLeagueLoader)
-    
-    LeagueView(leagueViewModel: leagueViewModel,
-               navigationPath: .constant(NavigationPath()),
-               imageViewLoader: MockImageComposer().composeImageView)
+    NavigationStack {
+        let leagueViewModel = LeagueViewModel(repository: MockLeagueRepository())
+        
+        LeagueView(leagueViewModel: leagueViewModel,
+                   navigationPath: .constant(NavigationPath()),
+                   imageViewLoader: MockImageComposer().composeImageView)
+    }
 }

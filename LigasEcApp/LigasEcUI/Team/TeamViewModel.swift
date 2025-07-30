@@ -14,17 +14,17 @@ final class TeamViewModel {
     var isLoading = false
     var errorMessage: ErrorModel? = nil
 
-    private let teamLoader: () async throws -> [Team]
-        
-    init(teamLoader: @escaping () async throws -> [Team]) {
-        self.teamLoader = teamLoader
+    private let repository: TeamRepository
+    
+    init(repository: TeamRepository) {
+        self.repository = repository
     }
     
     @MainActor
     func loadTeams() async {
         isLoading = true
         do {
-            teams = try await teamLoader()
+            teams = try await repository.loadTeams()
         } catch {
             errorMessage = ErrorModel(message: error.localizedDescription)
         }
@@ -38,7 +38,7 @@ struct ErrorModel: Identifiable {
 }
 
 final class MockTeamViewModel {
-    static func mockTeamLoader() async throws -> [Team] {
+    static func mockTeams() -> [Team] {
         return [Team(id: "pCMG6CNp",
                      name: "Barcelona SC",
                      logoURL: URL(string: "https://www.flashscore.com/res/image/data/nit9vJwS-WErjuywa.png")!,
@@ -50,3 +50,8 @@ final class MockTeamViewModel {
     }
 }
 
+struct MockTeamRepository: TeamRepository {
+    func loadTeams() async throws -> [Team] {
+        MockTeamViewModel.mockTeams()
+    }
+}

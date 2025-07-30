@@ -24,7 +24,7 @@ struct LigasEcApp: App {
                     .navigationDestination(for: League.self) { league in
                         TeamView(teamViewModel: composer.composeTeamViewModel(for: league),
                                  navigationPath: $navigationPath,
-                                 imageView: composer.composeImageView,
+                                 imageViewLoader: composer.composeImageView,
                                  title: league.name)
                         .toolbar(.hidden, for: .tabBar)
                     }

@@ -10,7 +10,7 @@ import SwiftUI
 struct TeamView: View {
     @State var teamViewModel: TeamViewModel
     @Binding var navigationPath: NavigationPath
-    let imageView: (URL, Table) -> ImageView
+    let imageViewLoader: (URL, Table) -> ImageView
     let title: String
     
     var body: some View {
@@ -24,7 +24,7 @@ struct TeamView: View {
                         navigationPath.append(team)
                     } label: {
                         HStack {
-                            imageView(team.logoURL, Table.Team)
+                            imageViewLoader(team.logoURL, Table.Team)
                                 .frame(width: 96, height: 48)
                             Text(team.name)
                                 .font(.title2)
@@ -55,15 +55,13 @@ struct TeamView: View {
     }
 }
     
-
-//#Preview {
-//    let teamViewModel = TeamViewModel(teamLoader: MockTeamViewModel.mockTeamLoader)
-//
-//    TeamView(teamViewModel: teamViewModel,
-//             navigationPath: .constant(NavigationPath()),
-//             imageView: MockImageView.mockImageView,
-//             title: "LigaPro Serie A")
-//}
-
-
-
+#Preview {
+    NavigationStack {
+        let teamViewModel = TeamViewModel(repository: MockTeamRepository())
+        
+        TeamView(teamViewModel: teamViewModel,
+                 navigationPath: .constant(NavigationPath()),
+                 imageViewLoader: MockImageComposer().composeImageView,
+                 title: "LigaPro Serie A")
+    }
+}

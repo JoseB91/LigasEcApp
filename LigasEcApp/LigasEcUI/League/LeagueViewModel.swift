@@ -14,7 +14,7 @@ final class LeagueViewModel {
     var isLoading = false
     var errorMessage: ErrorModel? = nil
     
-    private let leagueLoader: () async throws -> [League]
+    private let repository: LeagueRepository
         
     var title: String {
         String(localized: "LEAGUE_VIEW_TITLE",
@@ -22,15 +22,15 @@ final class LeagueViewModel {
                bundle: Bundle(for: Self.self))
     }
     
-    init(leagueLoader: @escaping () async throws -> [League]) {
-        self.leagueLoader = leagueLoader
+    init(repository: LeagueRepository) {
+        self.repository = repository
     }
     
     @MainActor
     func loadLeagues() async {
         isLoading = true
         do {
-            leagues = try await leagueLoader()
+            leagues = try await repository.loadLeagues()
         } catch {
             // Will never fail
         }
@@ -39,7 +39,7 @@ final class LeagueViewModel {
 }
 
 final class MockLeagueViewModel {
-    static func mockLeagueLoader() async throws -> [League] {
+    static func mockLeagues() -> [League] {
         let hardcodedLeagues = [
             League(id: "IaFDigtm",
                    name: "LigaPro Serie A",
@@ -52,5 +52,11 @@ final class MockLeagueViewModel {
         ]
         
         return hardcodedLeagues
+    }
+}
+
+struct MockLeagueRepository: LeagueRepository {
+    func loadLeagues() async throws -> [League] {
+        MockLeagueViewModel.mockLeagues()
     }
 }
