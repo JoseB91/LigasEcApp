@@ -7,11 +7,12 @@
 
 import UIKit
 
-final class LeagueViewModel: ObservableObject {
+@Observable
+final class LeagueViewModel {
 
-    @Published var leagues = [League]()
-    @Published var isLoading = false
-    @Published var errorMessage: ErrorModel? = nil
+    var leagues = [League]()
+    var isLoading = false
+    var errorMessage: ErrorModel? = nil
     
     private let leagueLoader: () async throws -> [League]
         

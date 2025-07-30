@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TeamView: View {
-    @ObservedObject var teamViewModel: TeamViewModel
+    @State var teamViewModel: TeamViewModel
     @Binding var navigationPath: NavigationPath
     let imageView: (URL, Table) -> ImageView
     let title: String

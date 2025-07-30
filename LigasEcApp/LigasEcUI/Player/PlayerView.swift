@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlayerView: View {
-    @ObservedObject var playerViewModel: PlayerViewModel
+    @State var playerViewModel: PlayerViewModel
     let imageView: (URL, Table) -> ImageView
     let title: String
     

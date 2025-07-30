@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LeagueView: View {
-    @ObservedObject var leagueViewModel: LeagueViewModel
+    var leagueViewModel: LeagueViewModel
     @Binding var navigationPath: NavigationPath
     @State private var hasLoaded = false
     

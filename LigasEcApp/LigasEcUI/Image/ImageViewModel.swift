@@ -7,12 +7,13 @@
 
 import UIKit
 
-final class ImageViewModel<Image>: ObservableObject {
+@Observable
+final class ImageViewModel<Image> {
     let imageLoader: () async throws -> Data
     let imageTransformer: (Data) -> Image?
     
-    @Published var isLoading = false
-    @Published var image: UIImage = UIImage.init()
+    var isLoading = false
+    var image: UIImage = UIImage.init()
     
     init(imageLoader: @escaping () async throws -> Data, imageTransformer: @escaping (Data) -> Image?) {
         self.imageLoader = imageLoader

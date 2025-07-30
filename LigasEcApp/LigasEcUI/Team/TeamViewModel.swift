@@ -7,11 +7,12 @@
 
 import Foundation
 
-final class TeamViewModel: ObservableObject {
+@Observable
+final class TeamViewModel {
 
-    @Published var teams = [Team]()
-    @Published var isLoading = false
-    @Published var errorMessage: ErrorModel? = nil
+    var teams = [Team]()
+    var isLoading = false
+    var errorMessage: ErrorModel? = nil
 
     private let teamLoader: () async throws -> [Team]
         

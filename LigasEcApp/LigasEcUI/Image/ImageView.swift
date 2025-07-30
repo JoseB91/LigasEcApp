@@ -9,7 +9,7 @@ import SwiftUI
  
 struct ImageView: View {
  
-    @ObservedObject var imageViewModel: ImageViewModel<UIImage>
+    var imageViewModel: ImageViewModel<UIImage>
 
     init(imageViewModel: ImageViewModel<UIImage>) {
         self.imageViewModel = imageViewModel

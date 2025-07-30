@@ -7,11 +7,12 @@
 
 import Foundation
 
-final class PlayerViewModel: ObservableObject {
+@Observable
+final class PlayerViewModel {
 
-    @Published var squad = [Player]()
-    @Published var isLoading = false
-    @Published var errorMessage: ErrorModel? = nil
+    var squad = [Player]()
+    var isLoading = false
+    var errorMessage: ErrorModel? = nil
 
     private let playerLoader: () async throws -> [Player]
     
