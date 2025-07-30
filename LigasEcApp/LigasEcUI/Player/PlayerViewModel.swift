@@ -14,7 +14,7 @@ final class PlayerViewModel {
     var isLoading = false
     var errorMessage: ErrorModel? = nil
 
-    private let playerLoader: () async throws -> [Player]
+    private let repository: PlayerRepository
     
     var coach: String {
         String(localized: "COACH",
@@ -47,19 +47,21 @@ final class PlayerViewModel {
     }
 
     
-    init(playerLoader: @escaping () async throws -> [Player]) {
-        self.playerLoader = playerLoader
+    init(repository: PlayerRepository) {
+        self.repository = repository
     }
     
     @MainActor
     func loadSquad() async {
         isLoading = true
+        defer {
+            isLoading = false
+        }
         do {
-            squad = try await playerLoader()
+            squad = try await repository.loadPlayers()
         } catch {
             errorMessage = ErrorModel(message: error.localizedDescription)
         }
-        isLoading = false
     }
     
     func getLocalizedPosition(for position: String) -> String {
@@ -103,15 +105,25 @@ final class PlayerViewModel {
     }
 }
 
-final class MockPlayerViewModel {
-
-    static func mockPlayerLoader() async throws -> [Player] {
+struct MockPlayerViewModel {
+    static func mockPlayers() -> [Player] {
         return [Player(id: "S0nWKdXm",
                        name: "Contreras José",
                        number: 1,
                        position: "Portero",
                        photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
-                       dataSource: .FlashLive)]
+                       dataSource: .FlashLive),
+                Player(id: "S0nWKdXn",
+                               name: "Contreras José",
+                               number: 1,
+                               position: "Portero",
+                               photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
+                               dataSource: .FlashLive)]
     }
 }
 
+struct MockPlayerRepository: PlayerRepository {
+    func loadPlayers() async throws -> [Player] {
+        MockPlayerViewModel.mockPlayers()
+    }
+}

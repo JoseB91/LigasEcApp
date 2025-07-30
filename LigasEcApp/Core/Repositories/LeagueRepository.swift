@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LeagueRepository {
-    func loadLeagues() async throws -> [League]
+    func loadLeagues() async -> [League]
 }
 
 final class LeagueRepositoryImpl: LeagueRepository {
@@ -20,7 +20,7 @@ final class LeagueRepositoryImpl: LeagueRepository {
         self.appLocalLoader = appLocalLoader
     }
     
-    func loadLeagues() async throws -> [League] {
+    func loadLeagues() async -> [League] {
         let hardcodedLeagues = [
             League(id: "IaFDigtm",
                    name: "LigaPro Serie A",

@@ -29,16 +29,16 @@ final class LeagueViewModel {
     @MainActor
     func loadLeagues() async {
         isLoading = true
-        do {
-            leagues = try await repository.loadLeagues()
-        } catch {
-            // Will never fail
+        
+        defer {
+            isLoading = false
         }
-        isLoading = false
+        
+        leagues = await repository.loadLeagues()
     }
 }
 
-final class MockLeagueViewModel {
+struct MockLeagueViewModel {
     static func mockLeagues() -> [League] {
         let hardcodedLeagues = [
             League(id: "IaFDigtm",
@@ -56,7 +56,7 @@ final class MockLeagueViewModel {
 }
 
 struct MockLeagueRepository: LeagueRepository {
-    func loadLeagues() async throws -> [League] {
+    func loadLeagues() async -> [League] {
         MockLeagueViewModel.mockLeagues()
     }
 }

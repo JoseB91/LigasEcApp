@@ -114,51 +114,17 @@ class Composer {
     }
     
     func composePlayerViewModel(for team: Team) -> PlayerViewModel {
-        let playerLoader: () async throws -> [Player] = {
-            [flashLiveEndpointConfiguration, transferMarketEndpointConfiguration,httpClient, appLocalLoader] in
-            
-            if team.dataSource == .FlashLive {
-                do {
-                    return try await appLocalLoader.localPlayerLoader.load(with: team.id, dataSource: .FlashLive)
-                } catch {
-                    let url = PlayerEndpoint.getFlashLive(sportId: 1,
-                                                          locale: "es_MX",
-                                                          teamId: team.id).url(baseURL: flashLiveEndpointConfiguration.url)
-                    
-                    let (data, response) = try await httpClient.get(from: url, with: flashLiveEndpointConfiguration.host)
-                    
-                    let players = try PlayerMapper.map(data, from: response, with: .FlashLive)
-                    
-                    do {
-                        try await appLocalLoader.localPlayerLoader.save(players, with: team.id)
-                    } catch {
-                        Logger.composer.error("Couldn't save FlashLive teams to cache")
-                    }
-                    
-                    return players
-                }
-            } else {
-                do {
-                    return try await appLocalLoader.localPlayerLoader.load(with: team.id, dataSource: .TransferMarket)
-                } catch {
-                    let url = PlayerEndpoint.getTransferMarket(id: team.id,
-                                                               domain: "es").url(baseURL: transferMarketEndpointConfiguration.url)
-                    
-                    let (data, response) = try await httpClient.get(from: url, with: transferMarketEndpointConfiguration.host)
-                    
-                    let players = try PlayerMapper.map(data, from: response, with: .TransferMarket)
-                    
-                    do {
-                        try await appLocalLoader.localPlayerLoader.save(players, with: team.id)
-                    } catch {
-                        Logger.composer.error("Couldn't save TransferMarket players to cache")
-                    }
-                    
-                    return players
-                }
-            }
-        }
-        return PlayerViewModel(playerLoader: playerLoader)
+        let playerRepositoryParams = PlayerRepositoryParams(
+            team: team,
+            flashLiveEndpointConfiguration: flashLiveEndpointConfiguration,
+            transferMarketEndpointConfiguration: transferMarketEndpointConfiguration
+        )
+        
+        let repository = PlayerRepositoryImpl(httpClient: httpClient,
+                                              appLocalLoader: appLocalLoader,
+                                              playerRepositoryParams: playerRepositoryParams)
+        
+        return PlayerViewModel(repository: repository)
     }
     
     func composeImageView(with url: URL, on table: Table) -> ImageView {
@@ -191,6 +157,12 @@ struct AppLocalLoader {
 
 struct TeamRepositoryParams {
     let league: League
+    let flashLiveEndpointConfiguration: EndpointConfiguration
+    let transferMarketEndpointConfiguration: EndpointConfiguration
+}
+
+struct PlayerRepositoryParams {
+    let team: Team
     let flashLiveEndpointConfiguration: EndpointConfiguration
     let transferMarketEndpointConfiguration: EndpointConfiguration
 }

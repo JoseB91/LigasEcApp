@@ -23,12 +23,16 @@ final class TeamViewModel {
     @MainActor
     func loadTeams() async {
         isLoading = true
+        
+        defer {
+            isLoading = false
+        }
+        
         do {
             teams = try await repository.loadTeams()
         } catch {
             errorMessage = ErrorModel(message: error.localizedDescription)
         }
-        isLoading = false
     }
 }
 
@@ -37,7 +41,7 @@ struct ErrorModel: Identifiable {
     let message: String
 }
 
-final class MockTeamViewModel {
+struct MockTeamViewModel {
     static func mockTeams() -> [Team] {
         return [Team(id: "pCMG6CNp",
                      name: "Barcelona SC",
