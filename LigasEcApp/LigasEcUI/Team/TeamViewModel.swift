@@ -22,11 +22,9 @@ final class TeamViewModel {
     
     @MainActor
     func loadTeams() async {
-        isLoading = true
         
-        defer {
-            isLoading = false
-        }
+        isLoading = true
+        defer { isLoading = false }
         
         do {
             teams = try await repository.loadTeams()

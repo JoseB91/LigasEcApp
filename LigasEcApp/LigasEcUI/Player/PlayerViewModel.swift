@@ -53,10 +53,10 @@ final class PlayerViewModel {
     
     @MainActor
     func loadSquad() async {
+        
         isLoading = true
-        defer {
-            isLoading = false
-        }
+        defer { isLoading = false }
+        
         do {
             squad = try await repository.loadPlayers()
         } catch {

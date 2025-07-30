@@ -28,11 +28,9 @@ final class LeagueViewModel {
     
     @MainActor
     func loadLeagues() async {
-        isLoading = true
         
-        defer {
-            isLoading = false
-        }
+        isLoading = true
+        defer { isLoading = false }
         
         leagues = await repository.loadLeagues()
     }
