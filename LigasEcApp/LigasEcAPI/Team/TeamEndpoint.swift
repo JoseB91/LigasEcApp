@@ -25,7 +25,10 @@ public enum TeamEndpoint {
                 URLQueryItem(name: "tournament_stage_id", value: tournamentStageId)
 
             ].compactMap { $0 }
-            return components.url!
+            
+            guard let url = components.url else { return baseURL }
+            return url
+            
         case let .getTransferMarket(id, domain):
             var components = URLComponents()
             components.scheme = baseURL.scheme
@@ -36,7 +39,9 @@ public enum TeamEndpoint {
                 URLQueryItem(name: "domain", value: domain)
 
             ].compactMap { $0 }
-            return components.url!
+            
+            guard let url = components.url else { return baseURL }
+            return url
         }
     }
 }

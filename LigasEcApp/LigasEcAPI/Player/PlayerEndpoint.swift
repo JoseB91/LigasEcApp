@@ -23,7 +23,9 @@ public enum PlayerEndpoint {
                 URLQueryItem(name: "locale", value: locale),
                 URLQueryItem(name: "team_id", value: teamId)
             ].compactMap { $0 }
-            return components.url!
+            
+            guard let url = components.url else { return baseURL }
+            return url
             
         case let .getTransferMarket(id, domain):
             var components = URLComponents()
@@ -34,7 +36,9 @@ public enum PlayerEndpoint {
                 URLQueryItem(name: "id", value: id),
                 URLQueryItem(name: "domain", value: domain)
             ].compactMap { $0 }
-            return components.url!
+            
+            guard let url = components.url else { return baseURL }
+            return url
         }
     }
 }

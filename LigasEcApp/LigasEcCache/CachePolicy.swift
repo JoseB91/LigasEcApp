@@ -7,10 +7,10 @@
 
 import Foundation
 
-final class CachePolicy {
+struct CachePolicy {
     private init() {}
     
-    private static let calendar = Calendar(identifier: .gregorian)
+    private static let calendar = Calendar.current
     
     private static var maxCacheAgeInDays: Int {
         return 7
