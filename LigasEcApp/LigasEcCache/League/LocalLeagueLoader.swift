@@ -32,6 +32,18 @@ extension LocalLeagueLoader: LeagueCache {
 }
 
 extension LocalLeagueLoader {
+    private struct EmptyData: Error {}
+    
+    public func load() async throws -> [League] {
+        if let retrievedLeagues = try await store.retrieve(), !retrievedLeagues.leagues.isEmpty {
+            return retrievedLeagues.leagues.toModels()
+        } else {
+            throw EmptyData()
+        }
+    }
+}
+
+extension LocalLeagueLoader {
     private struct InvalidCache: Error {}
     
     public func validateCache() async throws {
@@ -50,6 +62,16 @@ extension Array where Element == League {
     public func toLocal() -> [LocalLeague] {
         return map { LocalLeague(id: $0.id,
                                  name: $0.name,
-                                 logoURL: $0.logoURL)}
+                                 logoURL: $0.logoURL,
+                                 dataSource: $0.dataSource)}
+    }
+}
+
+private extension Array where Element == LocalLeague {
+    func toModels() -> [League] {
+        return map { League(id: $0.id,
+                            name: $0.name,
+                            logoURL: $0.logoURL,
+                            dataSource: $0.dataSource )}
     }
 }

@@ -21,19 +21,24 @@ final class LeagueRepositoryImpl: LeagueRepository {
     }
     
     func loadLeagues() async -> [League] {
-        let hardcodedLeagues = [
-            League(id: "IaFDigtm",
-                   name: "LigaPro Serie A",
-                   logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
-                   dataSource: .flashLive),
-            League(id: "EC2L",
-                   name: "LigaPro Serie B",
-                   logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!,
-                   dataSource: .transferMarket)
-        ]
         
-        try? await appLocalLoader.localLeagueLoader.save(hardcodedLeagues)
-        
-        return hardcodedLeagues
+        do {
+            return try await appLocalLoader.localLeagueLoader.load()
+        } catch {
+            let hardcodedLeagues = [
+                League(id: "IaFDigtm",
+                       name: "LigaPro Serie A",
+                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
+                       dataSource: .flashLive),
+                League(id: "EC2L",
+                       name: "LigaPro Serie B",
+                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!,
+                       dataSource: .transferMarket)
+            ]
+            
+            try? await appLocalLoader.localLeagueLoader.save(hardcodedLeagues)
+            
+            return hardcodedLeagues
+        }
     }
 }

@@ -34,12 +34,6 @@ extension LocalImageLoader: ImageCache {
     }
 }
 
-public enum Table {
-    case League
-    case Team
-    case Player
-}
-
 public protocol ImageLoader {
     func loadImageData(from url: URL, on table: Table) async throws -> Data
 }

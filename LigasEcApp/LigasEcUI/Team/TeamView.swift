@@ -24,14 +24,13 @@ struct TeamView: View {
                         navigationPath.append(team)
                     } label: {
                         HStack {
-                            imageViewLoader(team.logoURL, Table.Team)
+                            imageViewLoader(team.logoURL, .team)
                                 .frame(width: 96, height: 48)
                             Text(team.name)
                                 .font(.title2)
                                 .foregroundColor(.primary)
                         }
                     }
-                    .listRowSeparator(.hidden)
                 }
             }
         }

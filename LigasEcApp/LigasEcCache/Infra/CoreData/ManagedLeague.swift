@@ -13,8 +13,18 @@ class ManagedLeague: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var data: Data?
     @NSManaged var logoURL: URL
+    @NSManaged var dataSourceRaw: String
     @NSManaged var cache: ManagedCache
     @NSManaged var teams: NSOrderedSet
+    
+    var dataSource: DataSource {
+        get {
+            return DataSource(rawValue: dataSourceRaw) ?? DataSource.flashLive
+        }
+        set {
+            dataSourceRaw = newValue.rawValue
+        }
+    }
 }
 
 extension ManagedLeague {
@@ -47,6 +57,7 @@ extension ManagedLeague {
             if let cachedData = URLImageCache.shared.getImageData(for: local.logoURL) {
                 managed.data = cachedData
             }
+            managed.dataSource = local.dataSource
             return managed
         })
         return leagues
@@ -60,7 +71,7 @@ extension ManagedLeague {
     }
     
     var local: LocalLeague {
-        return LocalLeague(id: id, name: name, logoURL: logoURL)
+        return LocalLeague(id: id, name: name, logoURL: logoURL, dataSource: dataSource)
     }
     
     var localTeams: [LocalTeam] {

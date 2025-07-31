@@ -83,34 +83,3 @@ public final class TeamMapper {
         }
     }
 }
-
-extension HTTPURLResponse {
-    private static var OK_200: Int { return 200 }
-
-    var isOK: Bool {
-        return statusCode == HTTPURLResponse.OK_200
-    }
-}
-
-public enum MapperError: Error {
-    case unsuccessfullyResponse
-}
-
-public struct Team: Hashable, Identifiable {
-    public let id: String
-    public let name: String
-    public let logoURL: URL
-    public let dataSource: DataSource
-    
-    public init(id: String, name: String, logoURL: URL, dataSource: DataSource) {
-        self.id = id
-        self.name = name
-        self.logoURL = logoURL
-        self.dataSource = dataSource
-    }
-}
-
-public enum DataSource {
-    case flashLive
-    case transferMarket
-}

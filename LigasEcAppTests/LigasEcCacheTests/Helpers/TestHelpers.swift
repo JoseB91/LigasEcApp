@@ -29,15 +29,15 @@ func anyData() -> Data {
 }
 
 func mockLeagueTable() -> Table {
-    return Table.League
+    return Table.league
 }
 
 func mockTeamTable() -> Table {
-    return Table.Team
+    return Table.team
 }
 
 func mockPlayerTable() -> Table {
-    return Table.Player
+    return Table.player
 }
 
 func mockLeagues() -> (models: [League], local: [LocalLeague]) {

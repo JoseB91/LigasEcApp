@@ -152,6 +152,16 @@
 			path = Player;
 			sourceTree = "<group>";
 		};
+		B0C1AEA72E3ABA8C0077D6CA /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		B0C1AEB62E3BDDA90077D6CA /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		B0CCD6002DE8D73700AE51EE /* League */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = League;
@@ -284,6 +294,7 @@
 		B053617B2D821B3300BE41F0 /* LigasEcUI */ = {
 			isa = PBXGroup;
 			children = (
+				B0C1AEB62E3BDDA90077D6CA /* Shared */,
 				B05361B82D821B5D00BE41F0 /* League */,
 				B05361C22D821B6100BE41F0 /* Team */,
 				B05361BD2D821B5F00BE41F0 /* Player */,
@@ -314,6 +325,7 @@
 		B05361862D821B3300BE41F0 /* LigasEcApp */ = {
 			isa = PBXGroup;
 			children = (
+				B0C1AEA72E3ABA8C0077D6CA /* Shared */,
 				B0C1AE912E3A7E2D0077D6CA /* Core */,
 				B0CCD6082DE8D73700AE51EE /* LigasEcAPI */,
 				B053616E2D821B3300BE41F0 /* LigasEcCache */,
@@ -454,6 +466,8 @@
 				B05361C22D821B6100BE41F0 /* Team */,
 				B05362222D829A3400BE41F0 /* League */,
 				B05362282D82ABCB00BE41F0 /* Player */,
+				B0C1AEA72E3ABA8C0077D6CA /* Shared */,
+				B0C1AEB62E3BDDA90077D6CA /* Shared */,
 				B0CCD6002DE8D73700AE51EE /* League */,
 				B0CCD6032DE8D73700AE51EE /* Team */,
 				B0CCD6062DE8D73700AE51EE /* Player */,

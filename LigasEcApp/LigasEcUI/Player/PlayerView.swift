@@ -32,7 +32,7 @@ struct PlayerView: View {
                             ForEach(positionGroup) { player in
                                 HStack {
                                     if let url = player.photoURL {
-                                        imageView(url, Table.Player)
+                                        imageView(url, .player)
                                             .frame(width: 72, height: 36)
                                             .clipShape(Circle())
                                             .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))

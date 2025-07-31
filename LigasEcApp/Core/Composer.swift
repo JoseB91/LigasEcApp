@@ -96,7 +96,6 @@ class Composer {
     func composeLeagueViewModel() -> LeagueViewModel {
         let repository = LeagueRepositoryImpl(httpClient: httpClient,
                                               appLocalLoader: appLocalLoader)
-        
         return LeagueViewModel(repository: repository)
     }
     

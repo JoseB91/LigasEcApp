@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct LigasEcApp: App {
+    
     private let composer = Composer.makeComposer()
-        
-    @State private var navigationPath = NavigationPath()
+    @State var navigationPath = NavigationPath()
     @State private var selectedTab = 0
-
+    
     var body: some Scene {
         WindowGroup {
             TabView(selection: $selectedTab) {
@@ -26,12 +26,15 @@ struct LigasEcApp: App {
                                  navigationPath: $navigationPath,
                                  imageViewLoader: composer.composeImageView,
                                  title: league.name)
-                        .toolbar(.hidden, for: .tabBar)
                     }
                     .navigationDestination(for: Team.self) { team in
                         PlayerView(playerViewModel: composer.composePlayerViewModel(for: team),
                                    imageView: composer.composeImageView,
                                    title: team.name)
+                    }
+                    .task {
+                        print("TASK")
+                        try? await composer.validateCache()
                     }
                 }
                 .tabItem {
@@ -47,12 +50,50 @@ struct LigasEcApp: App {
                 }
                 .tag(1)
             }
-            .task {
-                try? await composer.validateCache()
-            }
         }
     }
-    
 }
 
 //TODO: Add Acceptance and UIIntegration tests
+//
+//@State private var isTabBarVisible: Bool = true
+//
+//var body: some Scene {
+//    WindowGroup {
+//        ZStack {
+//            TabView(selection: $selectedTab) {
+//                LeagueTabView(
+//                    leagueViewModel: leagueViewModel,
+//                    isTabBarVisible: $isTabBarVisible
+//                )
+//                .tag(0)
+//                .tabItem {
+//                    Label("Ligas", systemImage: "soccerball")
+//                }
+//
+//                SettingsTabView()
+//                    .tag(1)
+//                    .tabItem {
+//                        Label("Settings", systemImage: "gear")
+//                    }
+//            }
+//            .opacity(isTabBarVisible ? 1 : 0)
+//            // O puedes usar `.offset(y: isTabBarVisible ? 0 : 200)`
+//        }
+//    }
+//}
+//struct TeamView: View {
+//    @Binding var isTabBarVisible: Bool
+//
+//    var body: some View {
+//        VStack {
+//            Text("Team Details")
+//        }
+//        .onAppear {
+//            isTabBarVisible = false
+//        }
+//        .onDisappear {
+//            isTabBarVisible = true
+//        }
+//    }
+//}

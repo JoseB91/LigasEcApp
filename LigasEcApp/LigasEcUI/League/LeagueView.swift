@@ -10,58 +10,43 @@ import SwiftUI
 struct LeagueView: View {
     var leagueViewModel: LeagueViewModel
     @Binding var navigationPath: NavigationPath
-    @State private var hasLoaded = false
     
     let imageViewLoader: (URL, Table) -> ImageView
     
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .top) {
-                Image("ligasEc")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: geometry.size.width)
-                    .frame(height: geometry.size.height * 0.80)
-                    .edgesIgnoringSafeArea(.top)
-                
-                VStack {
-                    Spacer()
-                        .frame(height: geometry.size.height * 0.70)
-                    
-                    VStack {
-                        if leagueViewModel.isLoading {
-                            ProgressView()
-                                .frame(maxWidth: .infinity, alignment: .center)
-                        } else {
-                            List(leagueViewModel.leagues) { league in
-                                Button {
+        VStack(spacing: 0) {
+            Image("ligasEc")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: UIScreen.main.bounds.width,
+                       height: UIScreen.main.bounds.height * 0.65)
+            
+            ZStack {
+                if leagueViewModel.isLoading {
+                    ProgressView("Loading leagues...")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    VStack(spacing: 24) {
+                        ForEach(leagueViewModel.leagues) { league in
+                            Button {
                                     navigationPath.append(league)
                                 } label: {
-                                    HStack {
-                                        imageViewLoader(league.logoURL, Table.League)
-                                            .frame(width: 96, height: 48)
-                                        Text(league.name)
-                                            .font(.title)
-                                            .foregroundColor(.primary)
-                                        Spacer()
-                                    }
+                                    ButtonView(url: league.logoURL,
+                                               table: .league,
+                                               text: league.name,
+                                               imageViewLoader: imageViewLoader)
                                 }
-                                .cornerRadius(10)
-                            }
-                            .listRowSpacing(24)
+                                .buttonStyle(PlainButtonStyle())
                         }
                     }
-                    .frame(height: geometry.size.height * 0.30)
-                    .onAppear {
-                        if !hasLoaded {
-                            hasLoaded = true
-                            Task {
-                                await leagueViewModel.loadLeagues()
-                            }
-                        }
-                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 20)
                 }
             }
+        }
+        .edgesIgnoringSafeArea(.top)
+        .task {
+            await leagueViewModel.loadIfNeeded()
         }
     }
 }

@@ -12,15 +12,15 @@ extension CoreDataLigasEcStore: ImageStore {
     public func insert(_ data: Data, for url: URL, on table: Table) async throws {
         try await context.perform { [context] in 
             switch table {
-            case .League:
+            case .league:
                 if let managedLeague = try ManagedLeague.getFirst(with: url, in: context) {
                     managedLeague.data = data
                 }
-            case .Team:
+            case .team:
                 if let managedTeam = try ManagedTeam.getFirst(with: url, in: context) {
                     managedTeam.data = data
                 }
-            case .Player:
+            case .player:
                 if let managedPlayer = try ManagedPlayer.getFirst(with: url, in: context) {
                     managedPlayer.data = data
                 }
@@ -32,11 +32,11 @@ extension CoreDataLigasEcStore: ImageStore {
     public func retrieve(dataFor url: URL, on table: Table) async throws -> Data?  {
         try await context.perform { [context] in
             switch table {
-            case .League:
+            case .league:
                 return try ManagedLeague.getImageData(with: url, in: context)
-            case .Team:
+            case .team:
                 return try ManagedTeam.getImageData(with: url, in: context)
-            case .Player:
+            case .player:
                 return try ManagedPlayer.getImageData(with: url, in: context)
             }
         }
