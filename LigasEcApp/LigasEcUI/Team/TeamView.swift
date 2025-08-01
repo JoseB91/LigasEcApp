@@ -14,28 +14,32 @@ struct TeamView: View {
     let title: String
     
     var body: some View {
-        List {
+        //TODO: Change UI
+        ZStack {
             if teamViewModel.isLoading {
                 ProgressView()
-                    .frame(maxWidth: .infinity, alignment: .center)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                ForEach(teamViewModel.teams) { team in
-                    Button {
-                        navigationPath.append(team)
-                    } label: {
-                        HStack {
-                            imageViewLoader(team.logoURL, .team)
-                                .frame(width: 96, height: 48)
-                            Text(team.name)
-                                .font(.title2)
-                                .foregroundColor(.primary)
+                ScrollView {
+                    ForEach(teamViewModel.teams) { team in
+                        Button {
+                            navigationPath.append(team)
+                        } label: {
+                            HStack {
+                                imageViewLoader(team.logoURL, .team)
+                                    .frame(width: 96, height: 48)
+                                Text(team.name)
+                                    .font(.title2)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .cardStyle()
                         }
+                        .padding(.horizontal, 20)
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
             }
         }
-        .listRowSpacing(12)
-        .listStyle(.insetGrouped)
         .navigationTitle(title)
         .toolbarTitleDisplayMode(.large)
         .refreshable {
