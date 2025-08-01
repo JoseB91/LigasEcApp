@@ -19,7 +19,7 @@
 		B053619F2D821B3300BE41F0 /* LigasEcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361852D821B3300BE41F0 /* LigasEcApp.swift */; };
 		B05361A02D821B3300BE41F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B053617C2D821B3300BE41F0 /* Preview Assets.xcassets */; };
 		B05361A12D821B3300BE41F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B053617E2D821B3300BE41F0 /* Assets.xcassets */; };
-		B05361A22D821B3300BE41F0 /* LigasEc.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B053617F2D821B3300BE41F0 /* LigasEc.xcstrings */; };
+		B05361A22D821B3300BE41F0 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B053617F2D821B3300BE41F0 /* Localizable.xcstrings */; };
 		B05361EB2D821B8500BE41F0 /* ValidateCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361D72D821B8500BE41F0 /* ValidateCacheTests.swift */; };
 		B05361EC2D821B8500BE41F0 /* LocalizationTests+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361D92D821B8500BE41F0 /* LocalizationTests+Helpers.swift */; };
 		B05361ED2D821B8500BE41F0 /* LeagueLocalizedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05361DB2D821B8500BE41F0 /* LeagueLocalizedTests.swift */; };
@@ -64,7 +64,7 @@
 		B053616D2D821B3300BE41F0 /* CachePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachePolicy.swift; sourceTree = "<group>"; };
 		B053617C2D821B3300BE41F0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B053617E2D821B3300BE41F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B053617F2D821B3300BE41F0 /* LigasEc.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = LigasEc.xcstrings; sourceTree = "<group>"; };
+		B053617F2D821B3300BE41F0 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B05361832D821B3300BE41F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B05361842D821B3300BE41F0 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		B05361852D821B3300BE41F0 /* LigasEcApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LigasEcApp.swift; sourceTree = "<group>"; };
@@ -317,7 +317,7 @@
 			children = (
 				B053617D2D821B3300BE41F0 /* Preview Content */,
 				B053617E2D821B3300BE41F0 /* Assets.xcassets */,
-				B053617F2D821B3300BE41F0 /* LigasEc.xcstrings */,
+				B053617F2D821B3300BE41F0 /* Localizable.xcstrings */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -561,7 +561,7 @@
 				B08CFD672DFB86D700F4D8FD /* Config.xcconfig in Resources */,
 				B05361A02D821B3300BE41F0 /* Preview Assets.xcassets in Resources */,
 				B05361A12D821B3300BE41F0 /* Assets.xcassets in Resources */,
-				B05361A22D821B3300BE41F0 /* LigasEc.xcstrings in Resources */,
+				B05361A22D821B3300BE41F0 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

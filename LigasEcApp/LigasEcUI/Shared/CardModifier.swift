@@ -25,8 +25,3 @@ extension View {
     }
 }
 
-extension View {
-    var isDarkMode: Bool {
-        UITraitCollection.current.userInterfaceStyle == .dark
-    }
-}

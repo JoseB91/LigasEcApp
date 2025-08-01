@@ -23,7 +23,7 @@ struct LeagueView: View {
             
             ZStack {
                 if leagueViewModel.isLoading {
-                    ProgressView("Loading leagues...")
+                    ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     VStack(spacing: 24) {

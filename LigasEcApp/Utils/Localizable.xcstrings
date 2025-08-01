@@ -1,12 +1,24 @@
 {
   "sourceLanguage" : "es-419",
   "strings" : {
+    "" : {
+
+    },
+    "%@" : {
+
+    },
+    "1.0(7)" : {
+
+    },
+    "App Version" : {
+
+    },
     "COACH" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Coach"
           }
         },
@@ -24,16 +36,22 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Defender"
+            "value" : "Defenders"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Defensa"
+            "value" : "Defensas"
           }
         }
       }
+    },
+    "Download Cleeth Now!" : {
+
+    },
+    "Error" : {
+
     },
     "FORWARD" : {
       "extractionState" : "manual",
@@ -41,13 +59,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Forward"
+            "value" : "Forwards"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delantero"
+            "value" : "Delanteros"
           }
         }
       }
@@ -58,16 +76,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Goalkeeper"
+            "value" : "Goalkeepers"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Portero"
+            "value" : "Porteros"
           }
         }
       }
+    },
+    "Hey! Check out this app that helps you remember to brush your teeth!" : {
+
     },
     "LEAGUE_VIEW_TITLE" : {
       "extractionState" : "manual",
@@ -86,22 +107,28 @@
         }
       }
     },
+    "LigasEc" : {
+
+    },
     "MIDFIELDER" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Midfielder"
+            "value" : "Midfielders"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mediocampista"
+            "value" : "Mediocampistas"
           }
         }
       }
+    },
+    "OK" : {
+
     },
     "PLAYER_VIEW_TITLE" : {
       "extractionState" : "manual",
@@ -119,6 +146,12 @@
           }
         }
       }
+    },
+    "Settings" : {
+
+    },
+    "Share" : {
+
     },
     "TEAM_VIEW_TITLE" : {
       "extractionState" : "manual",

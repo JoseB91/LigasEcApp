@@ -11,3 +11,7 @@ struct ErrorModel: Identifiable {
     let id = UUID()
     let message: String
 }
+
+enum MapperError: Error {
+    case unsuccessfullyResponse
+}

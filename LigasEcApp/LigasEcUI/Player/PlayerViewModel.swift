@@ -6,47 +6,17 @@
 //
 
 import Foundation
+import SwiftUICore
 
 @Observable
 final class PlayerViewModel {
 
     var squad = [Player]()
     var isLoading = false
-    var errorMessage: ErrorModel? = nil
+    var errorModel: ErrorModel? = nil
 
     private let repository: PlayerRepository
-    
-    var coach: String {
-        String(localized: "COACH",
-               table: "LigasEc",
-               bundle: Bundle(for: Self.self))
-    }
-    
-    var goalkeeper: String {
-        String(localized: "GOALKEEPER",
-               table: "LigasEc",
-               bundle: Bundle(for: Self.self))
-    }
-
-    var defender: String {
-        String(localized: "DEFENDER",
-               table: "LigasEc",
-               bundle: Bundle(for: Self.self))
-    }
-
-    var midfielder: String {
-        String(localized: "MIDFIELDER",
-               table: "LigasEc",
-               bundle: Bundle(for: Self.self))
-    }
-
-    var forward: String {
-        String(localized: "FORWARD",
-               table: "LigasEc",
-               bundle: Bundle(for: Self.self))
-    }
-
-    
+        
     init(repository: PlayerRepository) {
         self.repository = repository
     }
@@ -60,47 +30,26 @@ final class PlayerViewModel {
         do {
             squad = try await repository.loadPlayers()
         } catch {
-            errorMessage = ErrorModel(message: error.localizedDescription)
+            errorModel = ErrorModel(message: error.localizedDescription)
         }
     }
+}
+
+struct Constants {
+    //Error
+    static let ok = "OK"
+    static let error = "Error"
     
-    func getLocalizedPosition(for position: String) -> String {
-        switch position {
-        case "Portero":
-            return goalkeeper
-        case "Defensa":
-            return defender
-        case "Centrocampista":
-            return midfielder
-        case "Delantero":
-            return forward
-        case "Entrenador":
-            return coach
-        default:
-            return ""
-        }
-    }
+    //Players
+    static var coach: LocalizedStringKey { "COACH" }
+    static var goalkeeper: LocalizedStringKey { "GOALKEEPER" }
+    static var defender: LocalizedStringKey { "DEFENDER" }
+    static var midfielder: LocalizedStringKey { "MIDFIELDER" }
+    static var forward: LocalizedStringKey { "FORWARD" }
     
-    func getCountryId(for country: String) -> Int {
-        switch country {
-        case "Argentina":
-            return 22
-        case "Brasil":
-            return 39
-        case "Colombia":
-            return 53
-        case "Ecuador":
-            return 68
-        case "Nigeria":
-            return 143
-        case "Paraguay":
-            return 151
-        case "Uruguay":
-            return 201
-        case "Venezuela":
-            return 205
-        default:
-            return 0
-        }
-    }
+    static let portero = "Portero"
+    static let defensa = "Defensa"
+    static let centrocampista = "Centrocampista"
+    static let delantero = "Delantero"
+    static let entrenador = "Entrenador"
 }
