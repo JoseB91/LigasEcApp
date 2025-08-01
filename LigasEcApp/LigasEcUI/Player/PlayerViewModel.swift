@@ -36,6 +36,10 @@ final class PlayerViewModel {
 }
 
 struct Constants {
+    
+    static var ligasEc: LocalizedStringKey { "LIGAS_EC" }
+    static var settings: LocalizedStringKey { "SETTINGS" }
+    
     //Error
     static let ok = "OK"
     static let error = "Error"

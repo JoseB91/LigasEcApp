@@ -12,7 +12,7 @@ final class TeamViewModel {
 
     var teams = [Team]()
     var isLoading = false
-    var errorMessage: ErrorModel? = nil
+    var errorModel: ErrorModel? = nil
 
     private let repository: TeamRepository
     
@@ -29,7 +29,7 @@ final class TeamViewModel {
         do {
             teams = try await repository.loadTeams()
         } catch {
-            errorMessage = ErrorModel(message: error.localizedDescription)
+            errorModel = ErrorModel(message: error.localizedDescription)
         }
     }
 }

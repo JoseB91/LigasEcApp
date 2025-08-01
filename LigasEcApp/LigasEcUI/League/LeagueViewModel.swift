@@ -17,12 +17,6 @@ final class LeagueViewModel {
     private let repository: LeagueRepository
     private var hasLoaded = false
         
-    var title: String {
-        String(localized: "LEAGUE_VIEW_TITLE",
-               table: "LigasEc",
-               bundle: Bundle(for: Self.self))
-    }
-    
     init(repository: LeagueRepository) {
         self.repository = repository
     }

@@ -46,7 +46,7 @@ struct LeagueView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .task {
-            await leagueViewModel.loadIfNeeded()
+            await leagueViewModel.loadLeagues()
         }
     }
 }

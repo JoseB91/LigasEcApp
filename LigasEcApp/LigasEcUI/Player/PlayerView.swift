@@ -100,5 +100,3 @@ struct PlayerView: View {
                imageViewLoader: MockImageComposer().composeImageView,
                title: "Barcelona SC")
 }
-
-

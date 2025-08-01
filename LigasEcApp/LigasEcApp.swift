@@ -36,13 +36,13 @@ struct LigasEcApp: App {
                         try? await composer.validateCache()
                     }
                 }
-                .tabItem { Label("LigasEc", systemImage: "soccerball") }
+                .tabItem { Label(Constants.ligasEc, systemImage: "soccerball") }
                 .tag(0)
                 
                 NavigationStack() {
                     SettingsView()
                 }
-                .tabItem { Label("Settings", systemImage: "gear") }
+                .tabItem { Label(Constants.settings, systemImage: "gear") }
                 .tag(1)
             }
         }

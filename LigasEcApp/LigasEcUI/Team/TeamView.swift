@@ -44,13 +44,7 @@ struct TeamView: View {
         .task {
             await teamViewModel.loadTeams()
         }
-        .alert(item: $teamViewModel.errorMessage) { error in
-            Alert(
-                title: Text("Error"),
-                message: Text(error.message),
-                dismissButton: .default(Text("OK"))
-            )
-        }
+        .withErrorAlert(errorModel: $teamViewModel.errorModel)
     }
 }
     

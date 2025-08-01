@@ -7,12 +7,6 @@
     "%@" : {
 
     },
-    "1.0(7)" : {
-
-    },
-    "App Version" : {
-
-    },
     "COACH" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -46,12 +40,6 @@
           }
         }
       }
-    },
-    "Download Cleeth Now!" : {
-
-    },
-    "Error" : {
-
     },
     "FORWARD" : {
       "extractionState" : "manual",
@@ -87,10 +75,7 @@
         }
       }
     },
-    "Hey! Check out this app that helps you remember to brush your teeth!" : {
-
-    },
-    "LEAGUE_VIEW_TITLE" : {
+    "LIGAS_EC" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -106,9 +91,6 @@
           }
         }
       }
-    },
-    "LigasEc" : {
-
     },
     "MIDFIELDER" : {
       "extractionState" : "manual",
@@ -126,9 +108,6 @@
           }
         }
       }
-    },
-    "OK" : {
-
     },
     "PLAYER_VIEW_TITLE" : {
       "extractionState" : "manual",
@@ -150,8 +129,21 @@
     "Settings" : {
 
     },
-    "Share" : {
-
+    "SETTINGS" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuración"
+          }
+        }
+      }
     },
     "TEAM_VIEW_TITLE" : {
       "extractionState" : "manual",
