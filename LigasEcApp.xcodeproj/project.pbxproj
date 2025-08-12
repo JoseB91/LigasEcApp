@@ -27,6 +27,8 @@
 		B053621E2D8232CA00BE41F0 /* ManagedLeague.swift in Sources */ = {isa = PBXBuildFile; fileRef = B053621D2D8232CA00BE41F0 /* ManagedLeague.swift */; };
 		B05362272D82AB3B00BE41F0 /* ManagedPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05362262D82AB3B00BE41F0 /* ManagedPlayer.swift */; };
 		B05362322D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */; };
+		B08ABC4A2E4BDB370045903A /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08ABC492E4BDB370045903A /* PDFViewer.swift */; };
+		B08ABC4C2E4BE0A30045903A /* LigasEc_PrivacyPolicy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B08ABC4B2E4BE0A30045903A /* LigasEc_PrivacyPolicy.pdf */; };
 		B08CFD672DFB86D700F4D8FD /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B08CFD662DFB86D700F4D8FD /* Config.xcconfig */; };
 		B08CFE6F2DFBA6C700F4D8FD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE6E2DFBA6C700F4D8FD /* SettingsView.swift */; };
 		B09758012DDE806500F99E45 /* KeychainManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09758002DDE806500F99E45 /* KeychainManagerTests.swift */; };
@@ -76,6 +78,8 @@
 		B053621D2D8232CA00BE41F0 /* ManagedLeague.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedLeague.swift; sourceTree = "<group>"; };
 		B05362262D82AB3B00BE41F0 /* ManagedPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedPlayer.swift; sourceTree = "<group>"; };
 		B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataLigasEcStore+PlayerStore.swift"; sourceTree = "<group>"; };
+		B08ABC492E4BDB370045903A /* PDFViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewer.swift; sourceTree = "<group>"; };
+		B08ABC4B2E4BE0A30045903A /* LigasEc_PrivacyPolicy.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = LigasEc_PrivacyPolicy.pdf; sourceTree = "<group>"; };
 		B08CFD662DFB86D700F4D8FD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		B08CFE6E2DFBA6C700F4D8FD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B09758002DDE806500F99E45 /* KeychainManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManagerTests.swift; sourceTree = "<group>"; };
@@ -235,6 +239,7 @@
 		B03E6F842D6CE44F00DE1485 = {
 			isa = PBXGroup;
 			children = (
+				B08ABC4B2E4BE0A30045903A /* LigasEc_PrivacyPolicy.pdf */,
 				B0F482372D920BF400874AA8 /* README.md */,
 				B05361862D821B3300BE41F0 /* LigasEcApp */,
 				B05361DD2D821B8500BE41F0 /* LigasEcAppTests */,
@@ -300,6 +305,7 @@
 				B05361BD2D821B5F00BE41F0 /* Player */,
 				B05361B32D821B5A00BE41F0 /* Image */,
 				B08CFE6E2DFBA6C700F4D8FD /* SettingsView.swift */,
+				B08ABC492E4BDB370045903A /* PDFViewer.swift */,
 			);
 			path = LigasEcUI;
 			sourceTree = "<group>";
@@ -557,6 +563,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B08ABC4C2E4BE0A30045903A /* LigasEc_PrivacyPolicy.pdf in Resources */,
 				B0F482382D920BF400874AA8 /* README.md in Resources */,
 				B08CFD672DFB86D700F4D8FD /* Config.xcconfig in Resources */,
 				B05361A02D821B3300BE41F0 /* Preview Assets.xcassets in Resources */,
@@ -589,6 +596,7 @@
 				B053618C2D821B3300BE41F0 /* CoreDataLigasEcStore+TeamStore.swift in Sources */,
 				B0CCD60D2DE8D73700AE51EE /* ImageMapper.swift in Sources */,
 				B053618D2D821B3300BE41F0 /* LigasEcStore.xcdatamodeld in Sources */,
+				B08ABC4A2E4BDB370045903A /* PDFViewer.swift in Sources */,
 				B08CFE6F2DFBA6C700F4D8FD /* SettingsView.swift in Sources */,
 				B053618E2D821B3300BE41F0 /* ManagedCache.swift in Sources */,
 				B049A3832DB0237300FA172C /* URLImageCache.swift in Sources */,
@@ -729,7 +737,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9V3336X7NB;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -737,6 +745,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

@@ -20,6 +20,7 @@ struct TeamView: View {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
+                //TODO: 2 columns
                 ScrollView {
                     ForEach(teamViewModel.teams) { team in
                         Button {

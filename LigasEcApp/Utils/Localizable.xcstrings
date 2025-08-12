@@ -109,6 +109,12 @@
         }
       }
     },
+    "PDF not found" : {
+
+    },
+    "PDF Viewer" : {
+
+    },
     "PLAYER_VIEW_TITLE" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -125,6 +131,12 @@
           }
         }
       }
+    },
+    "Privacy Policy" : {
+
+    },
+    "Send Email" : {
+
     },
     "Settings" : {
 
