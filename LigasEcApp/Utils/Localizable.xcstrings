@@ -24,6 +24,57 @@
         }
       }
     },
+    "APP_VERSION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Version"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión de la App"
+          }
+        }
+      }
+    },
+    "CONTACT_BODY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hey José!,\n\n"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Hola José!,\n\n"
+          }
+        }
+      }
+    },
+    "CONTACT_SUBJECT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact LigasEcApp"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contacto LigasEcApp"
+          }
+        }
+      }
+    },
     "DEFENDER" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -109,11 +160,39 @@
         }
       }
     },
-    "PDF not found" : {
-
+    "PDF_NOT_FOUND" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDF not found"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDF no encontrado"
+          }
+        }
+      }
     },
-    "PDF Viewer" : {
-
+    "PDF_VIEWER" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDF Viewer"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visor PDF"
+          }
+        }
+      }
     },
     "PLAYER_VIEW_TITLE" : {
       "extractionState" : "manual",
@@ -132,14 +211,39 @@
         }
       }
     },
-    "Privacy Policy" : {
-
+    "PRIVACY_POLICY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de Privacidad"
+          }
+        }
+      }
     },
-    "Send Email" : {
-
-    },
-    "Settings" : {
-
+    "SEND_EMAIL" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send Email"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar Email"
+          }
+        }
+      }
     },
     "SETTINGS" : {
       "localizations" : {

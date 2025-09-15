@@ -9,33 +9,44 @@ import SwiftUI
 
 struct SettingsView: View {
 
+    private var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+    }
+
     var body: some View {
         List {
-            NavigationLink("Privacy Policy") { //TODO: Add constants
+            NavigationLink {
                 if let url = Bundle.main.url(forResource: "LigasEc_PrivacyPolicy", withExtension: "pdf") {
                     PDFViewer(url: url)
-                        .navigationTitle("PDF Viewer")
+                        .navigationTitle(Constants.pdfViewer)
                         .navigationBarTitleDisplayMode(.inline)
                 } else {
-                    Text("PDF not found")
+                    Text(Constants.pdfNotFound)
                 }
+            } label: {
+                Label(Constants.privacyPolicy, systemImage: "doc.text")
             }
-            Section {
-                Button(action: openMailApp) {
-                    Label("Send Email", systemImage: "envelope") //TODO: Add constants
-                }
-                .buttonStyle(PlainButtonStyle())
+            Button(action: openMailApp) {
+                Label(Constants.sendEmail, systemImage: "envelope")
+            }
+            .buttonStyle(PlainButtonStyle())
+
+            HStack {
+                Label(Constants.appVersion, systemImage: "info.circle")
+                Spacer()
+                Text(appVersion)
+                    .foregroundColor(.secondary)
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("Settings")
+        .navigationTitle(Constants.settings)
         .navigationBarTitleDisplayMode(.large)
     }
-
+    
     private func openMailApp() {
         let email = "jose.briones.r@hotmail.com"
-        let subject = "App Support Request" //TODO: Add constants
-        let body = "Hi there,\n\n" //TODO: Add constants
+        let subject = String(localized: "CONTACT_SUBJECT")
+        let body = String(localized: "CONTACT_BODY")
         
         let urlString = "mailto:\(email)?subject=\(subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&body=\(body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
         
