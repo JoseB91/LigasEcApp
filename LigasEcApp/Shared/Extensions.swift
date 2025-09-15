@@ -5,7 +5,7 @@
 //  Created by José Briones on 31/7/25.
 //
 
-import SwiftUICore
+import SwiftUI
 
 extension HTTPURLResponse {
     private static var OK_200: Int { return 200 }
