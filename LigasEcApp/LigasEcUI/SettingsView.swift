@@ -26,10 +26,12 @@ struct SettingsView: View {
             } label: {
                 Label(Constants.privacyPolicy, systemImage: "doc.text")
             }
+            .accessibilityHint(Constants.opensPrivacyPolicy)
             Button(action: openMailApp) {
                 Label(Constants.sendEmail, systemImage: "envelope")
             }
             .buttonStyle(PlainButtonStyle())
+            .accessibilityHint(Constants.opensEmailClient)
 
             HStack {
                 Label(Constants.appVersion, systemImage: "info.circle")
@@ -37,6 +39,8 @@ struct SettingsView: View {
                 Text(appVersion)
                     .foregroundColor(.secondary)
             }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(String(localized: "CURRENT_VERSION", defaultValue: "Current version: \(appVersion)"))
         }
         .listStyle(.insetGrouped)
         .navigationTitle(Constants.settings)

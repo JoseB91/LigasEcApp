@@ -7,23 +7,6 @@
     "%@" : {
 
     },
-    "COACH" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Coach"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Entrenador"
-          }
-        }
-      }
-    },
     "APP_VERSION" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -37,6 +20,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Versión de la App"
+          }
+        }
+      }
+    },
+    "COACH" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coach"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrenador"
           }
         }
       }
@@ -71,6 +71,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contacto LigasEcApp"
+          }
+        }
+      }
+    },
+    "CURRENT_VERSION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current version: %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión actual: %@"
           }
         }
       }
@@ -143,6 +160,91 @@
         }
       }
     },
+    "LIGAS_EC_LOGO" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LigasEc logo"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logo de LigasEc"
+          }
+        }
+      }
+    },
+    "LOADING_IMAGE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading image"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando imagen"
+          }
+        }
+      }
+    },
+    "LOADING_LEAGUES" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading leagues"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando ligas"
+          }
+        }
+      }
+    },
+    "LOADING_PLAYERS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading players"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando jugadores"
+          }
+        }
+      }
+    },
+    "LOADING_TEAMS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading teams"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando equipos"
+          }
+        }
+      }
+    },
     "MIDFIELDER" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -156,6 +258,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mediocampistas"
+          }
+        }
+      }
+    },
+    "NO_PHOTO_AVAILABLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No photo available"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin foto disponible"
+          }
+        }
+      }
+    },
+    "OPENS_EMAIL_CLIENT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens email client"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abre cliente de email"
+          }
+        }
+      }
+    },
+    "OPENS_PRIVACY_POLICY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens privacy policy"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abre política de privacidad"
           }
         }
       }
@@ -194,6 +347,26 @@
         }
       }
     },
+    "Player number %lld" : {
+
+    },
+    "PLAYER_NUMBER" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player number %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jugador número %@"
+          }
+        }
+      }
+    },
     "PLAYER_VIEW_TITLE" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -224,6 +397,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Política de Privacidad"
+          }
+        }
+      }
+    },
+    "SELECT_LEAGUE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select %@ league"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionar liga %@"
+          }
+        }
+      }
+    },
+    "SELECT_TEAM" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select %@ team"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionar equipo %@"
           }
         }
       }

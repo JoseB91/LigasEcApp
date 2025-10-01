@@ -17,11 +17,13 @@ struct ButtonView: View {
         HStack {
             imageViewLoader(url, table)
                 .frame(width: 96, height: 48)
+                .accessibilityLabel(text)
             Text(text)
                 .font(.title)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .cardStyle()
+        .accessibilityElement(children: .combine)
     }
 }
 

@@ -20,11 +20,13 @@ struct LeagueView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(width: UIScreen.main.bounds.width,
                        height: UIScreen.main.bounds.height * 0.65)
+                .accessibilityLabel(Constants.ligasEcLogo)
             
             ZStack {
                 if leagueViewModel.isLoading {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .accessibilityLabel(Constants.loadingLeagues)
                 } else {
                     VStack(spacing: 24) {
                         ForEach(leagueViewModel.leagues) { league in
@@ -37,6 +39,7 @@ struct LeagueView: View {
                                                imageViewLoader: imageViewLoader)
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                .accessibilityLabel(String(localized: "SELECT_LEAGUE", defaultValue: "Select \(league.name) league"))
                         }
                     }
                     .padding(.horizontal, 20)

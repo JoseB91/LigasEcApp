@@ -18,7 +18,21 @@ struct Constants {
     static var pdfViewer: LocalizedStringKey { "PDF_VIEWER" }
     static var pdfNotFound: LocalizedStringKey { "PDF_NOT_FOUND" }
     static var appVersion: LocalizedStringKey { "APP_VERSION" }
-    
+
+    // Accessibility
+    static var loadingLeagues: LocalizedStringKey { "LOADING_LEAGUES" }
+    static var loadingTeams: LocalizedStringKey { "LOADING_TEAMS" }
+    static var loadingPlayers: LocalizedStringKey { "LOADING_PLAYERS" }
+    static var loadingImage: LocalizedStringKey { "LOADING_IMAGE" }
+    static var selectLeague: LocalizedStringKey { "SELECT_LEAGUE" }
+    static var selectTeam: LocalizedStringKey { "SELECT_TEAM" }
+    static var playerNumber: LocalizedStringKey { "PLAYER_NUMBER" }
+    static var noPhotoAvailable: LocalizedStringKey { "NO_PHOTO_AVAILABLE" }
+    static var currentVersion: LocalizedStringKey { "CURRENT_VERSION" }
+    static var opensPrivacyPolicy: LocalizedStringKey { "OPENS_PRIVACY_POLICY" }
+    static var opensEmailClient: LocalizedStringKey { "OPENS_EMAIL_CLIENT" }
+    static var ligasEcLogo: LocalizedStringKey { "LIGAS_EC_LOGO" }
+
     //Error
     static let ok = "OK"
     static let error = "Error"

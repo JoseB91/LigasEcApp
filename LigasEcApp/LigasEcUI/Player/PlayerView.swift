@@ -18,6 +18,7 @@ struct PlayerView: View {
                 ProgressView()
                     .frame(maxWidth: .infinity, alignment: .center)
                     .listRowSeparator(.hidden)
+                    .accessibilityLabel(Constants.loadingPlayers)
             } else {
                 
                 let groupedPlayers = Dictionary(grouping: playerViewModel.squad, by: { $0.position })
@@ -36,11 +37,13 @@ struct PlayerView: View {
                                             .frame(width: 72, height: 36)
                                             .clipShape(Circle())
                                             .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))
+                                            .accessibilityLabel(player.name)
                                     } else {
                                         Image(systemName: "person.circle")
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 72, height: 36)
+                                            .accessibilityLabel(Constants.noPhotoAvailable)
                                     }
                                     Text(player.name)
                                         .font(.body)
@@ -69,6 +72,7 @@ struct PlayerView: View {
                                                     .foregroundColor(.primary)
                                             }
                                         }
+                                        .accessibilityLabel(player.number != nil ? "Player number \(player.number!)" : "")
                                     }
                                 }
                                 .listRowSeparator(.hidden)

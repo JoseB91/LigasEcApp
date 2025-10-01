@@ -21,10 +21,12 @@ struct ImageView: View {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                     .scaleEffect(1.5)
+                    .accessibilityLabel(Constants.loadingImage)
             } else {
                 Image.load(from: imageViewModel.data)
                     .resizable()
                     .scaledToFit()
+                    .accessibilityHidden(true)
             }
         }
         .task {
