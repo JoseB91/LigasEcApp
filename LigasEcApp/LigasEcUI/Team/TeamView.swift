@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TeamView: View {
-    @State var teamViewModel: TeamViewModel
+    @StateObject private var teamViewModel: TeamViewModel
     @Binding var navigationPath: NavigationPath
     let imageViewLoader: (URL, Table) -> ImageView
     let title: String
@@ -18,9 +18,23 @@ struct TeamView: View {
         GridItem(.flexible())
     ]
 
+    init(teamViewModel: TeamViewModel,
+         navigationPath: Binding<NavigationPath>,
+         imageViewLoader: @escaping (URL, Table) -> ImageView,
+         title: String) {
+        _teamViewModel = StateObject(wrappedValue: teamViewModel)
+        _navigationPath = navigationPath
+        self.imageViewLoader = imageViewLoader
+        self.title = title
+    }
+
     var body: some View {
         ScrollView {
-            if teamViewModel.isLoading {
+            if teamViewModel.isSerieBComingSoon {
+                ComingSoonView()
+                    .padding(.horizontal, 20)
+                    .padding(.top, 48)
+            } else if teamViewModel.isLoading {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(0..<8, id: \.self) { _ in
                         TeamCardPlaceholderView()
@@ -50,7 +64,7 @@ struct TeamView: View {
             await teamViewModel.loadTeams()
         }
         .task {
-            await teamViewModel.loadTeams()
+            await teamViewModel.loadIfNeeded()
         }
         .withErrorAlert(errorModel: $teamViewModel.errorModel)
     }
@@ -81,6 +95,34 @@ struct TeamCardView: View {
                 .fill(Color(.secondarySystemBackground))
                 .shadow(color: .black.opacity(0.06), radius: 4, x: 0, y: 2)
         )
+    }
+}
+
+struct ComingSoonView: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "clock.badge.exclamationmark")
+                .font(.system(size: 56))
+                .foregroundStyle(.secondary)
+                .accessibilityHidden(true)
+            Text(Constants.comingSoon)
+                .font(.title2.bold())
+                .multilineTextAlignment(.center)
+            Text(Constants.serieBComingSoonMessage)
+                .font(.body)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 8)
+        }
+        .padding(32)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: 24)
+                .fill(Color(.secondarySystemBackground))
+                .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Constants.serieBComingSoonMessage)
     }
 }
 
@@ -152,11 +194,15 @@ struct ShimmerModifier: ViewModifier {
 
 #Preview {
     NavigationStack {
-        let teamViewModel = TeamViewModel(repository: MockTeamRepository())
-        
+        let league = League(id: "IaFDigtm",
+                            name: "LigaPro Serie A",
+                            logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
+                            dataSource: .flashLive)
+        let teamViewModel = TeamViewModel(repository: MockTeamRepository(), league: league)
+
         TeamView(teamViewModel: teamViewModel,
                  navigationPath: .constant(NavigationPath()),
                  imageViewLoader: MockImageComposer().composeImageView,
-                 title: "LigaPro Serie A")
+                 title: league.name)
     }
 }

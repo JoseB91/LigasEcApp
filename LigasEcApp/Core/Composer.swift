@@ -109,7 +109,7 @@ class Composer {
         let repository = TeamRepositoryImpl(httpClient: httpClient,
                                             appLocalLoader: appLocalLoader,
                                             teamRepositoryParams: teamRepositoryParams)
-        return TeamViewModel(repository: repository)
+        return TeamViewModel(repository: repository, league: league)
     }
     
     func composePlayerViewModel(for team: Team) -> PlayerViewModel {

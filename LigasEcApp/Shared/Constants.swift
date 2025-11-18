@@ -32,6 +32,8 @@ struct Constants {
     static var opensPrivacyPolicy: LocalizedStringKey { "OPENS_PRIVACY_POLICY" }
     static var opensEmailClient: LocalizedStringKey { "OPENS_EMAIL_CLIENT" }
     static var ligasEcLogo: LocalizedStringKey { "LIGAS_EC_LOGO" }
+    static var comingSoon: LocalizedStringKey { "COMING_SOON" }
+    static var serieBComingSoonMessage: LocalizedStringKey { "SERIE_B_COMING_SOON_MESSAGE" }
 
     //Error
     static let ok = "OK"
@@ -49,4 +51,5 @@ struct Constants {
     static let centrocampista = "Centrocampista"
     static let delantero = "Delantero"
     static let entrenador = "Entrenador"
+    static let serieBIdentifier = "EC2L"
 }

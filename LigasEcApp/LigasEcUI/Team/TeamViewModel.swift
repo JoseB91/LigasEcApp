@@ -7,21 +7,39 @@
 
 import Foundation
 
-@Observable
-final class TeamViewModel {
+final class TeamViewModel: ObservableObject {
 
-    var teams = [Team]()
-    var isLoading = false
-    var errorModel: ErrorModel? = nil
+    @Published var teams = [Team]()
+    @Published var isLoading = false
+    @Published var errorModel: ErrorModel? = nil
+    @Published var isSerieBComingSoon = false
 
     private let repository: TeamRepository
+    private let league: League
+    private var hasLoaded = false
     
-    init(repository: TeamRepository) {
+    init(repository: TeamRepository, league: League) {
         self.repository = repository
+        self.league = league
+    }
+    
+    @MainActor
+    func loadIfNeeded() async {
+        guard !hasLoaded else { return }
+        hasLoaded = true
+        await loadTeams()
     }
     
     @MainActor
     func loadTeams() async {
+        
+        let isFeatureEnabled = FeatureFlags.isEnabled(for: league)
+        isSerieBComingSoon = !isFeatureEnabled
+        guard isFeatureEnabled else {
+            teams = []
+            errorModel = nil
+            return
+        }
         
         isLoading = true
         defer { isLoading = false }

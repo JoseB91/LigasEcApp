@@ -8,17 +8,24 @@
 import Foundation
 import SwiftUI
 
-@Observable
-final class PlayerViewModel {
+final class PlayerViewModel: ObservableObject {
 
-    var squad = [Player]()
-    var isLoading = false
-    var errorModel: ErrorModel? = nil
+    @Published var squad = [Player]()
+    @Published var isLoading = false
+    @Published var errorModel: ErrorModel? = nil
 
     private let repository: PlayerRepository
+    private var hasLoaded = false
         
     init(repository: PlayerRepository) {
         self.repository = repository
+    }
+    
+    @MainActor
+    func loadIfNeeded() async {
+        guard !hasLoaded else { return }
+        hasLoaded = true
+        await loadSquad()
     }
     
     @MainActor
