@@ -12,69 +12,37 @@ protocol PlayerRepository {
 }
 
 final class PlayerRepositoryImpl: PlayerRepository {
-    private let httpClient: URLSessionHTTPClient
     private let appLocalLoader: AppLocalLoader
-    private let playerRepositoryParams: PlayerRepositoryParams
+    private let team: Team
+    private let remoteLoaders: PlayerRemoteLoaders
 
-    init(httpClient: URLSessionHTTPClient, appLocalLoader: AppLocalLoader, playerRepositoryParams: PlayerRepositoryParams) {
-        self.httpClient = httpClient
+    init(appLocalLoader: AppLocalLoader,
+         team: Team,
+         remoteLoaders: PlayerRemoteLoaders) {
         self.appLocalLoader = appLocalLoader
-        self.playerRepositoryParams = playerRepositoryParams
+        self.team = team
+        self.remoteLoaders = remoteLoaders
     }
     
     func loadPlayers() async throws -> [Player] {
-        if playerRepositoryParams.team.dataSource == .flashLive {
-            do {
-                return try await appLocalLoader.localPlayerLoader.load(
-                    with: playerRepositoryParams.team.id,
-                    dataSource: .flashLive
-                )
-            } catch {
-                let url = PlayerEndpoint.getFlashLive(
-                    sportId: 1,
-                    locale: "es_MX",
-                    teamId: playerRepositoryParams.team.id)
-                    .url(baseURL: playerRepositoryParams.flashLiveEndpointConfiguration.url)
-                
-                let (data, response) = try await httpClient.get(
-                    from: url,
-                    with: playerRepositoryParams.flashLiveEndpointConfiguration.host
-                )
-                
-                let players = try PlayerMapper.map(data, from: response, with: .flashLive)
-                
-                try? await appLocalLoader.localPlayerLoader.save(
-                    players,
-                    with: playerRepositoryParams.team.id
-                )
-                
-                return players
+        do {
+            return try await appLocalLoader.localPlayerLoader.load(
+                with: team.id,
+                dataSource: team.dataSource
+            )
+        } catch {
+            guard let remoteLoader = remoteLoaders.loader(for: team.dataSource) else {
+                throw error
             }
-        } else {
-            do {
-                return try await appLocalLoader.localPlayerLoader.load(
-                    with: playerRepositoryParams.team.id,
-                    dataSource: .transferMarket
-                )
-            } catch {
-                let url = PlayerEndpoint.getTransferMarket(
-                    id: playerRepositoryParams.team.id,
-                    domain: "es")
-                    .url(baseURL: playerRepositoryParams.transferMarketEndpointConfiguration.url)
-                
-                let (data, response) = try await httpClient.get(
-                    from: url,
-                    with: playerRepositoryParams.transferMarketEndpointConfiguration.host
-                )
-                
-                let players = try PlayerMapper.map(data, from: response, with: .transferMarket)
-                
-                try? await appLocalLoader.localPlayerLoader.save(
-                    players,
-                    with: playerRepositoryParams.team.id)
-                
-                return players
-            }
+            
+            let players = try await remoteLoader.loadPlayers(for: team)
+            
+            try? await appLocalLoader.localPlayerLoader.save(
+                players,
+                with: team.id
+            )
+            
+            return players
         }
     }
 }

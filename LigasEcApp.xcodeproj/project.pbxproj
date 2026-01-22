@@ -41,6 +41,7 @@
 		B0CCD60D2DE8D73700AE51EE /* ImageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6072DE8D73700AE51EE /* ImageMapper.swift */; };
 		B0CCD61C2DE8D75100AE51EE /* ImageMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6182DE8D75100AE51EE /* ImageMapperTests.swift */; };
 		B0CCD62C2DE8D79200AE51EE /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6292DE8D79200AE51EE /* URLSessionHTTPClientTests.swift */; };
+		B0E27BFE2ECE85E3002F84B1 /* RemoteLoaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E27BFD2ECE85E3002F84B1 /* RemoteLoaders.swift */; };
 		B0F482382D920BF400874AA8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B0F482372D920BF400874AA8 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +93,7 @@
 		B0CCD6072DE8D73700AE51EE /* ImageMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMapper.swift; sourceTree = "<group>"; };
 		B0CCD6182DE8D75100AE51EE /* ImageMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMapperTests.swift; sourceTree = "<group>"; };
 		B0CCD6292DE8D79200AE51EE /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
+		B0E27BFD2ECE85E3002F84B1 /* RemoteLoaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLoaders.swift; sourceTree = "<group>"; };
 		B0F482372D920BF400874AA8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -390,6 +392,7 @@
 		B0C1AE8F2E3A7E2D0077D6CA /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				B0E27BFD2ECE85E3002F84B1 /* RemoteLoaders.swift */,
 				B0C1AE8C2E3A7E2D0077D6CA /* LeagueRepository.swift */,
 				B0C1AE8E2E3A7E2D0077D6CA /* TeamRepository.swift */,
 				B0C1AE8D2E3A7E2D0077D6CA /* PlayerRepository.swift */,
@@ -602,6 +605,7 @@
 				B049A3832DB0237300FA172C /* URLImageCache.swift in Sources */,
 				B053618F2D821B3300BE41F0 /* ManagedTeam.swift in Sources */,
 				B05361942D821B3300BE41F0 /* CachePolicy.swift in Sources */,
+				B0E27BFE2ECE85E3002F84B1 /* RemoteLoaders.swift in Sources */,
 				B053621E2D8232CA00BE41F0 /* ManagedLeague.swift in Sources */,
 				B05362322D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift in Sources */,
 				B053621C2D82326900BE41F0 /* CoreDataLigasEcStore+LeagueStore.swift in Sources */,

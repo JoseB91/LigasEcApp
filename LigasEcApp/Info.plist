@@ -6,6 +6,24 @@
     <false/>
 	<key>API_KEY</key>
 	<string>$(API_KEY)</string>
+	<key>FLASHLIVE_BASE_URL</key>
+	<string>$(FLASHLIVE_BASE_URL)</string>
+	<key>FLASHLIVE_HOST</key>
+	<string>$(FLASHLIVE_HOST)</string>
+	<key>FLASHLIVE_LOCALE</key>
+	<string>$(FLASHLIVE_LOCALE)</string>
+	<key>FLASHLIVE_TOURNAMENT_STAGE_ID</key>
+	<string>$(FLASHLIVE_TOURNAMENT_STAGE_ID)</string>
+	<key>FLASHLIVE_STANDING_TYPE</key>
+	<string>$(FLASHLIVE_STANDING_TYPE)</string>
+	<key>FLASHLIVE_SPORT_ID</key>
+	<string>$(FLASHLIVE_SPORT_ID)</string>
+	<key>TRANSFERMARKET_BASE_URL</key>
+	<string>$(TRANSFERMARKET_BASE_URL)</string>
+	<key>TRANSFERMARKET_HOST</key>
+	<string>$(TRANSFERMARKET_HOST)</string>
+	<key>TRANSFERMARKET_DOMAIN</key>
+	<string>$(TRANSFERMARKET_DOMAIN)</string>
 	<key>SERIE_B_ENABLED</key>
 	<string>$(SERIE_B_ENABLED)</string>
 	<key>UILaunchScreen</key>

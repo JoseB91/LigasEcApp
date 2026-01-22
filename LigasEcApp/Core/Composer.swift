@@ -13,28 +13,31 @@ class Composer {
     private let transferMarketEndpointConfiguration: EndpointConfiguration
     private let httpClient: URLSessionHTTPClient
     private let appLocalLoader: AppLocalLoader
+    private let teamRemoteLoaders: TeamRemoteLoaders
+    private let playerRemoteLoaders: PlayerRemoteLoaders
 
     init(flashLiveEndpointConfiguration: EndpointConfiguration,
          transferMarketEndpointConfiguration: EndpointConfiguration,
          httpClient: URLSessionHTTPClient,
-         appLocalLoader: AppLocalLoader) {
+         appLocalLoader: AppLocalLoader,
+         teamRemoteLoaders: TeamRemoteLoaders,
+         playerRemoteLoaders: PlayerRemoteLoaders) {
         self.flashLiveEndpointConfiguration = flashLiveEndpointConfiguration
         self.transferMarketEndpointConfiguration = transferMarketEndpointConfiguration
         self.httpClient = httpClient
         self.appLocalLoader = appLocalLoader
+        self.teamRemoteLoaders = teamRemoteLoaders
+        self.playerRemoteLoaders = playerRemoteLoaders
     }
     
     static func makeComposer() -> Composer {
         
-        let flashLiveEndpointConfiguration = EndpointConfiguration(
-            url: URL(string: "https://flashlive-sports.p.rapidapi.com/v1/")!,
-            host: "flashlive-sports.p.rapidapi.com"
-        )
-        
-        let transferMarketEndpointConfiguration = EndpointConfiguration(
-            url: URL(string:"https://transfermarket.p.rapidapi.com/")!,
-            host: "transfermarket.p.rapidapi.com"
-        )
+        guard
+            let flashLiveConfig = EndpointConfiguration.makeFlashLive(),
+            let transferMarketConfig = EndpointConfiguration.makeTransferMarket()
+        else {
+            fatalError("Missing endpoint configuration values. Verify Config.xcconfig/Info.plist settings.")
+        }
         
         let httpClient = makeHTTPClient()
         
@@ -49,36 +52,66 @@ class Composer {
                                             localTeamLoader: localTeamLoader,
                                             localPlayerLoader: localPlayerLoader,
                                             localImageLoader: localImageLoader)
+
+        let teamRemoteLoaders = TeamRemoteLoaders(loaders: [
+            .flashLive: FlashLiveTeamRemoteLoader(
+                httpClient: httpClient,
+                configuration: flashLiveConfig
+            ),
+            .transferMarket: TransferMarketTeamRemoteLoader(
+                httpClient: httpClient,
+                configuration: transferMarketConfig
+            )
+        ])
         
-        return Composer(flashLiveEndpointConfiguration: flashLiveEndpointConfiguration,
-                        transferMarketEndpointConfiguration: transferMarketEndpointConfiguration,
+        let playerRemoteLoaders = PlayerRemoteLoaders(loaders: [
+            .flashLive: FlashLivePlayerRemoteLoader(
+                httpClient: httpClient,
+                configuration: flashLiveConfig
+            ),
+            .transferMarket: TransferMarketPlayerRemoteLoader(
+                httpClient: httpClient,
+                configuration: transferMarketConfig
+            )
+        ])
+        
+        return Composer(flashLiveEndpointConfiguration: flashLiveConfig,
+                        transferMarketEndpointConfiguration: transferMarketConfig,
                         httpClient: httpClient,
-                        appLocalLoader: appLocalLoader)
+                        appLocalLoader: appLocalLoader,
+                        teamRemoteLoaders: teamRemoteLoaders,
+                        playerRemoteLoaders: playerRemoteLoaders)
     }
     
     private static func makeHTTPClient() -> URLSessionHTTPClient {
-        var apiKey = ""
-        
-        do {
-            apiKey = try KeychainManager.retrieveAPIKey()
-        } catch KeychainError.itemNotFound {
-            if let envAPIKey = ProcessInfo.processInfo.environment["API_KEY"], !envAPIKey.isEmpty {
-                apiKey = envAPIKey
-                try? KeychainManager.saveAPIKey(apiKey)
-            } else if let bundleAPIKey = Bundle.main.infoDictionary?["API_KEY"] as? String,
-               !bundleAPIKey.isEmpty {
-                apiKey = bundleAPIKey
-                try? KeychainManager.saveAPIKey(apiKey)
-            } else {
-                Logger.composer.error("No API key found in Keychain or Bundle")
-            }
-        } catch {
-            Logger.composer.error("Error retrieving API key : \(error.localizedDescription)")
+        guard let apiKey = retrieveAPIKey(), !apiKey.isEmpty else {
+            fatalError("No RapidAPI key configured. Set API_KEY in Config.xcconfig or the keychain.")
         }
         
         return URLSessionHTTPClient(
             session: URLSession(configuration: .ephemeral),
             apiKey: apiKey)
+    }
+
+    private static func retrieveAPIKey() -> String? {
+        do {
+            return try KeychainManager.retrieveAPIKey()
+        } catch KeychainError.itemNotFound {
+            if let envAPIKey = ProcessInfo.processInfo.environment["API_KEY"], !envAPIKey.isEmpty {
+                try? KeychainManager.saveAPIKey(envAPIKey)
+                return envAPIKey
+            }
+            if let bundleAPIKey = Bundle.main.infoDictionary?["API_KEY"] as? String,
+               !bundleAPIKey.isEmpty {
+                try? KeychainManager.saveAPIKey(bundleAPIKey)
+                return bundleAPIKey
+            }
+            Logger.composer.error("No API key found in Keychain, environment, or Info.plist")
+            return nil
+        } catch {
+            Logger.composer.error("Error retrieving API key : \(error.localizedDescription)")
+            return nil
+        }
     }
     
     private static func makeStore() -> LeagueStore & ImageStore & TeamStore & PlayerStore {
@@ -100,28 +133,16 @@ class Composer {
     }
     
     func composeTeamViewModel(for league: League) -> TeamViewModel {
-        let teamRepositoryParams = TeamRepositoryParams(
-            league: league,
-            flashLiveEndpointConfiguration: flashLiveEndpointConfiguration,
-            transferMarketEndpointConfiguration: transferMarketEndpointConfiguration
-        )
-        
-        let repository = TeamRepositoryImpl(httpClient: httpClient,
-                                            appLocalLoader: appLocalLoader,
-                                            teamRepositoryParams: teamRepositoryParams)
+        let repository = TeamRepositoryImpl(appLocalLoader: appLocalLoader,
+                                            league: league,
+                                            remoteLoaders: teamRemoteLoaders)
         return TeamViewModel(repository: repository, league: league)
     }
     
     func composePlayerViewModel(for team: Team) -> PlayerViewModel {
-        let playerRepositoryParams = PlayerRepositoryParams(
-            team: team,
-            flashLiveEndpointConfiguration: flashLiveEndpointConfiguration,
-            transferMarketEndpointConfiguration: transferMarketEndpointConfiguration
-        )
-        
-        let repository = PlayerRepositoryImpl(httpClient: httpClient,
-                                              appLocalLoader: appLocalLoader,
-                                              playerRepositoryParams: playerRepositoryParams)
+        let repository = PlayerRepositoryImpl(appLocalLoader: appLocalLoader,
+                                              team: team,
+                                              remoteLoaders: playerRemoteLoaders)
         
         return PlayerViewModel(repository: repository)
     }
@@ -145,6 +166,65 @@ class Composer {
 struct EndpointConfiguration {
     let url: URL
     let host: String
+    let locale: String?
+    let tournamentStageId: String?
+    let standingType: String?
+    let sportId: Int?
+    let domain: String?
+    
+    static func makeFlashLive(bundle: Bundle = .main) -> EndpointConfiguration? {
+        guard
+            let baseURLString = bundle.infoValue(for: "FLASHLIVE_BASE_URL"),
+            let host = bundle.infoValue(for: "FLASHLIVE_HOST"),
+            let locale = bundle.infoValue(for: "FLASHLIVE_LOCALE"),
+            let standingType = bundle.infoValue(for: "FLASHLIVE_STANDING_TYPE"),
+            let tournamentStageId = bundle.infoValue(for: "FLASHLIVE_TOURNAMENT_STAGE_ID"),
+            let sportIdString = bundle.infoValue(for: "FLASHLIVE_SPORT_ID"),
+            let sportId = Int(sportIdString),
+            let url = URL(string: baseURLString)
+        else {
+            Logger.composer.error("Missing FlashLive configuration values")
+            return nil
+        }
+        
+        return EndpointConfiguration(
+            url: url,
+            host: host,
+            locale: locale,
+            tournamentStageId: tournamentStageId,
+            standingType: standingType,
+            sportId: sportId,
+            domain: nil
+        )
+    }
+    
+    static func makeTransferMarket(bundle: Bundle = .main) -> EndpointConfiguration? {
+        guard
+            let baseURLString = bundle.infoValue(for: "TRANSFERMARKET_BASE_URL"),
+            let host = bundle.infoValue(for: "TRANSFERMARKET_HOST"),
+            let domain = bundle.infoValue(for: "TRANSFERMARKET_DOMAIN"),
+            let url = URL(string: baseURLString)
+        else {
+            Logger.composer.error("Missing TransferMarket configuration values")
+            return nil
+        }
+        
+        return EndpointConfiguration(
+            url: url,
+            host: host,
+            locale: nil,
+            tournamentStageId: nil,
+            standingType: nil,
+            sportId: nil,
+            domain: domain
+        )
+    }
+}
+
+private extension Bundle {
+    func infoValue(for key: String) -> String? {
+        infoDictionary?[key] as? String
+    }
 }
 
 struct AppLocalLoader {
@@ -152,18 +232,6 @@ struct AppLocalLoader {
     let localTeamLoader: LocalTeamLoader
     let localPlayerLoader: LocalPlayerLoader
     let localImageLoader: LocalImageLoader
-}
-
-struct TeamRepositoryParams {
-    let league: League
-    let flashLiveEndpointConfiguration: EndpointConfiguration
-    let transferMarketEndpointConfiguration: EndpointConfiguration
-}
-
-struct PlayerRepositoryParams {
-    let team: Team
-    let flashLiveEndpointConfiguration: EndpointConfiguration
-    let transferMarketEndpointConfiguration: EndpointConfiguration
 }
 
 extension Logger {
