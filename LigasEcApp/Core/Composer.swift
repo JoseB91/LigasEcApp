@@ -85,7 +85,7 @@ class Composer {
     
     private static func makeHTTPClient() -> URLSessionHTTPClient {
         guard let apiKey = retrieveAPIKey(), !apiKey.isEmpty else {
-            fatalError("No RapidAPI key configured. Set API_KEY in the environment or store it in the keychain.")
+            fatalError("No RapidAPI key configured. Set API_KEY in Config.local.xcconfig, the environment, or the keychain.")
         }
         
         return URLSessionHTTPClient(
@@ -101,7 +101,13 @@ class Composer {
                 try? KeychainManager.saveAPIKey(envAPIKey)
                 return envAPIKey
             }
-            Logger.composer.error("No API key found in Keychain or environment")
+            if let bundleAPIKey = Bundle.main.infoDictionary?["API_KEY"] as? String,
+               !bundleAPIKey.isEmpty,
+               !bundleAPIKey.contains("$(") {
+                try? KeychainManager.saveAPIKey(bundleAPIKey)
+                return bundleAPIKey
+            }
+            Logger.composer.error("No API key found in Keychain, environment, or Info.plist")
             return nil
         } catch {
             Logger.composer.error("Error retrieving API key : \(error.localizedDescription)")

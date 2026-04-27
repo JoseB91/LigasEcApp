@@ -44,8 +44,15 @@ final class LeagueRepositoryImpl: LeagueRepository {
             
             try? await appLocalLoader.localLeagueLoader.save(hardcodedLeagues)
             
+            let errorModel: ErrorModel?
+            if case LocalLeagueLoaderError.emptyData = error {
+                errorModel = nil
+            } else {
+                errorModel = ErrorModel(message: error.localizedDescription)
+            }
+            
             return LeagueLoadResult(leagues: hardcodedLeagues,
-                                    errorModel: ErrorModel(message: error.localizedDescription))
+                                    errorModel: errorModel)
         }
     }
 }

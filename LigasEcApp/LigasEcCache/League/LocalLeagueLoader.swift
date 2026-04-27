@@ -7,6 +7,10 @@
 
 import Foundation
 
+public enum LocalLeagueLoaderError: Error {
+    case emptyData
+}
+
 public final class LocalLeagueLoader {
     private let store: LeagueStore
     private let currentDate: () -> Date
@@ -32,13 +36,11 @@ extension LocalLeagueLoader: LeagueCache {
 }
 
 extension LocalLeagueLoader {
-    private struct EmptyData: Error {}
-    
     public func load() async throws -> [League] {
         if let retrievedLeagues = try await store.retrieve(), !retrievedLeagues.leagues.isEmpty {
             return retrievedLeagues.leagues.toModels()
         } else {
-            throw EmptyData()
+            throw LocalLeagueLoaderError.emptyData
         }
     }
 }
