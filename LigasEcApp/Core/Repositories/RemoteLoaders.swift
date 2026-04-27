@@ -29,28 +29,27 @@ final class FlashLiveTeamRemoteLoader: RemoteTeamLoader {
     
     private let httpClient: HTTPClient
     private let configuration: EndpointConfiguration
-    private let standingType: String
-    private let locale: String
-    private let tournamentStageId: String
     
     init(httpClient: HTTPClient,
-         configuration: EndpointConfiguration,
-         standingType: String = "overall",
-         locale: String = "es_MX",
-         tournamentStageId: String = "x2nVXCWr") {
+         configuration: EndpointConfiguration) {
         self.httpClient = httpClient
         self.configuration = configuration
-        self.standingType = standingType
-        self.locale = locale
-        self.tournamentStageId = tournamentStageId
     }
     
     func loadTeams(for league: League) async throws -> [Team] {
+        guard
+            let standingType = configuration.standingType,
+            let locale = configuration.locale,
+            let tournamentStageId = configuration.tournamentStageId
+        else {
+            throw EndpointConfigurationError.missingFlashLiveValues
+        }
+
         let url = TeamEndpoint.getFlashLive(
             seasonId: league.id,
-            standingType: configuration.standingType ?? standingType,
-            locale: configuration.locale ?? locale,
-            tournamentStageId: configuration.tournamentStageId ?? tournamentStageId
+            standingType: standingType,
+            locale: locale,
+            tournamentStageId: tournamentStageId
         ).url(baseURL: configuration.url)
         
         let (data, response) = try await httpClient.get(from: url, with: configuration.host)
@@ -62,20 +61,21 @@ final class TransferMarketTeamRemoteLoader: RemoteTeamLoader {
     
     private let httpClient: HTTPClient
     private let configuration: EndpointConfiguration
-    private let domain: String
     
     init(httpClient: HTTPClient,
-         configuration: EndpointConfiguration,
-         domain: String = "es") {
+         configuration: EndpointConfiguration) {
         self.httpClient = httpClient
         self.configuration = configuration
-        self.domain = domain
     }
     
     func loadTeams(for league: League) async throws -> [Team] {
+        guard let domain = configuration.domain else {
+            throw EndpointConfigurationError.missingTransferMarketValues
+        }
+
         let url = TeamEndpoint.getTransferMarket(
             id: league.id,
-            domain: configuration.domain ?? domain
+            domain: domain
         ).url(baseURL: configuration.url)
         
         let (data, response) = try await httpClient.get(from: url, with: configuration.host)
@@ -105,23 +105,24 @@ final class FlashLivePlayerRemoteLoader: RemotePlayerLoader {
     
     private let httpClient: URLSessionHTTPClient
     private let configuration: EndpointConfiguration
-    private let sportId: Int
-    private let locale: String
     
     init(httpClient: URLSessionHTTPClient,
-         configuration: EndpointConfiguration,
-         sportId: Int = 1,
-         locale: String = "es_MX") {
+         configuration: EndpointConfiguration) {
         self.httpClient = httpClient
         self.configuration = configuration
-        self.sportId = sportId
-        self.locale = locale
     }
     
     func loadPlayers(for team: Team) async throws -> [Player] {
+        guard
+            let sportId = configuration.sportId,
+            let locale = configuration.locale
+        else {
+            throw EndpointConfigurationError.missingFlashLiveValues
+        }
+
         let url = PlayerEndpoint.getFlashLive(
-            sportId: configuration.sportId ?? sportId,
-            locale: configuration.locale ?? locale,
+            sportId: sportId,
+            locale: locale,
             teamId: team.id
         ).url(baseURL: configuration.url)
         
@@ -134,17 +135,18 @@ final class TransferMarketPlayerRemoteLoader: RemotePlayerLoader {
     
     private let httpClient: URLSessionHTTPClient
     private let configuration: EndpointConfiguration
-    private let domain: String
     
     init(httpClient: URLSessionHTTPClient,
-         configuration: EndpointConfiguration,
-         domain: String = "es") {
+         configuration: EndpointConfiguration) {
         self.httpClient = httpClient
         self.configuration = configuration
-        self.domain = domain
     }
     
     func loadPlayers(for team: Team) async throws -> [Player] {
+        guard let domain = configuration.domain else {
+            throw EndpointConfigurationError.missingTransferMarketValues
+        }
+
         let url = PlayerEndpoint.getTransferMarket(
             id: team.id,
             domain: domain
@@ -153,4 +155,9 @@ final class TransferMarketPlayerRemoteLoader: RemotePlayerLoader {
         let (data, response) = try await httpClient.get(from: url, with: configuration.host)
         return try PlayerMapper.map(data, from: response, with: .transferMarket)
     }
+}
+
+enum EndpointConfigurationError: Error {
+    case missingFlashLiveValues
+    case missingTransferMarketValues
 }

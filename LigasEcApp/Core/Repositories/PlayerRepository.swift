@@ -25,24 +25,26 @@ final class PlayerRepositoryImpl: PlayerRepository {
     }
     
     func loadPlayers() async throws -> [Player] {
-        do {
-            return try await appLocalLoader.localPlayerLoader.load(
-                with: team.id,
-                dataSource: team.dataSource
-            )
-        } catch {
-            guard let remoteLoader = remoteLoaders.loader(for: team.dataSource) else {
-                throw error
+        try await CacheBackedRepositoryLoader.load(
+            dataSource: team.dataSource,
+            loadLocal: {
+                try await appLocalLoader.localPlayerLoader.load(
+                    with: team.id,
+                    dataSource: team.dataSource
+                )
+            },
+            resolveRemoteLoader: { dataSource in
+                remoteLoaders.loader(for: dataSource)
+            },
+            loadRemote: { remoteLoader in
+                try await remoteLoader.loadPlayers(for: team)
+            },
+            save: { players in
+                try? await appLocalLoader.localPlayerLoader.save(
+                    players,
+                    with: team.id
+                )
             }
-            
-            let players = try await remoteLoader.loadPlayers(for: team)
-            
-            try? await appLocalLoader.localPlayerLoader.save(
-                players,
-                with: team.id
-            )
-            
-            return players
-        }
+        )
     }
 }

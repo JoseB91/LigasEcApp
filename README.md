@@ -25,6 +25,10 @@
 - **Swift** - Primary programming language
 - **GitHub Actions** - Continuous Integration/Deployment
 
+## Setup
+
+The app requires a RapidAPI key at runtime. Provide it through the `API_KEY` environment variable on first launch; the app stores it in Keychain after a successful read.
+
 ### 🗄️ Data & Persistence
 
 - **CoreData** - Local database for offline capability
