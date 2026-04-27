@@ -35,12 +35,26 @@ struct PlayerView: View {
                     if let positionGroup = groupedPlayers[position],
                        !positionGroup.isEmpty,
                        let title = playerViewModel.title(for: position) {
-                        Section(header: title) {
+                        Section {
                             ForEach(positionGroup) { player in
-                                HStack {
+                                HStack(spacing: 8) {
+                                    Spacer(minLength: 4)
+                                    if position != .coach {
+                                        ZStack {
+                                            ShirtIconView()
+                                                .frame(width: 36, height: 36)
+                                            if let number = player.number {
+                                                Text("\(String(number))")
+                                                    .font(.caption)
+                                                    .foregroundColor(.primary)
+                                            }
+                                        }
+                                        .accessibilityLabel(player.number != nil ? "Player number \(player.number!)" : "")
+                                        .padding(.trailing, 10)
+                                    }
                                     if let url = player.photoURL {
                                         imageViewLoader(url, .player)
-                                            .frame(width: 72, height: 36)
+                                            .frame(width: 56, height: 56)
                                             .clipShape(Circle())
                                             .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))
                                             .accessibilityLabel(player.name)
@@ -48,13 +62,16 @@ struct PlayerView: View {
                                         Image(systemName: "person.circle")
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: 72, height: 36)
+                                            .frame(width: 56, height: 56)
                                             .accessibilityLabel(Constants.noPhotoAvailable)
                                     }
                                     Text(player.name)
                                         .font(.body)
                                         .foregroundColor(.primary)
-                                        .frame(width: 150, alignment: .leading)
+                                        .lineLimit(2)
+                                        .minimumScaleFactor(0.85)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Spacer(minLength: 4)
                                     if let flagId = player.flagId {
                                         Image("country_flag_\(flagId)")
                                             .resizable()
@@ -66,23 +83,16 @@ struct PlayerView: View {
                                             .frame(width: 24, height: 16)
                                             .accessibilityLabel(nationality)
                                     }
-                                    if position != .coach {
-                                        Spacer()
-                                        ZStack{
-                                            Image("tshirt")
-                                                .renderingMode(.template)
-                                                .foregroundStyle(Color.primary)
-                                            if let number = player.number {
-                                                Text("\(String(number))")
-                                                    .font(.caption)
-                                                    .foregroundColor(.primary)
-                                            }
-                                        }
-                                        .accessibilityLabel(player.number != nil ? "Player number \(player.number!)" : "")
-                                    }
+                                    Spacer()
+                                        .frame(width: 16)
                                 }
                                 .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                             }
+                        } header: {
+                            title
+                                .font(.subheadline.weight(.semibold))
+                                .textCase(nil)
                         }
                     }
                 }
@@ -99,6 +109,16 @@ struct PlayerView: View {
             await playerViewModel.loadIfNeeded()
         }
         .withErrorAlert(errorModel: $playerViewModel.errorModel)
+    }
+}
+
+private struct ShirtIconView: View {
+    var body: some View {
+        Image("tshirt")
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
+            .foregroundStyle(Color.primary)
     }
 }
 

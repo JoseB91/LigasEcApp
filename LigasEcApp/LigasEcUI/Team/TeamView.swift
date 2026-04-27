@@ -16,7 +16,6 @@ struct TeamView: View {
     private let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16),
-        GridItem(.flexible(), spacing: 16),
         GridItem(.flexible())
     ]
 
@@ -81,18 +80,18 @@ struct TeamCardView: View {
     var body: some View {
         VStack(spacing: 8) {
             imageViewLoader(team.logoURL, .team)
-                .frame(width: 56, height: 56)
+                .frame(width: 72, height: 72)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .shadow(radius: 2)
                 .accessibilityLabel(team.name)
             Text(team.name)
-                .font(.caption.weight(.semibold))
+                .font(.subheadline.weight(.semibold))
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .minimumScaleFactor(0.75)
         }
-        .frame(maxWidth: .infinity, minHeight: 112)
+        .frame(maxWidth: .infinity, minHeight: 118)
         .padding(.horizontal, 6)
         .padding(.vertical, 10)
         .background(
@@ -139,14 +138,14 @@ struct TeamCardPlaceholderView: View {
         VStack(spacing: 8) {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.gray.opacity(0.3))
-                .frame(width: 56, height: 56)
+                .frame(width: 72, height: 72)
                 .shimmering(active: true)
             RoundedRectangle(cornerRadius: 5)
                 .fill(Color.gray.opacity(0.25))
-                .frame(width: 52, height: 12)
+                .frame(width: 72, height: 14)
                 .shimmering(active: true)
         }
-        .frame(maxWidth: .infinity, minHeight: 112)
+        .frame(maxWidth: .infinity, minHeight: 118)
         .padding(.horizontal, 6)
         .padding(.vertical, 10)
         .background(
