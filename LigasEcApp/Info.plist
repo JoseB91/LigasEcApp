@@ -18,6 +18,22 @@
 	<string>$(FLASHLIVE_STANDING_TYPE)</string>
 	<key>FLASHLIVE_SPORT_ID</key>
 	<string>$(FLASHLIVE_SPORT_ID)</string>
+	<key>SERIE_A_LEAGUE_ID</key>
+	<string>$(SERIE_A_LEAGUE_ID)</string>
+	<key>SERIE_A_LEAGUE_NAME</key>
+	<string>$(SERIE_A_LEAGUE_NAME)</string>
+	<key>SERIE_A_LEAGUE_LOGO_URL</key>
+	<string>$(SERIE_A_LEAGUE_LOGO_URL)</string>
+	<key>SERIE_A_LEAGUE_DATA_SOURCE</key>
+	<string>$(SERIE_A_LEAGUE_DATA_SOURCE)</string>
+	<key>SERIE_B_LEAGUE_ID</key>
+	<string>$(SERIE_B_LEAGUE_ID)</string>
+	<key>SERIE_B_LEAGUE_NAME</key>
+	<string>$(SERIE_B_LEAGUE_NAME)</string>
+	<key>SERIE_B_LEAGUE_LOGO_URL</key>
+	<string>$(SERIE_B_LEAGUE_LOGO_URL)</string>
+	<key>SERIE_B_LEAGUE_DATA_SOURCE</key>
+	<string>$(SERIE_B_LEAGUE_DATA_SOURCE)</string>
 	<key>TRANSFERMARKET_BASE_URL</key>
 	<string>$(TRANSFERMARKET_BASE_URL)</string>
 	<key>TRANSFERMARKET_HOST</key>

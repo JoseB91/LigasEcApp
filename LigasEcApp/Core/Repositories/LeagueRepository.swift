@@ -19,10 +19,12 @@ protocol LeagueRepository {
 final class LeagueRepositoryImpl: LeagueRepository {
     private let httpClient: HTTPClient
     private let appLocalLoader: AppLocalLoader
+    private let bootstrapLeagues: [League]
 
-    init(httpClient: HTTPClient, appLocalLoader: AppLocalLoader) {
+    init(httpClient: HTTPClient, appLocalLoader: AppLocalLoader, bootstrapLeagues: [League]) {
         self.httpClient = httpClient
         self.appLocalLoader = appLocalLoader
+        self.bootstrapLeagues = bootstrapLeagues
     }
     
     func loadLeagues() async -> LeagueLoadResult {
@@ -31,18 +33,7 @@ final class LeagueRepositoryImpl: LeagueRepository {
             return LeagueLoadResult(leagues: try await appLocalLoader.localLeagueLoader.load(),
                                     errorModel: nil)
         } catch {
-            let hardcodedLeagues = [
-                League(id: "trd6vSd3",
-                       name: "LigaPro Serie A",
-                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
-                       dataSource: .flashLive),
-                League(id: "EC2L",
-                       name: "LigaPro Serie B",
-                       logoURL: URL(string: "https://www.flashscore.com/res/image/data/2g15S2DO-GdicJTVi.png")!,
-                       dataSource: .transferMarket)
-            ]
-            
-            try? await appLocalLoader.localLeagueLoader.save(hardcodedLeagues)
+            try? await appLocalLoader.localLeagueLoader.save(bootstrapLeagues)
             
             let errorModel: ErrorModel?
             if case LocalLeagueLoaderError.emptyData = error {
@@ -51,7 +42,7 @@ final class LeagueRepositoryImpl: LeagueRepository {
                 errorModel = ErrorModel(message: error.localizedDescription)
             }
             
-            return LeagueLoadResult(leagues: hardcodedLeagues,
+            return LeagueLoadResult(leagues: bootstrapLeagues,
                                     errorModel: errorModel)
         }
     }

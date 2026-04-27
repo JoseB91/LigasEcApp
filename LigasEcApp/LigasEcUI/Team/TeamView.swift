@@ -15,6 +15,8 @@ struct TeamView: View {
 
     private let columns = [
         GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16),
         GridItem(.flexible())
     ]
 
@@ -77,23 +79,26 @@ struct TeamCardView: View {
     let imageViewLoader: (URL, Table) -> ImageView
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
             imageViewLoader(team.logoURL, .team)
-                .frame(width: 96, height: 96)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .shadow(radius: 4)
+                .frame(width: 56, height: 56)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .shadow(radius: 2)
                 .accessibilityLabel(team.name)
             Text(team.name)
-                .font(.headline)
+                .font(.caption.weight(.semibold))
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 4)
+                .lineLimit(2)
+                .minimumScaleFactor(0.75)
         }
-        .padding()
+        .frame(maxWidth: .infinity, minHeight: 112)
+        .padding(.horizontal, 6)
+        .padding(.vertical, 10)
         .background(
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 16)
                 .fill(Color(.secondarySystemBackground))
-                .shadow(color: .black.opacity(0.06), radius: 4, x: 0, y: 2)
+                .shadow(color: .black.opacity(0.05), radius: 3, x: 0, y: 2)
         )
     }
 }
@@ -131,21 +136,23 @@ struct TeamCardPlaceholderView: View {
     @State private var isAnimating = false
 
     var body: some View {
-        VStack(spacing: 12) {
-            RoundedRectangle(cornerRadius: 16)
+        VStack(spacing: 8) {
+            RoundedRectangle(cornerRadius: 12)
                 .fill(Color.gray.opacity(0.3))
-                .frame(width: 96, height: 96)
+                .frame(width: 56, height: 56)
                 .shimmering(active: true)
             RoundedRectangle(cornerRadius: 5)
                 .fill(Color.gray.opacity(0.25))
-                .frame(width: 80, height: 16)
+                .frame(width: 52, height: 12)
                 .shimmering(active: true)
         }
-        .padding()
+        .frame(maxWidth: .infinity, minHeight: 112)
+        .padding(.horizontal, 6)
+        .padding(.vertical, 10)
         .background(
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 16)
                 .fill(Color(.secondarySystemBackground))
-                .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+                .shadow(color: .black.opacity(0.05), radius: 3, x: 0, y: 2)
         )
         .opacity(0.85)
     }

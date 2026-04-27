@@ -15,19 +15,22 @@ class Composer {
     private let appLocalLoader: AppLocalLoader
     private let teamRemoteLoaders: TeamRemoteLoaders
     private let playerRemoteLoaders: PlayerRemoteLoaders
+    private let bootstrapLeagues: [League]
 
     init(flashLiveEndpointConfiguration: EndpointConfiguration,
          transferMarketEndpointConfiguration: EndpointConfiguration,
          httpClient: URLSessionHTTPClient,
          appLocalLoader: AppLocalLoader,
          teamRemoteLoaders: TeamRemoteLoaders,
-         playerRemoteLoaders: PlayerRemoteLoaders) {
+         playerRemoteLoaders: PlayerRemoteLoaders,
+         bootstrapLeagues: [League]) {
         self.flashLiveEndpointConfiguration = flashLiveEndpointConfiguration
         self.transferMarketEndpointConfiguration = transferMarketEndpointConfiguration
         self.httpClient = httpClient
         self.appLocalLoader = appLocalLoader
         self.teamRemoteLoaders = teamRemoteLoaders
         self.playerRemoteLoaders = playerRemoteLoaders
+        self.bootstrapLeagues = bootstrapLeagues
     }
     
     static func makeComposer() -> Composer {
@@ -74,13 +77,16 @@ class Composer {
                 configuration: transferMarketConfig
             )
         ])
+
+        let bootstrapLeagues = makeBootstrapLeagues()
         
         return Composer(flashLiveEndpointConfiguration: flashLiveConfig,
                         transferMarketEndpointConfiguration: transferMarketConfig,
                         httpClient: httpClient,
                         appLocalLoader: appLocalLoader,
                         teamRemoteLoaders: teamRemoteLoaders,
-                        playerRemoteLoaders: playerRemoteLoaders)
+                        playerRemoteLoaders: playerRemoteLoaders,
+                        bootstrapLeagues: bootstrapLeagues)
     }
     
     private static func makeHTTPClient() -> URLSessionHTTPClient {
@@ -129,7 +135,8 @@ class Composer {
     
     func composeLeagueViewModel() -> LeagueViewModel {
         let repository = LeagueRepositoryImpl(httpClient: httpClient,
-                                              appLocalLoader: appLocalLoader)
+                                              appLocalLoader: appLocalLoader,
+                                              bootstrapLeagues: bootstrapLeagues)
         return LeagueViewModel(repository: repository)
     }
     
@@ -161,6 +168,51 @@ class Composer {
     
     func validateCache() async throws {
         try await appLocalLoader.localLeagueLoader.validateCache()
+    }
+
+    private static func makeBootstrapLeagues(bundle: Bundle = .main) -> [League] {
+        guard
+            let serieA = makeLeague(
+                bundle: bundle,
+                idKey: "SERIE_A_LEAGUE_ID",
+                nameKey: "SERIE_A_LEAGUE_NAME",
+                logoURLKey: "SERIE_A_LEAGUE_LOGO_URL",
+                dataSourceKey: "SERIE_A_LEAGUE_DATA_SOURCE"
+            ),
+            let serieB = makeLeague(
+                bundle: bundle,
+                idKey: "SERIE_B_LEAGUE_ID",
+                nameKey: "SERIE_B_LEAGUE_NAME",
+                logoURLKey: "SERIE_B_LEAGUE_LOGO_URL",
+                dataSourceKey: "SERIE_B_LEAGUE_DATA_SOURCE"
+            )
+        else {
+            fatalError("Missing league bootstrap configuration values. Verify Config.xcconfig/Info.plist settings.")
+        }
+
+        return [serieA, serieB]
+    }
+
+    private static func makeLeague(
+        bundle: Bundle,
+        idKey: String,
+        nameKey: String,
+        logoURLKey: String,
+        dataSourceKey: String
+    ) -> League? {
+        guard
+            let id = bundle.infoValue(for: idKey),
+            let name = bundle.infoValue(for: nameKey),
+            let logoURLString = bundle.infoValue(for: logoURLKey),
+            let dataSourceValue = bundle.infoValue(for: dataSourceKey),
+            let logoURL = URL(string: logoURLString),
+            let dataSource = DataSource(rawValue: dataSourceValue)
+        else {
+            Logger.composer.error("Missing league configuration for \(idKey, privacy: .public)")
+            return nil
+        }
+
+        return League(id: id, name: name, logoURL: logoURL, dataSource: dataSource)
     }
 }
 
