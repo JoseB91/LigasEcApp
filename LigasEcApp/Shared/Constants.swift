@@ -12,7 +12,7 @@ struct Constants {
     static var ligasEc: LocalizedStringKey { "LIGAS_EC" }
     static var settings: LocalizedStringKey { "SETTINGS" }
     static var privacyPolicy: LocalizedStringKey { "PRIVACY_POLICY" }
-    static var sendEmail: LocalizedStringKey { "SEND_EMAIL" }
+    static var contactSupport: LocalizedStringKey { "CONTACT_SUPPORT" }
     static var contactSubject: LocalizedStringKey { "CONTACT_SUBJECT" }
     static var contactBody: LocalizedStringKey { "CONTACT_BODY" }
     static var pdfViewer: LocalizedStringKey { "PDF_VIEWER" }

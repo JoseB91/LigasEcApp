@@ -75,6 +75,23 @@
         }
       }
     },
+    "CONTACT_SUPPORT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact Support"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contactar Soporte"
+          }
+        }
+      }
+    },
     "COMING_SOON" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -258,6 +275,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cargando equipos"
+          }
+        }
+      }
+    },
+    "MAIL_UNAVAILABLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No email account or email app is available on this device."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay una cuenta o aplicacion de correo disponible en este dispositivo."
           }
         }
       }
@@ -465,23 +499,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seleccionar equipo %@"
-          }
-        }
-      }
-    },
-    "SEND_EMAIL" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Send Email"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enviar Email"
           }
         }
       }
