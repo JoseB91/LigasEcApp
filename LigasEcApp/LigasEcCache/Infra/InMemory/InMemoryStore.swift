@@ -9,8 +9,8 @@ import Foundation
 
 public class InMemoryStore {
     private var leaguesCache: CachedLeagues?
-    private var teamsCache: [LocalTeam]?
-    private var playersCache: [LocalPlayer]?
+    private var teamsCache = [String: CachedTeams]()
+    private var playersCache = [String: CachedPlayers]()
     private var leagueImageCacheData = NSCache<NSURL, NSData>()
 
     public init() {}
@@ -22,9 +22,7 @@ extension InMemoryStore: LeagueStore {
     }
 
     public func insert(_ leagues: [LocalLeague], timestamp: Date) throws {
-        if leaguesCache == nil {
-            leaguesCache = CachedLeagues(leagues: leagues, timestamp: timestamp)
-        }
+        leaguesCache = CachedLeagues(leagues: leagues, timestamp: timestamp)
     }
 
     public func retrieve() throws -> CachedLeagues? {
@@ -33,22 +31,22 @@ extension InMemoryStore: LeagueStore {
 }
 
 extension InMemoryStore: TeamStore {
-    public func insert(_ teams: [LocalTeam], with id: String) throws {
-        teamsCache = teams
+    public func insert(_ teams: [LocalTeam], with id: String, timestamp: Date) throws {
+        teamsCache[id] = CachedTeams(teams: teams, timestamp: timestamp)
     }
     
-    public func retrieve(with id: String) throws -> [LocalTeam]? {
-        teamsCache
+    public func retrieve(with id: String) throws -> CachedTeams? {
+        teamsCache[id]
     }
 }
 
 extension InMemoryStore: PlayerStore {    
-    public func insert(_ players: [LocalPlayer], with id: String) throws {
-        playersCache = players
+    public func insert(_ players: [LocalPlayer], with id: String, timestamp: Date) throws {
+        playersCache[id] = CachedPlayers(players: players, timestamp: timestamp)
     }
     
-    public func retrieve(with id: String) throws -> [LocalPlayer]? {
-        playersCache
+    public func retrieve(with id: String) throws -> CachedPlayers? {
+        playersCache[id]
     }
 }
 

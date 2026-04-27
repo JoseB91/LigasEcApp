@@ -11,18 +11,18 @@ import LigasEcApp
 public class PlayerStoreSpy: PlayerStore {
     
     enum ReceivedMessage: Equatable {
-        case insert([LocalPlayer], String)
+        case insert([LocalPlayer], String, Date)
         case retrieve(String)
     }
     
     private(set) var receivedMessages = [ReceivedMessage]()
     
     private var insertionResult: Result<Void, Error>?
-    private var retrievalResult: Result<[LocalPlayer]?, Error>?
+    private var retrievalResult: Result<CachedPlayers?, Error>?
 
     // MARK: Insert
-    public func insert(_ players: [LigasEcApp.LocalPlayer], with id: String) async throws {
-        receivedMessages.append(.insert(players, id))
+    public func insert(_ players: [LigasEcApp.LocalPlayer], with id: String, timestamp: Date) async throws {
+        receivedMessages.append(.insert(players, id, timestamp))
         try insertionResult?.get()
     }
 
@@ -35,7 +35,7 @@ public class PlayerStoreSpy: PlayerStore {
     }
     
     // MARK: Retrieve
-    public func retrieve(with id: String) async throws -> [LigasEcApp.LocalPlayer]? {
+    public func retrieve(with id: String) async throws -> CachedPlayers? {
         receivedMessages.append(.retrieve(id))
         return try retrievalResult?.get()
     }
@@ -48,7 +48,7 @@ public class PlayerStoreSpy: PlayerStore {
         retrievalResult = .failure(error)
     }
     
-    func completeRetrieval(with players: [LocalPlayer]) {
-        retrievalResult = .success(players)
+    func completeRetrieval(with players: [LocalPlayer], timestamp: Date = Date()) {
+        retrievalResult = .success(CachedPlayers(players: players, timestamp: timestamp))
     }
 }

@@ -27,17 +27,20 @@ extension LeagueStoreSpecs where Self: XCTestCase {
         XCTAssertNil(insertionError, "Expected to insert just once without error", file: file, line: line)
     }
     
-    func assertThatInsertDoNotSaveOnNonEmptyCache(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) async {
+    func assertThatInsertOverridesPreviouslyInsertedCacheValues(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) async {
         // Act
-        let timestamp = Date()
-        await insert((mockLeagues().local, timestamp), to: sut)
+        let initialTimestamp = Date()
+        let updatedTimestamp = initialTimestamp.addingTimeInterval(1)
+        let updatedLeagues = [LocalLeague(id: "id",
+                                          name: "LigaPro Serie B",
+                                          logoURL: anyURL(),
+                                          dataSource: .flashLive)]
+        await insert((mockLeagues().local, initialTimestamp), to: sut)
                 
-        await insert(([LocalLeague(id: "id",
-                             name: "LigaPro Serie B",
-                             logoURL: anyURL())], Date()), to: sut)
+        await insert((updatedLeagues, updatedTimestamp), to: sut)
    
         //Assert
-        await expect(sut, toRetrieve: .success(CachedLeagues(leagues: mockLeagues().local, timestamp: timestamp)))
+        await expect(sut, toRetrieve: .success(CachedLeagues(leagues: updatedLeagues, timestamp: updatedTimestamp)))
     }
         
     func assertThatDeleteDeliversNoErrorOnEmptyCache(on sut: LeagueStore, file: StaticString = #file, line: UInt = #line) async {

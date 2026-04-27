@@ -21,13 +21,14 @@ final class SavePlayersCacheTests: XCTestCase {
     func test_save_requestsToSaveCache() async {
         // Arrange
         let id = "id"
-        let (sut, store) = makeSUT()
+        let currentDate = Date()
+        let (sut, store) = makeSUT(currentDate: currentDate)
         
         // Act
         _ = try? await sut.save(mockPlayers().models, with: id)
         
         // Assert
-        XCTAssertEqual(store.receivedMessages, [.insert(mockPlayers().local, id)])
+        XCTAssertEqual(store.receivedMessages, [.insert(mockPlayers().local, id, currentDate)])
     }
     
     func test_save_succeedsOnSuccessfulCacheInsertion() async {
@@ -55,9 +56,9 @@ final class SavePlayersCacheTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalPlayerLoader, store: PlayerStoreSpy) {
+    private func makeSUT(currentDate: Date = Date(), file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalPlayerLoader, store: PlayerStoreSpy) {
         let store = PlayerStoreSpy()
-        let sut = LocalPlayerLoader(store: store)
+        let sut = LocalPlayerLoader(store: store, currentDate: { currentDate })
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, store)
@@ -75,4 +76,3 @@ final class SavePlayersCacheTests: XCTestCase {
         }
     }
 }
-

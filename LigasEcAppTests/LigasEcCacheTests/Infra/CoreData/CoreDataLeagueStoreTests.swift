@@ -22,9 +22,9 @@ class CoreDataLeagueStoreTests: XCTestCase, LeagueStoreSpecs {
         }
     }
     
-    func test_insert_doNotSaveOnNonEmptyCache() async throws {
+    func test_insert_overridesPreviouslyInsertedCacheValues() async throws {
         try await makeSUT { sut in
-            await self.assertThatInsertDoNotSaveOnNonEmptyCache(on: sut)
+            await self.assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut)
         }
     }
 

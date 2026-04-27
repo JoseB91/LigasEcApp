@@ -13,6 +13,7 @@ class ManagedTeam: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var data: Data?
     @NSManaged var logoURL: URL
+    @NSManaged var timestamp: Date?
     @NSManaged var league: ManagedLeague
     @NSManaged var players: NSOrderedSet
 }
@@ -38,12 +39,13 @@ extension ManagedTeam {
         return try context.fetch(request).first
     }
     
-    static func fetchTeams(from localTeams: [LocalTeam], in context: NSManagedObjectContext) -> NSOrderedSet {
+    static func fetchTeams(from localTeams: [LocalTeam], timestamp: Date, in context: NSManagedObjectContext) -> NSOrderedSet {
         let teams = NSOrderedSet(array: localTeams.map { local in
             let managed = ManagedTeam(context: context)
             managed.id = local.id
             managed.name = local.name
             managed.logoURL = local.logoURL
+            managed.timestamp = timestamp
             if let cachedData = URLImageCache.shared.getImageData(for: local.logoURL) {
                 managed.data = cachedData
             }

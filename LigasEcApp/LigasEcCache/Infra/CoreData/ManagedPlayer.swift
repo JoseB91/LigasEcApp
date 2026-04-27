@@ -17,6 +17,7 @@ class ManagedPlayer: NSManagedObject {
     @NSManaged var nationality: String?
     @NSManaged var data: Data?
     @NSManaged var photoURL: URL?
+    @NSManaged var timestamp: Date?
     @NSManaged var team: ManagedTeam
     
     var flagIdRaw: Int? {
@@ -67,7 +68,7 @@ extension ManagedPlayer {
         return try context.fetch(request).first
     }
     
-    static func fetchPlayers(from localPlayers: [LocalPlayer], in context: NSManagedObjectContext) -> NSOrderedSet {
+    static func fetchPlayers(from localPlayers: [LocalPlayer], timestamp: Date, in context: NSManagedObjectContext) -> NSOrderedSet {
         let players = NSOrderedSet(array: localPlayers.map { local in
             let managed = ManagedPlayer(context: context)
             managed.id = local.id
@@ -77,6 +78,7 @@ extension ManagedPlayer {
             managed.flagIdRaw = local.flagId
             managed.nationality = local.nationality
             managed.photoURL = local.photoURL
+            managed.timestamp = timestamp
             if let photoURL = local.photoURL,
                 let cachedData = URLImageCache.shared.getImageData(for: photoURL) {
                 managed.data = cachedData

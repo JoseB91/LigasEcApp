@@ -37,7 +37,7 @@ final class FlashLiveTeamRemoteLoader: RemoteTeamLoader {
          configuration: EndpointConfiguration,
          standingType: String = "overall",
          locale: String = "es_MX",
-         tournamentStageId: String = "OO37de6i") {
+         tournamentStageId: String = "x2nVXCWr") {
         self.httpClient = httpClient
         self.configuration = configuration
         self.standingType = standingType

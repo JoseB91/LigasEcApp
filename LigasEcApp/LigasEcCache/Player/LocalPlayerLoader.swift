@@ -9,9 +9,11 @@ import Foundation
 
 public final class LocalPlayerLoader {
     private let store: PlayerStore
+    private let currentDate: () -> Date
         
-    public init(store: PlayerStore) {
+    public init(store: PlayerStore, currentDate: @escaping () -> Date) {
         self.store = store
+        self.currentDate = currentDate
     }
 }
 
@@ -21,7 +23,7 @@ public protocol PlayerCache {
 
 extension LocalPlayerLoader: PlayerCache {
     public func save(_ players: [Player], with id: String) async throws {
-        try await store.insert(players.toLocal(), with: id)
+        try await store.insert(players.toLocal(), with: id, timestamp: currentDate())
     }
 }
 
@@ -29,8 +31,10 @@ extension LocalPlayerLoader {
     private struct EmptyData: Error {}
     
     public func load(with id: String, dataSource: DataSource) async throws -> [Player] {
-        if let retrievedPlayers = try await store.retrieve(with: id), !retrievedPlayers.isEmpty {
-            return retrievedPlayers.toModels(with: dataSource)
+        if let retrievedCache = try await store.retrieve(with: id),
+           !retrievedCache.players.isEmpty,
+           CachePolicy.validate(retrievedCache.timestamp, against: currentDate()) {
+            return retrievedCache.players.toModels(with: dataSource)
         } else {
             throw EmptyData()
         }
@@ -61,3 +65,22 @@ private extension Array where Element == LocalPlayer {
                             dataSource: dataSource)}
     }
 }
+
+//{
+//  "DATA": {
+//    "ID": "hd6xf1mi",
+//    "SHORT_NAME": "Bores E.",
+//    "COUNTRY_ID": 68,
+//    "COUNTRY_NAME": "Ecuador",
+//    "IMAGE_PATH": "https://www.flashscore.com/res/image/data/Gn4jzvzB-OAOwZa9O.png",
+//    "NAME": "Eduardo Bores",
+//    "BIRTHDAY_TIME": "1035763200",
+//    "TYPE_ID": 12,
+//    "TYPE_NAME": "guardameta",
+//    "PARENT_NAME": "Independiente del Valle",
+//    "PMV": "€579k",
+//    "PCE": "1861833600",
+//    "TEAM_IMAGE": "https://www.flashscore.com/res/image/data/t8nwTpe5-OnCKiY2r.png",
+//    "TEAM_NAME": "Independiente del Valle",
+//  }
+//}

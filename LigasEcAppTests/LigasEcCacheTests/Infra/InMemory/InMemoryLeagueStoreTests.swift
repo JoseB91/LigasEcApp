@@ -22,10 +22,10 @@ class InMemoryLeagueStoreTests: XCTestCase, LeagueStoreSpecs {
         await assertThatInsertDeliversNoErrorOnNonEmptyCache(on: sut)
     }
     
-    func test_insert_doNotSaveOnNonEmptyCache() async throws {
+    func test_insert_overridesPreviouslyInsertedCacheValues() async throws {
         let sut = makeSUT()
         
-        await assertThatInsertDoNotSaveOnNonEmptyCache(on: sut)
+        await assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut)
     }
 
     func test_delete_deliversNoErrorOnEmptyCache() async throws {
@@ -61,4 +61,3 @@ class InMemoryLeagueStoreTests: XCTestCase, LeagueStoreSpecs {
     }
 
 }
-

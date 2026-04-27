@@ -26,7 +26,7 @@ final class LeagueRepositoryImpl: LeagueRepository {
             return try await appLocalLoader.localLeagueLoader.load()
         } catch {
             let hardcodedLeagues = [
-                League(id: "IaFDigtm",
+                League(id: "trd6vSd3",
                        name: "LigaPro Serie A",
                        logoURL: URL(string: "https://www.flashscore.com/res/image/data/v3G098ld-veKf2ye0.png")!,
                        dataSource: .flashLive),

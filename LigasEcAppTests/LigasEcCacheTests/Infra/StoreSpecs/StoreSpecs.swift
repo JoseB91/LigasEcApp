@@ -8,7 +8,7 @@
 protocol LeagueStoreSpecs {
     func test_insert_deliversNoErrorOnEmptyCache() async throws
     func test_insert_deliversNoErrorOnNonEmptyCache() async throws
-    func test_insert_doNotSaveOnNonEmptyCache() async throws
+    func test_insert_overridesPreviouslyInsertedCacheValues() async throws
     
     func test_delete_deliversNoErrorOnEmptyCache() async throws
     func test_delete_hasNoSideEffectsOnEmptyCache() async throws

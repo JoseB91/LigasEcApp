@@ -134,7 +134,7 @@ class CoreDataImageStoreTests: XCTestCase, ImageStoreSpecs {
     
     private func insertLeague(with url: URL, into sut: CoreDataLigasEcStore, file: StaticString = #filePath, line: UInt = #line) async {
         do {
-            let league = LocalLeague(id: "IaFDigtm", name: "LigaPro Serie A", logoURL: url)
+            let league = LocalLeague(id: "IaFDigtm", name: "LigaPro Serie A", logoURL: url, dataSource: .flashLive)
             try await sut.insert([league], timestamp: Date())
         } catch {
             XCTFail("Failed to insert league with URL \(url) - error: \(error)", file: file, line: line)
@@ -144,7 +144,7 @@ class CoreDataImageStoreTests: XCTestCase, ImageStoreSpecs {
     private func insertTeam(with url: URL, into sut: CoreDataLigasEcStore, file: StaticString = #filePath, line: UInt = #line) async {
         do {
             let team = LocalTeam(id: "pCMG6CNp", name: "Barcelona SC", logoURL: url)
-            try await sut.insert([team], with: "IaFDigtm")
+            try await sut.insert([team], with: "IaFDigtm", timestamp: Date())
         } catch {
             XCTFail("Failed to insert league with URL \(url) - error: \(error)", file: file, line: line)
         }
@@ -158,7 +158,7 @@ class CoreDataImageStoreTests: XCTestCase, ImageStoreSpecs {
                                      position: "Portero",
                                      flagId: 205,
                                      photoURL: url)
-            try await sut.insert([player], with: "pCMG6CNp")
+            try await sut.insert([player], with: "pCMG6CNp", timestamp: Date())
         } catch {
             XCTFail("Failed to insert league with URL \(url) - error: \(error)", file: file, line: line)
         }

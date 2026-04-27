@@ -44,8 +44,8 @@ class Composer {
         let store = makeStore()
         
         let localLeagueLoader = LocalLeagueLoader(store: store, currentDate: Date.init)
-        let localTeamLoader = LocalTeamLoader(store: store)
-        let localPlayerLoader = LocalPlayerLoader(store: store)
+        let localTeamLoader = LocalTeamLoader(store: store, currentDate: Date.init)
+        let localPlayerLoader = LocalPlayerLoader(store: store, currentDate: Date.init)
         let localImageLoader = LocalImageLoader(store: store)
 
         let appLocalLoader = AppLocalLoader(localLeagueLoader: localLeagueLoader,
@@ -181,7 +181,7 @@ struct EndpointConfiguration {
             let tournamentStageId = bundle.infoValue(for: "FLASHLIVE_TOURNAMENT_STAGE_ID"),
             let sportIdString = bundle.infoValue(for: "FLASHLIVE_SPORT_ID"),
             let sportId = Int(sportIdString),
-            let url = URL(string: baseURLString)
+            let url = validURL(from: baseURLString, expectedHost: host)
         else {
             Logger.composer.error("Missing FlashLive configuration values")
             return nil
@@ -203,7 +203,7 @@ struct EndpointConfiguration {
             let baseURLString = bundle.infoValue(for: "TRANSFERMARKET_BASE_URL"),
             let host = bundle.infoValue(for: "TRANSFERMARKET_HOST"),
             let domain = bundle.infoValue(for: "TRANSFERMARKET_DOMAIN"),
-            let url = URL(string: baseURLString)
+            let url = validURL(from: baseURLString, expectedHost: host)
         else {
             Logger.composer.error("Missing TransferMarket configuration values")
             return nil
@@ -218,6 +218,24 @@ struct EndpointConfiguration {
             sportId: nil,
             domain: domain
         )
+    }
+
+    private static func validURL(from baseURLString: String, expectedHost: String) -> URL? {
+        guard
+            let url = URL(string: baseURLString),
+            let host = url.host,
+            !host.isEmpty
+        else {
+            Logger.composer.error("Invalid endpoint base URL: \(baseURLString, privacy: .public)")
+            return nil
+        }
+
+        guard host == expectedHost else {
+            Logger.composer.error("Endpoint host mismatch. Expected \(expectedHost, privacy: .public), got \(host, privacy: .public)")
+            return nil
+        }
+
+        return url
     }
 }
 

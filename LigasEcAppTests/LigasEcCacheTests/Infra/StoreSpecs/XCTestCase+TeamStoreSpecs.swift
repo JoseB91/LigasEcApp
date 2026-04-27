@@ -21,7 +21,10 @@ extension TeamStoreSpecs where Self: XCTestCase {
         await insert(mockTeams().local, with: id, to: sut)
         
         // Act & Assert
-        await expect(sut, with: id, toRetrieve: .success(mockTeams().local), file: file, line: line)
+        guard let expectedCache = try? await sut.retrieve(with: id) else {
+            return XCTFail("Expected cached teams", file: file, line: line)
+        }
+        await expect(sut, with: id, toRetrieve: .success(expectedCache), file: file, line: line)
     }
     
     func assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on sut: TeamStore, and leagueStore: LeagueStore, with id: String, file: StaticString = #file, line: UInt = #line) async {
@@ -31,7 +34,10 @@ extension TeamStoreSpecs where Self: XCTestCase {
         await insert(mockTeams().local, with: id, to: sut)
 
         // Act & Assert
-        await expect(sut, with: id, toRetrieveTwice: .success(mockTeams().local), file: file, line: line)
+        guard let expectedCache = try? await sut.retrieve(with: id) else {
+            return XCTFail("Expected cached teams", file: file, line: line)
+        }
+        await expect(sut, with: id, toRetrieveTwice: .success(expectedCache), file: file, line: line)
     }
 
     func assertThatInsertDeliversNoErrorOnEmptyCache(on sut: TeamStore, with id: String, file: StaticString = #file, line: UInt = #line) async {
@@ -62,7 +68,10 @@ extension TeamStoreSpecs where Self: XCTestCase {
         await insert((mockTeams().local), with: id, to: sut)
    
         //Assert
-        await expect(sut, with: id, toRetrieve: .success(mockTeams().local))
+        guard let expectedCache = try? await sut.retrieve(with: id) else {
+            return XCTFail("Expected cached teams", file: file, line: line)
+        }
+        await expect(sut, with: id, toRetrieve: .success(expectedCache))
     }
             
     @discardableResult
@@ -80,22 +89,22 @@ extension TeamStoreSpecs where Self: XCTestCase {
     func insert(_ teams: [LocalTeam], with id: String, to sut: TeamStore) async -> Error? {
         do {
             // Act
-            try await sut.insert(teams, with: id)
+            try await sut.insert(teams, with: id, timestamp: Date())
             return nil
         } catch {
             return error
         }
     }
     
-    func expect(_ sut: TeamStore, with id: String, toRetrieveTwice expectedResult: Result<[LocalTeam]?, Error>, file: StaticString = #filePath, line: UInt = #line) async {
+    func expect(_ sut: TeamStore, with id: String, toRetrieveTwice expectedResult: Result<CachedTeams?, Error>, file: StaticString = #filePath, line: UInt = #line) async {
         await expect(sut, with: id, toRetrieve: expectedResult, file: file, line: line)
         await expect(sut, with: id, toRetrieve: expectedResult, file: file, line: line)
     }
     
-    func expect(_ sut: TeamStore, with id: String, toRetrieve expectedResult: Result<[LocalTeam]?, Error>, file: StaticString = #filePath, line: UInt = #line) async {
+    func expect(_ sut: TeamStore, with id: String, toRetrieve expectedResult: Result<CachedTeams?, Error>, file: StaticString = #filePath, line: UInt = #line) async {
         
         // Act
-        let retrievedResult: Result<[LocalTeam]?, Error>
+        let retrievedResult: Result<CachedTeams?, Error>
         
         do {
             let retrievedTeams = try await sut.retrieve(with: id)
@@ -111,7 +120,8 @@ extension TeamStoreSpecs where Self: XCTestCase {
 
         case let (.success(.some(expected)), .success(.some(retrieved))):
             // Assert
-            XCTAssertEqual(retrieved, expected, file: file, line: line)
+            XCTAssertEqual(retrieved.teams, expected.teams, file: file, line: line)
+            XCTAssertEqual(retrieved.timestamp, expected.timestamp, file: file, line: line)
 
         default:
             // Assert

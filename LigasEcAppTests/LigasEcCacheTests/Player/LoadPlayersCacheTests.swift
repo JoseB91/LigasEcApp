@@ -45,12 +45,11 @@ final class LoadPlayersCacheTests: XCTestCase {
     func test_load_failsOnEmptyCache() async {
         // Arrange
         let id = "id"
-        let retrievalError = anyNSError()
         let (sut, store) = makeSUT()
 
         // Act & Assert
-        await expect(sut, with: id, toCompleteWith: .failure(retrievalError), when: {
-            store.completeRetrievalWithEmptyCache(with: retrievalError)
+        await expectFailure(sut, with: id, when: {
+            store.completeRetrievalWithEmptyCache(with: anyNSError())
         })
     }
     
@@ -63,6 +62,17 @@ final class LoadPlayersCacheTests: XCTestCase {
         // Act & Assert
         await expect(sut, with: id, toCompleteWith: .failure(retrievalError), when: {
             store.completeRetrieval(with: retrievalError)
+        })
+    }
+
+    func test_load_failsOnExpiredCache() async {
+        let id = "id"
+        let currentDate = Date()
+        let expiredTimestamp = Calendar.current.date(byAdding: .day, value: -8, to: currentDate)!
+        let (sut, store) = makeSUT(currentDate: currentDate)
+        
+        await expectFailure(sut, with: id, when: {
+            store.completeRetrieval(with: mockPlayers().local, timestamp: expiredTimestamp)
         })
     }
     
@@ -89,9 +99,9 @@ final class LoadPlayersCacheTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalPlayerLoader, store: PlayerStoreSpy) {
+    private func makeSUT(currentDate: Date = Date(), file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalPlayerLoader, store: PlayerStoreSpy) {
         let store = PlayerStoreSpy()
-        let sut = LocalPlayerLoader(store: store)
+        let sut = LocalPlayerLoader(store: store, currentDate: { currentDate })
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, store)
@@ -118,6 +128,16 @@ final class LoadPlayersCacheTests: XCTestCase {
             
         default:
             XCTFail("Expected result \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+        }
+    }
+
+    private func expectFailure(_ sut: LocalPlayerLoader, with id: String, when action: () async -> Void?, file: StaticString = #filePath, line: UInt = #line) async {
+        await action()
+        
+        do {
+            _ = try await sut.load(with: id, dataSource: .flashLive)
+            XCTFail("Expected failure, got success instead", file: file, line: line)
+        } catch {
         }
     }
 }

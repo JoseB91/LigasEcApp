@@ -9,9 +9,11 @@ import Foundation
 
 public final class LocalTeamLoader {
     private let store: TeamStore
+    private let currentDate: () -> Date
         
-    public init(store: TeamStore) {
+    public init(store: TeamStore, currentDate: @escaping () -> Date) {
         self.store = store
+        self.currentDate = currentDate
     }
 }
 
@@ -21,7 +23,7 @@ public protocol TeamCache {
 
 extension LocalTeamLoader: TeamCache {
     public func save(_ teams: [Team], with id: String) async throws {
-        try await store.insert(teams.toLocal(), with: id)
+        try await store.insert(teams.toLocal(), with: id, timestamp: currentDate())
     }
 }
 
@@ -29,8 +31,10 @@ extension LocalTeamLoader {
     private struct EmptyData: Error {}
     
     public func load(with id: String, dataSource: DataSource) async throws -> [Team] {
-        if let retrievedTeams = try await store.retrieve(with: id), !retrievedTeams.isEmpty {
-            return retrievedTeams.toModels(with: dataSource)
+        if let retrievedCache = try await store.retrieve(with: id),
+           !retrievedCache.teams.isEmpty,
+           CachePolicy.validate(retrievedCache.timestamp, against: currentDate()) {
+            return retrievedCache.teams.toModels(with: dataSource)
         } else {
             throw EmptyData()
         }
