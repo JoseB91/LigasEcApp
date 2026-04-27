@@ -29,7 +29,6 @@
 		B05362322D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05362312D82ACFA00BE41F0 /* CoreDataLigasEcStore+PlayerStore.swift */; };
 		B08ABC4A2E4BDB370045903A /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08ABC492E4BDB370045903A /* PDFViewer.swift */; };
 		B08ABC4C2E4BE0A30045903A /* LigasEc_PrivacyPolicy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B08ABC4B2E4BE0A30045903A /* LigasEc_PrivacyPolicy.pdf */; };
-		B08CFD672DFB86D700F4D8FD /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B08CFD662DFB86D700F4D8FD /* Config.xcconfig */; };
 		B08CFE6F2DFBA6C700F4D8FD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08CFE6E2DFBA6C700F4D8FD /* SettingsView.swift */; };
 		B09758012DDE806500F99E45 /* KeychainManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09758002DDE806500F99E45 /* KeychainManagerTests.swift */; };
 		B0C1AE922E3A7E2D0077D6CA /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C1AE8B2E3A7E2D0077D6CA /* ImageRepository.swift */; };
@@ -38,8 +37,6 @@
 		B0C1AE952E3A7E2D0077D6CA /* TeamRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C1AE8E2E3A7E2D0077D6CA /* TeamRepository.swift */; };
 		B0C1AE962E3A7E2D0077D6CA /* Composer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C1AE902E3A7E2D0077D6CA /* Composer.swift */; };
 		B0C1AE982E3A85FF0077D6CA /* URLProtocolStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C1AE972E3A85FF0077D6CA /* URLProtocolStub.swift */; };
-		B0C681832FA00D2E00691529 /* Config.local.example.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B0C681822FA00D2E00691529 /* Config.local.example.xcconfig */; };
-		B0C681852FA014D900691529 /* Config.local.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B0C681842FA014D900691529 /* Config.local.xcconfig */; };
 		B0CCD60D2DE8D73700AE51EE /* ImageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6072DE8D73700AE51EE /* ImageMapper.swift */; };
 		B0CCD61C2DE8D75100AE51EE /* ImageMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6182DE8D75100AE51EE /* ImageMapperTests.swift */; };
 		B0CCD62C2DE8D79200AE51EE /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CCD6292DE8D79200AE51EE /* URLSessionHTTPClientTests.swift */; };
@@ -535,7 +532,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					B03E6F8C2D6CE44F00DE1485 = {
 						CreatedOnToolsVersion = 16.2;
@@ -574,10 +571,7 @@
 			files = (
 				B08ABC4C2E4BE0A30045903A /* LigasEc_PrivacyPolicy.pdf in Resources */,
 				B0F482382D920BF400874AA8 /* README.md in Resources */,
-				B08CFD672DFB86D700F4D8FD /* Config.xcconfig in Resources */,
-				B0C681852FA014D900691529 /* Config.local.xcconfig in Resources */,
 				B05361A02D821B3300BE41F0 /* Preview Assets.xcassets in Resources */,
-				B0C681832FA00D2E00691529 /* Config.local.example.xcconfig in Resources */,
 				B05361A12D821B3300BE41F0 /* Assets.xcassets in Resources */,
 				B05361A22D821B3300BE41F0 /* Localizable.xcstrings in Resources */,
 			);
@@ -709,6 +703,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -769,6 +764,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
