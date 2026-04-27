@@ -19,7 +19,7 @@ public final class PlayerMapper {
                     Player(id: item.playerID,
                            name: item.playerName,
                            number: item.playerJerseyNumber,
-                           position: item.playerTypeID.spanishName,
+                           position: item.playerTypeID.position,
                            flagId: item.playerFlagID,
                            photoURL: item.playerImagePath,
                            dataSource: .flashLive)
@@ -66,18 +66,18 @@ public final class PlayerMapper {
                 case goalkeeper = "GOALKEEPER"
                 case midfielder = "MIDFIELDER"
                 
-                var spanishName: String {
+                var position: Player.Position {
                     switch self {
                     case .coach:
-                        return "Entrenador"
+                        return .coach
                     case .defender:
-                        return "Defensa"
+                        return .defender
                     case .forward:
-                        return "Delantero"
+                        return .forward
                     case .goalkeeper:
-                        return "Portero"
+                        return .goalkeeper
                     case .midfielder:
-                        return "Centrocampista"
+                        return .midfielder
                     }
                 }
             }
@@ -95,7 +95,7 @@ public final class PlayerMapper {
             squadCodable.compactMap {  Player(id: $0.id,
                                               name: $0.name,
                                               number: $0.shirtNumber != nil ? Int($0.shirtNumber!) : nil,
-                                              position: $0.positions?.first?.group ?? "",
+                                              position: .init(storageValue: $0.positions?.first?.group ?? ""),
                                               nationality: $0.nationalities.first?.name,
                                               photoURL: $0.image,
                                               dataSource: .transferMarket)

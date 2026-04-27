@@ -76,7 +76,7 @@ func mockPlayer() -> Player {
     return Player(id: "S0nWKdXm",
                   name: "Contreras Jose",
                   number: 1,
-                  position: "Portero",
+                  position: .goalkeeper,
                   flagId: 205,
                   photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                   dataSource: .flashLive)

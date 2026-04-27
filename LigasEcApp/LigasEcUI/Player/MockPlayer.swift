@@ -12,14 +12,14 @@ struct MockPlayerViewModel {
         return [Player(id: "S0nWKdXm",
                        name: "Contreras José",
                        number: 1,
-                       position: "Portero",
+                       position: .goalkeeper,
                        nationality: "Venezuela",
                        photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                        dataSource: .flashLive),
                 Player(id: "S0nWKdXn",
                        name: "Contreras José",
                        number: 1,
-                       position: "Portero",
+                       position: .goalkeeper,
                        nationality: "Venezuela",
                        photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                        dataSource: .flashLive)]
@@ -29,7 +29,7 @@ struct MockPlayerViewModel {
         return Player(id: "S0nWKdXm",
                       name: "Contreras José",
                       number: 1,
-                      position: "Portero",
+                      position: .goalkeeper,
                       photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                       dataSource: .flashLive)
     }

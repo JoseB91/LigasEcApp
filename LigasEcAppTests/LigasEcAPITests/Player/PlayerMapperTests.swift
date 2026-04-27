@@ -167,7 +167,7 @@ final class PlayerMapperTests: XCTestCase {
         Player(id: "S0nWKdXm",
                name: "Contreras Jose",
                number: 1,
-               position: "Portero",
+               position: .goalkeeper,
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                dataSource: .flashLive)
@@ -177,7 +177,7 @@ final class PlayerMapperTests: XCTestCase {
         Player(id: "S0nWKdXm",
                name: "Contreras Jose",
                number: nil,
-               position: "Portero",
+               position: .goalkeeper,
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                dataSource: .flashLive)
@@ -187,7 +187,7 @@ final class PlayerMapperTests: XCTestCase {
         Player(id: "S0nWKdXm",
                name: "Contreras Jose",
                number: nil,
-               position: "Defensa",
+               position: .defender,
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                dataSource: .flashLive)
@@ -197,7 +197,7 @@ final class PlayerMapperTests: XCTestCase {
         Player(id: "S0nWKdXm",
                name: "Contreras Jose",
                number: nil,
-               position: "Centrocampista",
+               position: .midfielder,
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                dataSource: .flashLive)
@@ -207,7 +207,7 @@ final class PlayerMapperTests: XCTestCase {
         Player(id: "S0nWKdXm",
                name: "Contreras Jose",
                number: nil,
-               position: "Delantero",
+               position: .forward,
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                dataSource: .flashLive)
@@ -217,7 +217,7 @@ final class PlayerMapperTests: XCTestCase {
         Player(id: "S0nWKdXm",
                name: "Contreras Jose",
                number: nil,
-               position: "Entrenador",
+               position: .coach,
                flagId: 205,
                photoURL: URL(string: "https://www.flashscore.com/res/image/data/WKTYkjyS-nFdH6Slk.png")!,
                dataSource: .flashLive)
@@ -227,7 +227,7 @@ final class PlayerMapperTests: XCTestCase {
         Player(id: "106495",
                name: "Jonathan de la Cruz",
                number: 8,
-               position: "Centrocampista",
+               position: .midfielder,
                nationality: "Ecuador",
                photoURL: URL(string: "https://img.a.transfermarkt.technology/portrait/medium/106495-1733949391.JPG?lm=1")!,
                dataSource: .transferMarket)
@@ -237,7 +237,7 @@ final class PlayerMapperTests: XCTestCase {
         Player(id: "106495",
                name: "Jonathan de la Cruz",
                number: nil,
-               position: "Centrocampista",
+               position: .midfielder,
                nationality: "Ecuador",
                photoURL: URL(string: "https://img.a.transfermarkt.technology/portrait/medium/106495-1733949391.JPG?lm=1")!,
                dataSource: .transferMarket)
@@ -247,7 +247,7 @@ final class PlayerMapperTests: XCTestCase {
         Player(id: "106495",
                name: "Jonathan de la Cruz",
                number: nil,
-               position: "",
+               position: .unknown(""),
                nationality: "Ecuador",
                photoURL: URL(string: "https://img.a.transfermarkt.technology/portrait/medium/106495-1733949391.JPG?lm=1")!,
                dataSource: .transferMarket)

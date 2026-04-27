@@ -7,8 +7,13 @@
 
 import Foundation
 
+struct LeagueLoadResult {
+    let leagues: [League]
+    let errorModel: ErrorModel?
+}
+
 protocol LeagueRepository {
-    func loadLeagues() async -> [League]
+    func loadLeagues() async -> LeagueLoadResult
 }
 
 final class LeagueRepositoryImpl: LeagueRepository {
@@ -20,10 +25,11 @@ final class LeagueRepositoryImpl: LeagueRepository {
         self.appLocalLoader = appLocalLoader
     }
     
-    func loadLeagues() async -> [League] {
+    func loadLeagues() async -> LeagueLoadResult {
         
         do {
-            return try await appLocalLoader.localLeagueLoader.load()
+            return LeagueLoadResult(leagues: try await appLocalLoader.localLeagueLoader.load(),
+                                    errorModel: nil)
         } catch {
             let hardcodedLeagues = [
                 League(id: "trd6vSd3",
@@ -38,7 +44,8 @@ final class LeagueRepositoryImpl: LeagueRepository {
             
             try? await appLocalLoader.localLeagueLoader.save(hardcodedLeagues)
             
-            return hardcodedLeagues
+            return LeagueLoadResult(leagues: hardcodedLeagues,
+                                    errorModel: ErrorModel(message: error.localizedDescription))
         }
     }
 }

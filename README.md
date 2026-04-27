@@ -29,6 +29,14 @@
 
 The app requires a RapidAPI key at runtime. Provide it through the `API_KEY` environment variable on first launch; the app stores it in Keychain after a successful read.
 
+For local Xcode runs, you can also create `LigasEcApp/Config.local.xcconfig` with:
+
+```xcconfig
+API_KEY = YOUR_RAPIDAPI_KEY
+```
+
+`Config.xcconfig` includes that file optionally, and `Config.local.xcconfig` should stay unversioned.
+
 ### 🗄️ Data & Persistence
 
 - **CoreData** - Local database for offline capability

@@ -46,7 +46,7 @@ extension Array where Element == Player {
         return map { LocalPlayer(id: $0.id,
                                  name: $0.name,
                                  number: $0.number,
-                                 position: $0.position,
+                                 position: $0.position.storageValue,
                                  flagId: $0.flagId,
                                  nationality: $0.nationality,
                                  photoURL: $0.photoURL)}
@@ -58,7 +58,7 @@ private extension Array where Element == LocalPlayer {
         return map { Player(id: $0.id,
                             name: $0.name,
                             number: $0.number,
-                            position: $0.position,
+                            position: .init(storageValue: $0.position),
                             flagId: $0.flagId,
                             nationality: $0.nationality,
                             photoURL: $0.photoURL,

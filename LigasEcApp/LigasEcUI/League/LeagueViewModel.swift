@@ -27,7 +27,9 @@ final class LeagueViewModel {
         isLoading = true
         defer { isLoading = false }
         
-        leagues = await repository.loadLeagues()
+        let result = await repository.loadLeagues()
+        leagues = result.leagues
+        errorMessage = result.errorModel
     }
     
     @MainActor

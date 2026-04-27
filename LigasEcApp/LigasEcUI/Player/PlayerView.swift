@@ -28,16 +28,14 @@ struct PlayerView: View {
                     .listRowSeparator(.hidden)
                     .accessibilityLabel(Constants.loadingPlayers)
             } else {
-                
-                let groupedPlayers = Dictionary(grouping: playerViewModel.squad, by: { $0.position })
-                
-                let positionOrder = [Constants.portero, Constants.defensa, Constants.centrocampista, Constants.delantero, Constants.entrenador]
-                
-                ForEach(positionOrder, id: \.self) { position in
-                    if let positionGroup = groupedPlayers[position], !positionGroup.isEmpty {
-                        Section(header: Text(position != Constants.entrenador ?
-                                             position.getPlayerLocalizedPosition() :
-                                                Constants.coach)) {
+                let groupedPlayers = Dictionary(grouping: playerViewModel.squad, by: \.position)
+                let orderedPositions = playerViewModel.orderedPositions(from: groupedPlayers)
+
+                ForEach(orderedPositions, id: \.self) { position in
+                    if let positionGroup = groupedPlayers[position],
+                       !positionGroup.isEmpty,
+                       let title = playerViewModel.title(for: position) {
+                        Section(header: title) {
                             ForEach(positionGroup) { player in
                                 HStack {
                                     if let url = player.photoURL {
@@ -68,7 +66,7 @@ struct PlayerView: View {
                                             .frame(width: 24, height: 16)
                                             .accessibilityLabel(nationality)
                                     }
-                                    if position != Constants.entrenador {
+                                    if position != .coach {
                                         Spacer()
                                         ZStack{
                                             Image("tshirt")

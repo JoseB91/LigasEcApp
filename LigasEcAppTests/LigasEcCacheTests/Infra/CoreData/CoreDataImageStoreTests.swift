@@ -155,7 +155,7 @@ class CoreDataImageStoreTests: XCTestCase, ImageStoreSpecs {
             let player = LocalPlayer(id: "S0nWKdXm",
                                      name: "Contreras Jose",
                                      number: 1,
-                                     position: "Portero",
+                                     position: Player.Position.goalkeeper.storageValue,
                                      flagId: 205,
                                      photoURL: url)
             try await sut.insert([player], with: "pCMG6CNp", timestamp: Date())

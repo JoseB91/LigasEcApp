@@ -9,6 +9,13 @@ import Foundation
 import SwiftUI
 
 final class PlayerViewModel: ObservableObject {
+    private static let preferredPositionOrder: [Player.Position] = [
+        .goalkeeper,
+        .defender,
+        .midfielder,
+        .forward,
+        .coach
+    ]
 
     @Published var squad = [Player]()
     @Published var isLoading = false
@@ -38,6 +45,36 @@ final class PlayerViewModel: ObservableObject {
             squad = try await repository.loadPlayers()
         } catch {
             errorModel = ErrorModel(message: error.localizedDescription)
+        }
+    }
+
+    func orderedPositions(from groupedPlayers: [Player.Position: [Player]]) -> [Player.Position] {
+        let knownPositions = Self.preferredPositionOrder.filter { groupedPlayers[$0]?.isEmpty == false }
+        let unknownPositions = groupedPlayers.keys.filter {
+            if case .unknown = $0 {
+                return groupedPlayers[$0]?.isEmpty == false
+            }
+            return false
+        }.sorted { $0.storageValue < $1.storageValue }
+
+        return knownPositions + unknownPositions
+    }
+
+    func title(for position: Player.Position) -> Text? {
+        switch position {
+        case .goalkeeper:
+            return Text(Constants.goalkeeper)
+        case .defender:
+            return Text(Constants.defender)
+        case .midfielder:
+            return Text(Constants.midfielder)
+        case .forward:
+            return Text(Constants.forward)
+        case .coach:
+            return Text(Constants.coach)
+        case let .unknown(value):
+            guard !value.isEmpty else { return nil }
+            return Text(verbatim: value)
         }
     }
 }

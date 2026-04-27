@@ -14,6 +14,11 @@ struct LeagueView: View {
     let imageViewLoader: (URL, Table) -> ImageView
     
     var body: some View {
+        let errorBinding = Binding<ErrorModel?>(
+            get: { leagueViewModel.errorMessage },
+            set: { leagueViewModel.errorMessage = $0 }
+        )
+
         VStack(spacing: 0) {
             Image("ligasEc")
                 .resizable()
@@ -49,8 +54,9 @@ struct LeagueView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .task {
-            await leagueViewModel.loadLeagues()
+            await leagueViewModel.loadIfNeeded()
         }
+        .withErrorAlert(errorModel: errorBinding)
     }
 }
 

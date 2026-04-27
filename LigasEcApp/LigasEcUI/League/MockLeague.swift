@@ -25,7 +25,7 @@ struct MockLeagueViewModel {
 }
 
 struct MockLeagueRepository: LeagueRepository {
-    func loadLeagues() async -> [League] {
-        MockLeagueViewModel.mockLeagues()
+    func loadLeagues() async -> LeagueLoadResult {
+        LeagueLoadResult(leagues: MockLeagueViewModel.mockLeagues(), errorModel: nil)
     }
 }

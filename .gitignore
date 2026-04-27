@@ -63,4 +63,5 @@ fastlane/test_output
 
 #My files
 Config.xcconfig
+Config.local.xcconfig
 .claude

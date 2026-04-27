@@ -67,7 +67,7 @@ extension PlayerStoreSpecs where Self: XCTestCase {
         await insert([LocalPlayer(id: "1",
                                   name: "Alexander Dominguez",
                                   number: 1,
-                                  position: "Portero",
+                                  position: Player.Position.goalkeeper.storageValue,
                                   photoURL: anyURL())], with: id, to: sut)
         
         await insert((mockPlayers().local), with: id, to: sut)
