@@ -42,7 +42,12 @@ struct SettingsView: View {
             .accessibilityHint(Constants.opensPrivacyPolicy)
 
             Button(action: openMailApp) {
-                Label(Constants.contactSupport, systemImage: "envelope")
+                HStack {
+                    Label(Constants.contactSupport, systemImage: "envelope")
+                    Spacer()
+                    Image(systemName: "arrow.up.right.square")
+                        .foregroundStyle(.secondary)
+                }
             }
             .buttonStyle(PlainButtonStyle())
             .accessibilityHint(Constants.opensEmailClient)

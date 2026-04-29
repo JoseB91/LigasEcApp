@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct LocalTeam: Equatable {
+public struct LocalTeam: Equatable, Sendable {
     public let id: String
     public let name: String
     public let logoURL: URL

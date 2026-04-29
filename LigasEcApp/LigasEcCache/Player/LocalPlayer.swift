@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct LocalPlayer: Equatable {
+public struct LocalPlayer: Equatable, Sendable {
     public let id: String
     public let name: String
     public let number: Int?
