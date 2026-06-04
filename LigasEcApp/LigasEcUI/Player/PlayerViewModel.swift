@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-final class PlayerViewModel: ObservableObject {
+@Observable
+final class PlayerViewModel {
     private static let preferredPositionOrder: [Player.Position] = [
         .goalkeeper,
         .defender,
@@ -17,12 +18,12 @@ final class PlayerViewModel: ObservableObject {
         .coach
     ]
 
-    @Published var squad = [Player]()
-    @Published var isLoading = false
-    @Published var errorModel: ErrorModel? = nil
+    var squad = [Player]()
+    var isLoading = false
+    var errorModel: ErrorModel? = nil
 
-    private let repository: PlayerRepository
-    private var hasLoaded = false
+    @ObservationIgnored private let repository: PlayerRepository
+    @ObservationIgnored private var hasLoaded = false
         
     init(repository: PlayerRepository) {
         self.repository = repository

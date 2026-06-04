@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TeamView: View {
-    @StateObject private var teamViewModel: TeamViewModel
+    @Bindable var teamViewModel: TeamViewModel
     @Binding var navigationPath: NavigationPath
     let imageViewLoader: (URL, Table) -> ImageView
     let title: String
@@ -18,16 +18,6 @@ struct TeamView: View {
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible())
     ]
-
-    init(teamViewModel: TeamViewModel,
-         navigationPath: Binding<NavigationPath>,
-         imageViewLoader: @escaping (URL, Table) -> ImageView,
-         title: String) {
-        _teamViewModel = StateObject(wrappedValue: teamViewModel)
-        _navigationPath = navigationPath
-        self.imageViewLoader = imageViewLoader
-        self.title = title
-    }
 
     var body: some View {
         ScrollView {

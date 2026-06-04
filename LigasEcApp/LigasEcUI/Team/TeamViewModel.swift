@@ -7,16 +7,17 @@
 
 import Foundation
 
-final class TeamViewModel: ObservableObject {
+@Observable
+final class TeamViewModel {
 
-    @Published var teams = [Team]()
-    @Published var isLoading = false
-    @Published var errorModel: ErrorModel? = nil
-    @Published var isSerieBComingSoon = false
+    var teams = [Team]()
+    var isLoading = false
+    var errorModel: ErrorModel? = nil
+    var isSerieBComingSoon = false
 
-    private let repository: TeamRepository
-    private let league: League
-    private var hasLoaded = false
+    @ObservationIgnored private let repository: TeamRepository
+    @ObservationIgnored private let league: League
+    @ObservationIgnored private var hasLoaded = false
     
     init(repository: TeamRepository, league: League) {
         self.repository = repository

@@ -8,17 +8,9 @@
 import SwiftUI
 
 struct PlayerView: View {
-    @StateObject private var playerViewModel: PlayerViewModel
+    @Bindable var playerViewModel: PlayerViewModel
     let imageViewLoader: (URL, Table) -> ImageView
     let title: String
-
-    init(playerViewModel: PlayerViewModel,
-         imageViewLoader: @escaping (URL, Table) -> ImageView,
-         title: String) {
-        _playerViewModel = StateObject(wrappedValue: playerViewModel)
-        self.imageViewLoader = imageViewLoader
-        self.title = title
-    }
     
     var body: some View {
         List {
