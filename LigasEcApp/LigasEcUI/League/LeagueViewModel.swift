@@ -14,8 +14,8 @@ final class LeagueViewModel {
     var isLoading = false
     var errorMessage: ErrorModel? = nil
     
-    private let repository: LeagueRepository
-    private var hasLoaded = false
+    @ObservationIgnored private let repository: LeagueRepository
+    @ObservationIgnored private var hasLoaded = false
         
     init(repository: LeagueRepository) {
         self.repository = repository

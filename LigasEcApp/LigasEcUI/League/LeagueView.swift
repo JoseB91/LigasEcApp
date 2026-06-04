@@ -8,17 +8,12 @@
 import SwiftUI
 
 struct LeagueView: View {
-    var leagueViewModel: LeagueViewModel
+    @Bindable var leagueViewModel: LeagueViewModel
     @Binding var navigationPath: NavigationPath
     
     let imageViewLoader: (URL, Table) -> ImageView
     
     var body: some View {
-        let errorBinding = Binding<ErrorModel?>(
-            get: { leagueViewModel.errorMessage },
-            set: { leagueViewModel.errorMessage = $0 }
-        )
-
         VStack(spacing: 0) {
             Image("ligasEc")
                 .resizable()
@@ -56,7 +51,7 @@ struct LeagueView: View {
         .task {
             await leagueViewModel.loadIfNeeded()
         }
-        .withErrorAlert(errorModel: errorBinding)
+        .withErrorAlert(errorModel: $leagueViewModel.errorMessage)
     }
 }
 
