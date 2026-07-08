@@ -41,6 +41,23 @@
         }
       }
     },
+    "COMING_SOON" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coming soon"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximamente"
+          }
+        }
+      }
+    },
     "CONTACT_BODY" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -88,23 +105,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contactar Soporte"
-          }
-        }
-      }
-    },
-    "COMING_SOON" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Coming soon"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Próximamente"
           }
         }
       }
@@ -418,23 +418,6 @@
         }
       }
     },
-    "SERIE_B_COMING_SOON_MESSAGE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LigaPro Serie B data is coming soon. Check back later."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La información de la LigaPro Serie B estará disponible pronto. Vuelve más tarde."
-          }
-        }
-      }
-    },
     "PLAYER_VIEW_TITLE" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -486,6 +469,17 @@
         }
       }
     },
+    "SELECT_PLAYER" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "See %@ detail"
+          }
+        }
+      }
+    },
     "SELECT_TEAM" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -499,6 +493,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seleccionar equipo %@"
+          }
+        }
+      }
+    },
+    "SERIE_B_COMING_SOON_MESSAGE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LigaPro Serie B data is coming soon. Check back later."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La información de la LigaPro Serie B estará disponible pronto. Vuelve más tarde."
           }
         }
       }

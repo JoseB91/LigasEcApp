@@ -29,55 +29,59 @@ struct PlayerView: View {
                        let title = playerViewModel.title(for: position) {
                         Section {
                             ForEach(positionGroup) { player in
-                                HStack(spacing: 8) {
-                                    Spacer(minLength: 4)
-                                    if position != .coach {
-                                        ZStack {
-                                            ShirtIconView()
-                                                .frame(width: 36, height: 36)
-                                            if let number = player.number {
-                                                Text("\(String(number))")
-                                                    .font(.caption)
-                                                    .foregroundColor(.primary)
+                                NavigationLink(value: player) {
+                                    HStack(spacing: 8) {
+                                        Spacer(minLength: 4)
+                                        if position != .coach {
+                                            ZStack {
+                                                ShirtIconView()
+                                                    .frame(width: 36, height: 36)
+                                                if let number = player.number {
+                                                    Text("\(String(number))")
+                                                        .font(.caption)
+                                                        .foregroundColor(.primary)
+                                                }
                                             }
+                                            .accessibilityLabel(player.number != nil ? "Player number \(player.number!)" : "")
+                                            .padding(.trailing, 10)
                                         }
-                                        .accessibilityLabel(player.number != nil ? "Player number \(player.number!)" : "")
-                                        .padding(.trailing, 10)
+                                        if let url = player.photoURL {
+                                            imageViewLoader(url, .player)
+                                                .frame(width: 56, height: 56)
+                                                .clipShape(Circle())
+                                                .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))
+                                                .accessibilityLabel(player.name)
+                                        } else {
+                                            Image(systemName: "person.circle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 56, height: 56)
+                                                .accessibilityLabel(Constants.noPhotoAvailable)
+                                        }
+                                        Text(player.name)
+                                            .font(.body)
+                                            .foregroundColor(.primary)
+                                            .lineLimit(2)
+                                            .minimumScaleFactor(0.85)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Spacer(minLength: 4)
+                                        if let flagId = player.flagId {
+                                            Image("country_flag_\(flagId)")
+                                                .resizable()
+                                                .frame(width: 24, height: 16)
+                                        } else if let nationality = player.nationality {
+                                            let flagId = nationality.getPlayerCountryId()
+                                            Image("country_flag_\(flagId)")
+                                                .resizable()
+                                                .frame(width: 24, height: 16)
+                                                .accessibilityLabel(nationality)
+                                        }
+                                        Spacer()
+                                            .frame(width: 16)
                                     }
-                                    if let url = player.photoURL {
-                                        imageViewLoader(url, .player)
-                                            .frame(width: 56, height: 56)
-                                            .clipShape(Circle())
-                                            .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))
-                                            .accessibilityLabel(player.name)
-                                    } else {
-                                        Image(systemName: "person.circle")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 56, height: 56)
-                                            .accessibilityLabel(Constants.noPhotoAvailable)
-                                    }
-                                    Text(player.name)
-                                        .font(.body)
-                                        .foregroundColor(.primary)
-                                        .lineLimit(2)
-                                        .minimumScaleFactor(0.85)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Spacer(minLength: 4)
-                                    if let flagId = player.flagId {
-                                        Image("country_flag_\(flagId)")
-                                            .resizable()
-                                            .frame(width: 24, height: 16)
-                                    } else if let nationality = player.nationality {
-                                        let flagId = nationality.getPlayerCountryId()
-                                        Image("country_flag_\(flagId)")
-                                            .resizable()
-                                            .frame(width: 24, height: 16)
-                                            .accessibilityLabel(nationality)
-                                    }
-                                    Spacer()
-                                        .frame(width: 16)
                                 }
+                                .buttonStyle(PlainButtonStyle())
+                                .accessibilityLabel(String(localized: "SELECT_PLAYER", defaultValue: "See \(player.name) detail"))
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                             }

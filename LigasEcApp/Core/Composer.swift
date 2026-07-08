@@ -155,6 +155,10 @@ class Composer {
         return PlayerViewModel(repository: repository)
     }
     
+    func composePlayerDetailViewModel(for player: Player) -> PlayerDetailViewModel {
+        PlayerDetailViewModel(player: player)
+    }
+
     func composeImageView(with url: URL, on table: Table) -> ImageView {
         let repository = ImageRepositoryImpl(url: url,
                                              table: table,

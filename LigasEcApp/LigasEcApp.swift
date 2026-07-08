@@ -36,6 +36,10 @@ struct LigasEcApp: App {
                                    imageViewLoader: composer.composeImageView,
                                    title: team.name)
                     }
+                    .navigationDestination(for: Player.self) { player in
+                        PlayerDetailView(playerDetailViewModel: composer.composePlayerDetailViewModel(for: player),
+                                         imageViewLoader: composer.composeImageView)
+                    }
                     .task {
                         try? await composer.validateCache()
                     }
