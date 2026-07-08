@@ -9,11 +9,15 @@ import SwiftUI
 
 @main
 struct LigasEcApp: App {
-    
-    private let composer = Composer.makeComposer()
+
+    private let composer: Composer
     @State var navigationPath = NavigationPath()
     @State private var selectedTab = 0
-    
+
+    init() {
+        self.composer = Composer.makeComposer()
+    }
+
     var body: some Scene {
         WindowGroup {
             TabView(selection: $selectedTab) {

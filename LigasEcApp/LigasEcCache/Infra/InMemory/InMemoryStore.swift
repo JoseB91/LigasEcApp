@@ -7,11 +7,11 @@
 
 import Foundation
 
-public class InMemoryStore {
+public actor InMemoryStore {
     private var leaguesCache: CachedLeagues?
     private var teamsCache = [String: CachedTeams]()
     private var playersCache = [String: CachedPlayers]()
-    private var leagueImageCacheData = NSCache<NSURL, NSData>()
+    private let leagueImageCacheData = NSCache<NSURL, NSData>()
 
     public init() {}
 }

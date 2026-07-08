@@ -8,18 +8,28 @@
 import SwiftUI
 
 struct LeagueView: View {
-    @Bindable var leagueViewModel: LeagueViewModel
+    @State private var leagueViewModel: LeagueViewModel
     @Binding var navigationPath: NavigationPath
-    
+
     let imageViewLoader: (URL, Table) -> ImageView
-    
+
+    init(leagueViewModel: @autoclosure @escaping () -> LeagueViewModel,
+         navigationPath: Binding<NavigationPath>,
+         imageViewLoader: @escaping (URL, Table) -> ImageView) {
+        self._leagueViewModel = State(initialValue: leagueViewModel())
+        self._navigationPath = navigationPath
+        self.imageViewLoader = imageViewLoader
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             Image("ligasEc")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: UIScreen.main.bounds.width,
-                       height: UIScreen.main.bounds.height * 0.65)
+                .containerRelativeFrame(.horizontal)
+                .containerRelativeFrame(.vertical) { length, _ in length * 0.77 }
+               // .frame(width: UIScreen.main.bounds.width,
+                 //      height: UIScreen.main.bounds.height * 0.65)
                 .accessibilityLabel(Constants.ligasEcLogo)
             
             ZStack {
