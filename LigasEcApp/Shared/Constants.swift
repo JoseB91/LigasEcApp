@@ -23,6 +23,7 @@ struct Constants {
     static var loadingLeagues: LocalizedStringKey { "LOADING_LEAGUES" }
     static var loadingTeams: LocalizedStringKey { "LOADING_TEAMS" }
     static var loadingPlayers: LocalizedStringKey { "LOADING_PLAYERS" }
+    static var loadingPlayerDetail: LocalizedStringKey { "LOADING_PLAYER_DETAIL" }
     static var loadingImage: LocalizedStringKey { "LOADING_IMAGE" }
     static var selectLeague: LocalizedStringKey { "SELECT_LEAGUE" }
     static var selectTeam: LocalizedStringKey { "SELECT_TEAM" }

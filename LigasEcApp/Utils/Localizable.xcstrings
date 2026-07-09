@@ -245,6 +245,23 @@
         }
       }
     },
+    "LOADING_PLAYER_DETAIL" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading player detail"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando detalle del jugador"
+          }
+        }
+      }
+    },
     "LOADING_PLAYERS" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -399,6 +416,9 @@
       }
     },
     "Player number %lld" : {
+
+    },
+    "Player number 1" : {
 
     },
     "PLAYER_NUMBER" : {

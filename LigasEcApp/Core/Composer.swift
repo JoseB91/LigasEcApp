@@ -156,7 +156,11 @@ class Composer {
     }
     
     func composePlayerDetailViewModel(for player: Player) -> PlayerDetailViewModel {
-        PlayerDetailViewModel(player: player)
+        let repository = PlayerDetailRepositoryImpl(player: player,
+                                                    httpClient: httpClient,
+                                                    configuration: flashLiveEndpointConfiguration)
+
+        return PlayerDetailViewModel(repository: repository)
     }
 
     func composeImageView(with url: URL, on table: Table) -> ImageView {
